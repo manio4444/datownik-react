@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
-import './css/notes.css'; // TODO - import this in notes component
-import './css/notes.css'; // TODO - import this in notes component
+import React, {Component} from 'react';
+import 'semantic-ui-css/components/button.css'; // TODO - import this in specific component
+import 'semantic-ui-css/components/card.css'; // TODO - import this in specific component
+import 'semantic-ui-css/components/icon.css'; // TODO - import this in specific component
 import './css/notes.css'; // TODO - import this in notes component
 
 class PageStart extends Component {
-  render() {
-    return (
+    render() {
+        return (
         <main>
           <section id="main_page">
 
@@ -264,8 +265,8 @@ git reset --hard origin/master</textarea>
 
           </section>
         </main>
-    );
-  }
+        );
+    }
 }
 
 export default PageStart;

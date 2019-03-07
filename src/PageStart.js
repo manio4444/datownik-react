@@ -187,73 +187,61 @@ class PageStart extends Component {
               <div className="note_element">
                 <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
                           data-placeholder="Kliknięcie poza notatką spowoduje usunięcie" data-note=""></textarea>
-                <div className="note__urlify"></div>
+
+                <div className="note_element__progress"></div>
+              </div>
+
+                <div className="note_element">
+                    <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
+                              data-placeholder="Kliknięcie poza notatką spowoduje usunięcie" data-note="574" value="!Kaczuszka1
+                    intive"></textarea>
+
+                    <div className="note_element__progress"></div>
+                </div>
+
+              <div className="note_element">
+                <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
+                          data-placeholder="Kliknięcie poza notatką spowoduje usunięcie" data-note="573" value="MOŻE KANAPA https://allegro.pl/oferta/duza-sofa-czarna-kanapa-owal-retro-design-sassy-6657292829?reco_id=c816d1ef-3a89-11e9-aabe-000af7f5f5c0&amp;sid=041047f9c36843e364ecb91b45c568a2755aa386fe7e14ee7421a14291fbf951"></textarea>
+
+                <div className="note_element__progress"></div>
+              </div>
+
+              <div className="note_element">
+                <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
+                          data-placeholder="Kliknięcie poza notatką spowoduje usunięcie"
+                          data-note="572" value="mbank 08891"></textarea>
+
+                <div className="note_element__progress"></div>
+              </div>
+
+              <div className="note_element">
+                <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
+                          data-placeholder="Kliknięcie poza notatką spowoduje usunięcie"
+                          data-note="571" value="https://github.com/LineageOS/android_packages_apps_CMWallpapers/tree/cm-14.1/res/drawable-xxxhdpi"></textarea>
+
+                <div className="note_element__progress"></div>
+              </div>
+
+              <div className="note_element">
+                <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
+                          data-placeholder="Kliknięcie poza notatką spowoduje usunięcie" data-note="570" value="DO SNIPPETÓW https://highlightjs.org/"></textarea>
+
+                <div className="note_element__progress"></div>
+              </div>
+
+              <div className="note_element">
+                <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
+                          data-placeholder="Kliknięcie poza notatką spowoduje usunięcie"
+                          data-note="568" value="https://fili.cc/serial/brickleberry/312"></textarea>
+
                 <div className="note_element__progress"></div>
               </div>
 
               <div className="note_element">
       <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
-                data-placeholder="Kliknięcie poza notatką spowoduje usunięcie" data-note="574">!Kaczuszka1
-intive</textarea>
-                <div className="note__urlify">!Kaczuszka1
-                  intive
-                </div>
-                <div className="note_element__progress"></div>
-              </div>
+                data-placeholder="Kliknięcie poza notatką spowoduje usunięcie" data-note="567" value="USUWA NIEPUSHNIĘTE COMMITY, STAN JAK NA REMOTE
+git reset --hard origin/master"></textarea>
 
-              <div className="note_element">
-                <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
-                          data-placeholder="Kliknięcie poza notatką spowoduje usunięcie" data-note="573">MOŻE KANAPA https://allegro.pl/oferta/duza-sofa-czarna-kanapa-owal-retro-design-sassy-6657292829?reco_id=c816d1ef-3a89-11e9-aabe-000af7f5f5c0&amp;sid=041047f9c36843e364ecb91b45c568a2755aa386fe7e14ee7421a14291fbf951</textarea>
-                <div className="note__urlify">MOŻE KANAPA <a
-                    href="https://allegro.pl/oferta/duza-sofa-czarna-kanapa-owal-retro-design-sassy-6657292829?reco_id=c816d1ef-3a89-11e9-aabe-000af7f5f5c0&amp;sid=041047f9c36843e364ecb91b45c568a2755aa386fe7e14ee7421a14291fbf951"
-                    target="_blank">https://allegro.pl/oferta/duza-sofa-czarna-kanapa-owal-retro-design-sassy-6657292829?reco_id=c816d1ef-3a89-11e9-aabe-000af7f5f5c0&amp;sid=041047f9c36843e364ecb91b45c568a2755aa386fe7e14ee7421a14291fbf951</a>
-                </div>
-                <div className="note_element__progress"></div>
-              </div>
-
-              <div className="note_element">
-                <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
-                          data-placeholder="Kliknięcie poza notatką spowoduje usunięcie"
-                          data-note="572">mbank 08891</textarea>
-                <div className="note__urlify">mbank 08891</div>
-                <div className="note_element__progress"></div>
-              </div>
-
-              <div className="note_element">
-                <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
-                          data-placeholder="Kliknięcie poza notatką spowoduje usunięcie"
-                          data-note="571">https://github.com/LineageOS/android_packages_apps_CMWallpapers/tree/cm-14.1/res/drawable-xxxhdpi</textarea>
-                <div className="note__urlify"><a
-                    href="https://github.com/LineageOS/android_packages_apps_CMWallpapers/tree/cm-14.1/res/drawable-xxxhdpi"
-                    target="_blank">https://github.com/LineageOS/android_packages_apps_CMWallpapers/tree/cm-14.1/res/drawable-xxxhdpi</a>
-                </div>
-                <div className="note_element__progress"></div>
-              </div>
-
-              <div className="note_element">
-                <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
-                          data-placeholder="Kliknięcie poza notatką spowoduje usunięcie" data-note="570">DO SNIPPETÓW https://highlightjs.org/</textarea>
-                <div className="note__urlify">DO SNIPPETÓW <a href="https://highlightjs.org/"
-                                                              target="_blank">https://highlightjs.org/</a></div>
-                <div className="note_element__progress"></div>
-              </div>
-
-              <div className="note_element">
-                <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
-                          data-placeholder="Kliknięcie poza notatką spowoduje usunięcie"
-                          data-note="568">https://fili.cc/serial/brickleberry/312</textarea>
-                <div className="note__urlify"><a href="https://fili.cc/serial/brickleberry/312"
-                                                 target="_blank">https://fili.cc/serial/brickleberry/312</a></div>
-                <div className="note_element__progress"></div>
-              </div>
-
-              <div className="note_element">
-      <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
-                data-placeholder="Kliknięcie poza notatką spowoduje usunięcie" data-note="567">USUWA NIEPUSHNIĘTE COMMITY, STAN JAK NA REMOTE
-git reset --hard origin/master</textarea>
-                <div className="note__urlify">USUWA NIEPUSHNIĘTE COMMITY, STAN JAK NA REMOTE
-                  git reset --hard origin/master
-                </div>
                 <div className="note_element__progress"></div>
               </div>
 

@@ -8,6 +8,8 @@ class MainMenu extends Component {
         this.setState({
             opened: !this.state.opened,
         });
+
+        this.props.blurPage();
     };
     state = {
         opened: false

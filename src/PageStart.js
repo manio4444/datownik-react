@@ -7,7 +7,7 @@ import './css/notes.css'; // TODO - import this in notes component
 class PageStart extends Component {
     render() {
         return (
-        <main>
+        <div className={"PageStart"}>
           <section id="main_page">
 
             <form method="POST" className="start_form">
@@ -252,7 +252,7 @@ git reset --hard origin/master"></textarea>
             </div>
 
           </section>
-        </main>
+        </div>
         );
     }
 }

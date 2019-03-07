@@ -9,24 +9,26 @@ class App extends Component {
         isBlurPage: false,
     };
 
-    getStyles = () => {
+    getBlurStyles = () => {
         return {
             filter: this.state.isBlurPage ? 'blur(4px)' : '',
             pointerEvents: this.state.isBlurPage ? 'none' : '',
         }
     };
 
-    blurPage = () => {
-        this.setState({isBlurPage: true});
-    };
+    blurPage = () => this.setState({isBlurPage: true});
+
+    unBlurPage = () => this.setState({isBlurPage: false});
 
     render() {
         return (
-            <div className="App" style={this.getStyles()}>
+            <div className="App">
                 <header className="App-header">
-                    <MainMenu blurPage={this.blurPage}/>
+                    <MainMenu blurPage={this.blurPage} unBlurPage={this.unBlurPage} />
                 </header>
-                <PageStart/>
+                <main style={this.getBlurStyles()}>
+                    <PageStart />
+                </main>
             </div>
         );
     }

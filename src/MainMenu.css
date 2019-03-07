@@ -151,19 +151,6 @@
     transform: translate(-50%, -50%) rotate(45deg);
 }
 
-/* BEFORE OPENING STYLES */
-
-body:not(.nav_open) .MainMenuWrapper {
-    transform: translateX(-100%);
-}
-
-/* AFTER OPENING STYLES */
-
-body.nav_open main {
-    filter: blur(4px);
-    pointer-events: none;
-}
-
 @media (max-width: 1023px) {
 }
 

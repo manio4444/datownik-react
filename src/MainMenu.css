@@ -1,9 +1,9 @@
-header, main {
+.MainMenuWrapper, main {
     width: 100%;
     box-sizing: border-box;
 }
 
-header {
+.MainMenuWrapper {
     background-image: url('LockscreenBg.png');
     background-repeat: no-repeat;
     background-size: cover;
@@ -21,7 +21,7 @@ header {
     box-shadow: inset 0px 0px 36px -8px black;
 }
 
-header > nav {
+.MainMenuWrapper > nav {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -31,38 +31,38 @@ header > nav {
     padding: 30px;
 }
 
-header > nav::-webkit-scrollbar {
+.MainMenuWrapper > nav::-webkit-scrollbar {
     width: 10px;
 }
 
-header > nav::-webkit-scrollbar-track {
+.MainMenuWrapper > nav::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
-header > nav::-webkit-scrollbar-thumb {
+.MainMenuWrapper > nav::-webkit-scrollbar-thumb {
     background-color: transparent;
     -webkit-box-shadow: inset 0 0 2px 1px rgba(255, 255, 255, 1);
     border-radius: 2px;
 }
 
-header > nav > ul {
+.MainMenuWrapper > nav > ul {
     display: flex;
     flex-direction: column;
     align-items: stretch;
     width: 100%;
 }
 
-header > nav > ul > li {
+.MainMenuWrapper > nav > ul > li {
     font-size: 16px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-header > nav > ul > li:hover > a {
+.MainMenuWrapper > nav > ul > li:hover > a {
     opacity: .45;
     padding-left: 20px;
 }
 
-header > nav > ul > li > a {
+.MainMenuWrapper > nav > ul > li > a {
     display: block;
     text-decoration: none;
     color: inherit;
@@ -70,8 +70,8 @@ header > nav > ul > li > a {
     transition: all .5s ease;
 }
 
-header ul li:hover a,
-header ul li .active {
+.MainMenuWrapper ul li:hover a,
+.MainMenuWrapper ul li .active {
     /*color: #ffffff; border-color: white;*/
 }
 
@@ -153,7 +153,7 @@ header ul li .active {
 
 /* BEFORE OPENING STYLES */
 
-body:not(.nav_open) header {
+body:not(.nav_open) .MainMenuWrapper {
     transform: translateX(-100%);
 }
 

@@ -11,18 +11,14 @@ class App extends Component {
 
     getStyles = () => {
         return {
-            cursor: 'pointer',
             filter: this.state.isBlurPage ? 'blur(4px)' : '',
             pointerEvents: this.state.isBlurPage ? 'none' : '',
         }
     };
 
     blurPage = () => {
-        console.log('blur');
-      this.setState({isBlurPage: true});
+        this.setState({isBlurPage: true});
     };
-
-
 
     render() {
         return (

@@ -72,8 +72,8 @@ class MainMenu extends Component {
                 <nav>
                     <button type="button" className="hamburger_close" onClick={this.openState}><span className="hamburger_line" /></button>
                     <ul>
-                        {this.routeElements.map((link) => {
-                            return (<li><Link to={link.url}>{link.name}</Link></li>);
+                        {this.routeElements.map((link, i) => {
+                            return (<li key={i}><Link to={link.url}>{link.name}</Link></li>);
                         })}
                     </ul>
                 </nav>

@@ -67,12 +67,12 @@ class MainMenu extends Component {
     render() {
         return (
             <div className="MainMenu">
-                <button type="button" className="hamburger" onClick={this.openState}><span className="hamburger_line"></span></button>
+                <button type="button" className="hamburger" onClick={this.openState}><span className="hamburger_line" /></button>
                 <div className="MainMenuWrapper" style={this.getStylesMenu()}>
                 <nav>
-                    <button type="button" className="hamburger_close" onClick={this.openState}><span className="hamburger_line"></span></button>
+                    <button type="button" className="hamburger_close" onClick={this.openState}><span className="hamburger_line" /></button>
                     <ul>
-                        {this.routeElements.map((link, i) => {
+                        {this.routeElements.map((link) => {
                             return (<li><Link to={link.url}>{link.name}</Link></li>);
                         })}
                     </ul>

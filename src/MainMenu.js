@@ -1,10 +1,50 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import './MainMenu.css';
 
 class MainMenu extends Component {
     state = {
         opened: true
     };
+
+    routeElements = [
+        {
+            url: "/",
+            name: "Main",
+        },
+        {
+            url: "/kalendarz",
+            name: "Kalendarz",
+        },
+        {
+            url: "/zakladki",
+            name: "Zakladki",
+        },
+        {
+            url: "/notatki",
+            name: "Notatki",
+        },
+        {
+            url: "/dokumenty",
+            name: "Dokumenty",
+        },
+        {
+            url: "/do-zrobienia",
+            name: "To do",
+        },
+        {
+            url: "/kontakty",
+            name: "Kontakty",
+        },
+        {
+            url: "/pliki",
+            name: "Pliki",
+        },
+        {
+            url: "/ustawienia",
+            name: "Ustawienia",
+        },
+    ];
 
     openState = () => {
         console.log(this.state.opened);
@@ -32,15 +72,9 @@ class MainMenu extends Component {
                 <nav>
                     <button type="button" className="hamburger_close" onClick={this.openState}><span className="hamburger_line"></span></button>
                     <ul>
-                        <li><a href="<?php $explode = explode('?', $_SERVER['REQUEST_URI'], 2); echo $explode[0]; ?>">Main</a></li>
-                        <li><a href="?page=kalendarz">Kalendarz</a></li>
-                        <li><a href="?page=zakladki">Zakladki</a></li>
-                        <li><a href="?page=notatki">Notatki</a></li>
-                        <li><a href="?page=dokumenty">Dokumenty</a></li>
-                        <li><a href="?page=do-zrobienia">To do</a></li>
-                        <li><a href="?page=kontakty">Kontakty</a></li>
-                        <li><a href="?page=pliki">Pliki</a></li>
-                        <li><a href="?page=ustawienia">Ustawienia</a></li>
+                        {this.routeElements.map((link, i) => {
+                            return (<li><Link to={link.url}>{link.name}</Link></li>);
+                        })}
                     </ul>
                 </nav>
                 </div>

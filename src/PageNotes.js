@@ -1,7 +1,56 @@
 import React, {Component} from 'react';
 import './css/notes.css';
 
-class PageStart extends Component {
+class PageNotes extends Component {
+    notes = [
+        {
+            placeholder: "Zacznij wpisywać tekst aby dodać nową notatkę",
+            dataPlaceholder: "Kliknięcie poza notatką spowoduje usunięcie",
+            dataNote: ""
+        },
+        {
+            placeholder: "Zacznij wpisywać tekst aby dodać nową notatkę",
+            dataPlaceholder: "Kliknięcie poza notatką spowoduje usunięcie",
+            dataNote: "574",
+            value: "test test",
+        },
+        {
+            placeholder: "Zacznij wpisywać tekst aby dodać nową notatkę",
+            dataPlaceholder: "Kliknięcie poza notatką spowoduje usunięcie",
+            dataNote: "573",
+            value: "MOŻE KANAPA https://allegro.pl/oferta/duza-sofa-czarna-kanapa-owal-retro-design-sassy-6657292829?reco_id=c816d1ef-3a89-11e9-aabe-000af7f5f5c0&amp;sid=041047f9c36843e364ecb91b45c568a2755aa386fe7e14ee7421a14291fbf951",
+        },
+        {
+            placeholder: "Zacznij wpisywać tekst aby dodać nową notatkę",
+            dataPlaceholder: "Kliknięcie poza notatką spowoduje usunięcie",
+            dataNote: "572",
+            value: "mbank przelew",
+        },
+        {
+            placeholder: "Zacznij wpisywać tekst aby dodać nową notatkę",
+            dataPlaceholder: "Kliknięcie poza notatką spowoduje usunięcie",
+            dataNote: "571",
+            value: "https://github.com/LineageOS/android_packages_apps_CMWallpapers/tree/cm-14.1/res/drawable-xxxhdpi",
+        },
+        {
+            placeholder: "Zacznij wpisywać tekst aby dodać nową notatkę",
+            dataPlaceholder: "Kliknięcie poza notatką spowoduje usunięcie",
+            dataNote: "570",
+            value: "DO SNIPPETÓW https://highlightjs.org/",
+        },
+        {
+            placeholder: "Zacznij wpisywać tekst aby dodać nową notatkę",
+            dataPlaceholder: "Kliknięcie poza notatką spowoduje usunięcie",
+            dataNote: "568",
+            value: "https://fili.cc/serial/brickleberry/312",
+        },
+        {
+            placeholder: "Zacznij wpisywać tekst aby dodać nową notatkę",
+            dataPlaceholder: "Kliknięcie poza notatką spowoduje usunięcie",
+            dataNote: "567",
+            value: "USUWA NIEPUSHNIĘTE COMMITY, STAN JAK NA REMOTE git reset--hard origin / master",
+        }
+    ];
     render() {
         return (
         <React.Fragment>
@@ -12,66 +61,21 @@ class PageStart extends Component {
 
             <div className="notes_container">
 
-
-              <div className="note_element">
-                <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
-                          data-placeholder="Kliknięcie poza notatką spowoduje usunięcie" data-note=""></textarea>
-
-                <div className="note_element__progress"></div>
-              </div>
-
-                <div className="note_element">
-                    <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
-                              data-placeholder="Kliknięcie poza notatką spowoduje usunięcie" data-note="574" value="test test"></textarea>
-
-                    <div className="note_element__progress"></div>
-                </div>
-
-              <div className="note_element">
-                <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
-                          data-placeholder="Kliknięcie poza notatką spowoduje usunięcie" data-note="573" value="MOŻE KANAPA https://allegro.pl/oferta/duza-sofa-czarna-kanapa-owal-retro-design-sassy-6657292829?reco_id=c816d1ef-3a89-11e9-aabe-000af7f5f5c0&amp;sid=041047f9c36843e364ecb91b45c568a2755aa386fe7e14ee7421a14291fbf951"></textarea>
-
-                <div className="note_element__progress"></div>
-              </div>
-
-              <div className="note_element">
-                <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
-                          data-placeholder="Kliknięcie poza notatką spowoduje usunięcie"
-                          data-note="572" value="mbank przelew"></textarea>
-
-                <div className="note_element__progress"></div>
-              </div>
-
-              <div className="note_element">
-                <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
-                          data-placeholder="Kliknięcie poza notatką spowoduje usunięcie"
-                          data-note="571" value="https://github.com/LineageOS/android_packages_apps_CMWallpapers/tree/cm-14.1/res/drawable-xxxhdpi"></textarea>
-
-                <div className="note_element__progress"></div>
-              </div>
-
-              <div className="note_element">
-                <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
-                          data-placeholder="Kliknięcie poza notatką spowoduje usunięcie" data-note="570" value="DO SNIPPETÓW https://highlightjs.org/"></textarea>
-
-                <div className="note_element__progress"></div>
-              </div>
-
-              <div className="note_element">
-                <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
-                          data-placeholder="Kliknięcie poza notatką spowoduje usunięcie"
-                          data-note="568" value="https://fili.cc/serial/brickleberry/312"></textarea>
-
-                <div className="note_element__progress"></div>
-              </div>
-
-              <div className="note_element">
-      <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
-                data-placeholder="Kliknięcie poza notatką spowoduje usunięcie" data-note="567" value="USUWA NIEPUSHNIĘTE COMMITY, STAN JAK NA REMOTE
-git reset --hard origin/master"></textarea>
-
-                <div className="note_element__progress"></div>
-              </div>
+                {this.notes.map((note) => {
+                    return (
+                        <div
+                            className="note_element"
+                            data-note={note.dataNote}
+                        >
+                            <textarea
+                                placeholder={note.placeholder}
+                                data-placeholder={note.dataPlaceholder}
+                                value={note.value}
+                            />
+                            <div className="note_element__progress"/>
+                        </div>
+                    );
+                })}
 
             </div>
 
@@ -81,4 +85,4 @@ git reset --hard origin/master"></textarea>
     }
 }
 
-export default PageStart;
+export default PageNotes;

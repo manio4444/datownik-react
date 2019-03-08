@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import './css/reset.css';
 import './css/main.css';
 import PageStart from './PageStart';
+import PageNotes from './PageNotes';
 import MainMenu from './MainMenu';
 
 class App extends Component {
@@ -22,14 +24,17 @@ class App extends Component {
 
     render() {
         return (
-            <div className="App">
-                <header className="App-header">
-                    <MainMenu blurPage={this.blurPage} unBlurPage={this.unBlurPage} />
-                </header>
-                <main style={this.getBlurStyles()}>
-                    <PageStart />
-                </main>
-            </div>
+            <Router>
+                <div className="App">
+                    <header className="App-header">
+                        <MainMenu blurPage={this.blurPage} unBlurPage={this.unBlurPage}/>
+                    </header>
+                    <main style={this.getBlurStyles()}>
+                        <Route path="/" exact component={PageStart}/>
+                        <Route path="/notatki" component={PageNotes}/>
+                    </main>
+                </div>
+            </Router>
         );
     }
 }

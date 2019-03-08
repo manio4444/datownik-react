@@ -3,6 +3,7 @@ import 'semantic-ui-css/components/button.css'; // TODO - import this in specifi
 import 'semantic-ui-css/components/card.css'; // TODO - import this in specific component
 import 'semantic-ui-css/components/icon.css'; // TODO - import this in specific component
 import './css/notes.css'; // TODO - import this in notes component
+import {Link} from "react-router-dom";
 
 class PageStart extends Component {
     render() {
@@ -193,8 +194,7 @@ class PageStart extends Component {
 
                 <div className="note_element">
                     <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
-                              data-placeholder="Kliknięcie poza notatką spowoduje usunięcie" data-note="574" value="!Kaczuszka1
-                    intive"></textarea>
+                              data-placeholder="Kliknięcie poza notatką spowoduje usunięcie" data-note="574" value="test test"></textarea>
 
                     <div className="note_element__progress"></div>
                 </div>
@@ -209,7 +209,7 @@ class PageStart extends Component {
               <div className="note_element">
                 <textarea placeholder="Zacznij wpisywać tekst aby dodać nową notatkę"
                           data-placeholder="Kliknięcie poza notatką spowoduje usunięcie"
-                          data-note="572" value="mbank 08891"></textarea>
+                          data-note="572" value="mbank przelew"></textarea>
 
                 <div className="note_element__progress"></div>
               </div>
@@ -246,7 +246,7 @@ git reset --hard origin/master"></textarea>
               </div>
 
               <div className="notes_more">
-                <a className="ui button" href="?page=notatki">Zobacz wszystkie</a>
+                  <Link className="ui button" to="/notatki">Zobacz wszystkie</Link>
               </div>
 
             </div>

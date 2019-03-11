@@ -4,53 +4,40 @@ import './css/notes.css';
 class PageNotes extends Component {
     notes = [
         {
-            placeholder: "Zacznij wpisywać tekst aby dodać nową notatkę",
-            dataPlaceholder: "Kliknięcie poza notatką spowoduje usunięcie",
-            dataNote: ""
-        },
-        {
-            placeholder: "Zacznij wpisywać tekst aby dodać nową notatkę",
-            dataPlaceholder: "Kliknięcie poza notatką spowoduje usunięcie",
             dataNote: "574",
             value: "test test",
         },
         {
-            placeholder: "Zacznij wpisywać tekst aby dodać nową notatkę",
-            dataPlaceholder: "Kliknięcie poza notatką spowoduje usunięcie",
             dataNote: "573",
             value: "MOŻE KANAPA https://allegro.pl/oferta/duza-sofa-czarna-kanapa-owal-retro-design-sassy-6657292829?reco_id=c816d1ef-3a89-11e9-aabe-000af7f5f5c0&amp;sid=041047f9c36843e364ecb91b45c568a2755aa386fe7e14ee7421a14291fbf951",
         },
         {
-            placeholder: "Zacznij wpisywać tekst aby dodać nową notatkę",
-            dataPlaceholder: "Kliknięcie poza notatką spowoduje usunięcie",
             dataNote: "572",
             value: "mbank przelew",
         },
         {
-            placeholder: "Zacznij wpisywać tekst aby dodać nową notatkę",
-            dataPlaceholder: "Kliknięcie poza notatką spowoduje usunięcie",
             dataNote: "571",
             value: "https://github.com/LineageOS/android_packages_apps_CMWallpapers/tree/cm-14.1/res/drawable-xxxhdpi",
         },
         {
-            placeholder: "Zacznij wpisywać tekst aby dodać nową notatkę",
-            dataPlaceholder: "Kliknięcie poza notatką spowoduje usunięcie",
             dataNote: "570",
             value: "DO SNIPPETÓW https://highlightjs.org/",
         },
         {
-            placeholder: "Zacznij wpisywać tekst aby dodać nową notatkę",
-            dataPlaceholder: "Kliknięcie poza notatką spowoduje usunięcie",
             dataNote: "568",
             value: "https://fili.cc/serial/brickleberry/312",
         },
         {
-            placeholder: "Zacznij wpisywać tekst aby dodać nową notatkę",
-            dataPlaceholder: "Kliknięcie poza notatką spowoduje usunięcie",
             dataNote: "567",
             value: "USUWA NIEPUSHNIĘTE COMMITY, STAN JAK NA REMOTE git reset--hard origin / master",
         }
     ];
+
+    placeholder = {
+        adding: "Zacznij wpisywać tekst aby dodać nową notatkę",
+        deleting: "Kliknięcie poza notatką spowoduje usunięcie",
+    }
+
     render() {
         return (
         <React.Fragment>
@@ -60,6 +47,14 @@ class PageNotes extends Component {
             <h1 className="notes_title">Ostatnie notatki:</h1>
 
             <div className="notes_container">
+
+                <div className="note_element">
+                            <textarea
+                                placeholder={this.placeholder.adding}
+                                data-placeholder-deleting={this.placeholder.deleting}
+                            />
+                    <div className="note_element__progress"/>
+                </div>
 
                 {this.notes.map((note) => {
                     return (

@@ -47,15 +47,11 @@ class MainMenu extends Component {
     ];
 
     openState = () => {
-        console.log(this.state.opened);
-
         this.setState({
             opened: !this.state.opened,
         });
-        console.log(this.state.opened);
 
         this.state.opened ? this.props.blurPage() : this.props.unBlurPage();
-
     };
 
     getStylesMenu = () => {

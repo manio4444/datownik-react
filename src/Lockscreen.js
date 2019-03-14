@@ -35,14 +35,14 @@ class MainMenu extends Component {
     ];
 
     numberClick = (e) => {
-        if (this.state.lockInput) return;
-
         const number = e.target.attributes['data-button'].value;
 
         this.updateCode(number);
     };
 
     updateCode = (number) => {
+        if (this.state.lockInput) return;
+
         const newCode = `${this.state.codeInput}${number}`;
 
         this.setState({

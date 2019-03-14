@@ -5,10 +5,18 @@ import './css/main.css';
 import PageStart from './PageStart';
 import PageNotes from './PageNotes';
 import MainMenu from './MainMenu';
+import Lockscreen from './Lockscreen';
 
 class App extends Component {
     state = {
         isBlurPage: false,
+        isLogged: false, //TODO - CREATE QUERY FOR CHECKING
+    };
+
+    setIsLogged = () => {
+        this.setState({
+            isLogged: true,
+        });
     };
 
     getBlurStyles = () => {
@@ -23,6 +31,11 @@ class App extends Component {
     unBlurPage = () => this.setState({isBlurPage: false});
 
     render() {
+        if (!this.state.isLogged) {
+            return (
+                <Lockscreen isLogged={this.setIsLogged}/>
+            )
+        }
         return (
             <Router>
                 <div className="App">

@@ -11,10 +11,38 @@ class MainMenu extends Component {
         allowCodeAnimation: false,
     };
 
+    keyCodesMap = [
+        {keyCode: 48, clickNumber: "0"}, //0
+        {keyCode: 49, clickNumber: "1"}, //1
+        {keyCode: 50, clickNumber: "2"}, //2
+        {keyCode: 51, clickNumber: "3"}, //3
+        {keyCode: 52, clickNumber: "4"}, //4
+        {keyCode: 53, clickNumber: "5"}, //5
+        {keyCode: 54, clickNumber: "6"}, //6
+        {keyCode: 55, clickNumber: "7"}, //7
+        {keyCode: 56, clickNumber: "8"}, //8
+        {keyCode: 57, clickNumber: "9"}, //9
+        {keyCode: 96, clickNumber: "0"}, //numpad 0
+        {keyCode: 97, clickNumber: "1"}, //numpad 1
+        {keyCode: 98, clickNumber: "2"}, //numpad 2
+        {keyCode: 99, clickNumber: "3"}, //numpad 3
+        {keyCode: 100, clickNumber: "4"}, //numpad 4
+        {keyCode: 101, clickNumber: "5"}, //numpad 5
+        {keyCode: 102, clickNumber: "6"}, //numpad 6
+        {keyCode: 103, clickNumber: "7"}, //numpad 7
+        {keyCode: 104, clickNumber: "8"}, //numpad 8
+        {keyCode: 105, clickNumber: "9"}, //numpad 9
+    ];
+
     numberClick = (e) => {
         if (this.state.lockInput) return;
 
         const number = e.target.attributes['data-button'].value;
+
+        this.updateCode(number);
+    };
+
+    updateCode = (number) => {
         const newCode = `${this.state.codeInput}${number}`;
 
         this.setState({
@@ -69,6 +97,25 @@ class MainMenu extends Component {
             1000
         );
     };
+
+    onKeyDown = (e) => {
+        const keyCode = e.keyCode;
+        this.keyCodesMap.map((item) => {
+            if (item.keyCode === keyCode) {
+                console.log(item.clickNumber);
+                this.updateCode(item.clickNumber);
+            }
+
+        })
+    };
+
+    componentDidMount() {
+        document.addEventListener('keydown', this.onKeyDown);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.onKeyDown);
+    }
 
     render() {
         const code = () => this.state.codeInput;

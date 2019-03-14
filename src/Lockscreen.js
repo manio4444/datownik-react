@@ -59,7 +59,6 @@ class MainMenu extends Component {
 
     tryCode = (code) => {
         console.log('xhr');
-        console.log(code);
         if (code == 1111) { //TODO - temp
             this.allowCode();
         } else {
@@ -102,7 +101,6 @@ class MainMenu extends Component {
         const keyCode = e.keyCode;
         this.keyCodesMap.map((item) => {
             if (item.keyCode === keyCode) {
-                console.log(item.clickNumber);
                 this.updateCode(item.clickNumber);
             }
 

@@ -40,6 +40,13 @@
     animation-duration: 1.5s;
 }
 
+.lockscreen--allowed .lockscreen__container {
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all.3s ease;
+    transition-delay: .4s;
+}
+
 .lockscreen__title {
     font-size: 18px;
     font-family: 'Work Sans', Arial, sans-serif;

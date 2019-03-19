@@ -59,7 +59,7 @@ class MainMenu extends Component {
 
     tryCode = (code) => {
         console.log('xhr');
-        if (code == 1111) { //TODO - temp
+        if (code === "1111") { //TODO - temp
             this.allowCode();
         } else {
             this.resetCode();
@@ -99,7 +99,7 @@ class MainMenu extends Component {
 
     onKeyDown = (e) => {
         const keyCode = e.keyCode;
-        this.keyCodesMap.map((item) => {
+        this.keyCodesMap.forEach((item) => {
             if (item.keyCode === keyCode) {
                 this.updateCode(item.clickNumber);
             }

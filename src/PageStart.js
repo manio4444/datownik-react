@@ -185,7 +185,7 @@ class PageStart extends Component {
 
             <ListNotes
               viewOnly={false}
-              limit={4}
+              limit={7}
             />
 
             <div className="notes_more">

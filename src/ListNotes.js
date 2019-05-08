@@ -5,29 +5,39 @@ import notesData from './ExampleNotes';
 import axios from 'axios';
 
 class ListNotes extends Component {
-
-    getNotesList() {
-        return notesData; //todo - temp of cors
+    state = {
+        list: [],
     };
 
-    componentDidMount() {
-        axios.post('http://datownik.studiocitrus.pl?ajax_action=notesAjax', {
+    getNotesList() {
+        axios.post('http://localhost/datownik/?ajax_action=notesAjax', {
             ajax_action: 'notesAjax',
             operation: 'getData',
             limit: this.props.limit,
         })
             .then(res => {
-                // const posts = res.data.data.children.map(obj => obj.data);
-                // this.setState({posts});
-                console.log(res);
+                const list = res.data.result.map(note => {
+                    return {
+                        id: note.id,
+                        value: note.txt,
+                    }
+                });
+                console.log(list.length);
+                this.setState({list});
+
             })
             .catch(function (error) {
-            console.log(error);
-        });
+                console.log(error);
+            });
+    };
+
+    componentDidMount() {
+        this.getNotesList();
     };
 
     render() {
-        const notes = this.getNotesList(this.props.limit);
+        const notes = this.state.list;
+        console.log(notes);
 
         return (
             <div className="notes_container">

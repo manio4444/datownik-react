@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import SingleNote from './SingleNote';
 import './css/notes.css';
-import notesData from './ExampleNotes';
 import axios from 'axios';
 
 class ListNotes extends Component {
@@ -22,7 +21,6 @@ class ListNotes extends Component {
                         value: note.txt,
                     }
                 });
-                console.log(list.length);
                 this.setState({list});
 
             })
@@ -37,7 +35,6 @@ class ListNotes extends Component {
 
     render() {
         const notes = this.state.list;
-        console.log(notes);
 
         return (
             <div className="notes_container">

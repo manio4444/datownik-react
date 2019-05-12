@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 
 class SingleNote extends Component {
+    fillBar = false; //for logic only, can't be async
     state = {
         txt: this.props.value,
-        fillBar: false,
+        fillBarAnimation: false,
         fillBarDelay: 700,
     };
 
@@ -13,21 +14,24 @@ class SingleNote extends Component {
     };
 
     onChange = (e) => {
-        if (this.state.fillBar === true) {
-            this.setState({
-                fillBar: false,
-            });
-            clearTimeout(this.fillBarTimeout);
-        }
 
         this.setState({
+            fillBarAnimation: false,
             txt: e.target.value,
         });
 
-        setTimeout(() => this.setState({fillBar: true}), 0);
+        if (this.fillBar === true) {
+            clearTimeout(this.fillBarTimeout);
+            this.fillBar = false;
+        }
+
+        this.fillBar = true;
+        setTimeout(() => this.setState({fillBarAnimation: true}), 0);
 
         this.fillBarTimeout = setTimeout(() => {
             console.log('xhr will be here');
+            // this.addNew();
+            this.fillBar = false;
         }, this.state.fillBarDelay);
 
     };
@@ -35,7 +39,7 @@ class SingleNote extends Component {
     render() {
         const id = this.props.id;
         const value = this.state.txt;
-        const progress = (this.state.fillBar) ? 'fill' : '';
+        const progress = (this.state.fillBarAnimation) ? 'fill' : '';
         const progressStyle = {
             transitionDuration: this.state.fillBarDelay + 'ms',
         };

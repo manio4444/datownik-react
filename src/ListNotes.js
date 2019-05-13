@@ -21,6 +21,7 @@ class ListNotes extends Component {
                         value: note.txt,
                     }
                 });
+                list.unshift({id: "new"});
                 this.setState({list});
 
             })
@@ -33,17 +34,34 @@ class ListNotes extends Component {
         this.getNotesList();
     };
 
+    addedNew(newElement) {
+        const list = this.state.list.map((element) => {
+            if (element.id === 'new') {
+                return {
+                    id: newElement.id,
+                    value: newElement.txt,
+                }
+            }
+            return element;
+        });
+        this.setState({list});
+
+        setTimeout(() => {
+            list.unshift({id: "new"});
+            this.setState({list})
+        }, 0);
+
+    };
+
     render() {
         const notes = this.state.list;
 
         return (
             <div className="notes_container">
 
-                <SingleNote/>
-
                 {notes.map((note) => {
                     return (
-                        <SingleNote key={note.id} id={note.id} value={note.value}/>
+                        <SingleNote key={note.id} id={note.id} value={note.value} addedNew={this.addedNew.bind(this)}/>
                     );
                 })}
 

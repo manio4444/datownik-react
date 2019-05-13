@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from "axios";
 
 class SingleNote extends Component {
     fillBar = false; //for logic only, can't be async
@@ -13,8 +14,21 @@ class SingleNote extends Component {
         deleting: "Kliknięcie poza notatką spowoduje usunięcie",
     };
 
-    onChange = (e) => {
+    addNew() {
+        axios.post('http://localhost/datownik/', {
+            ajax_action: 'notesAjax',
+            operation: 'addNote',
+            txt: this.state.txt,
+        })
+            .then(res => {
+                this.props.addedNew(res.data.result);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
 
+    onChange = (e) => {
         this.setState({
             fillBarAnimation: false,
             txt: e.target.value,
@@ -30,7 +44,7 @@ class SingleNote extends Component {
 
         this.fillBarTimeout = setTimeout(() => {
             console.log('xhr will be here');
-            // this.addNew();
+            this.addNew();
             this.fillBar = false;
         }, this.state.fillBarDelay);
 

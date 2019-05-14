@@ -8,7 +8,7 @@ class SingleNote extends Component {
         fillBarAnimation: false,
         fillBarDelay: 700,
     };
-
+    setFocusTarget = React.createRef();
     placeholder = {
         adding: "Zacznij wpisywać tekst aby dodać nową notatkę",
         deleting: "Kliknięcie poza notatką spowoduje usunięcie",
@@ -43,12 +43,17 @@ class SingleNote extends Component {
         setTimeout(() => this.setState({fillBarAnimation: true}), 0);
 
         this.fillBarTimeout = setTimeout(() => {
-            console.log('xhr will be here');
             this.addNew();
             this.fillBar = false;
         }, this.state.fillBarDelay);
 
     };
+
+    componentDidMount() {
+        if (this.props.setFocus) {
+            this.setFocusTarget.current.focus();
+        }
+    }
 
     render() {
         const id = this.props.id;
@@ -66,11 +71,11 @@ class SingleNote extends Component {
             >
                 <textarea
                     name="note"
-
                     placeholder={this.placeholder.adding}
                     data-placeholder={this.placeholder.deleting}
                     value={value}
                     onChange={this.onChange}
+                    ref={this.setFocusTarget}
                 />
                 <div className={`note_element__progress ${progress}`} style={progressStyle}/>
             </div>

@@ -40,6 +40,7 @@ class ListNotes extends Component {
                 return {
                     id: newElement.id,
                     value: newElement.txt,
+                    setFocus: true,
                 }
             }
             return element;
@@ -61,7 +62,13 @@ class ListNotes extends Component {
 
                 {notes.map((note) => {
                     return (
-                        <SingleNote key={note.id} id={note.id} value={note.value} addedNew={this.addedNew.bind(this)}/>
+                        <SingleNote
+                            key={note.id}
+                            id={note.id}
+                            value={note.value}
+                            addedNew={this.addedNew.bind(this)}
+                            setFocus={note.setFocus}
+                        />
                     );
                 })}
 

@@ -1,0 +1,31 @@
+.todos {
+  &__list {
+    margin: 0 -10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+  }
+
+  &__list .task.ui {
+    margin: 0 10px 20px;
+  }
+
+  &__list .task.ui.done {
+    opacity: .2;
+    transition: opacity .3s ease;
+    transition-delay: .3s;
+  }
+
+  &__list .task .field {
+    font-size: 14px;
+  }
+
+  &__list .task .field.disabled {
+    display: none;
+  }
+
+  &__list .task [data-task-details] {
+    cursor: pointer;
+  }
+}

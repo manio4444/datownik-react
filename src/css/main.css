@@ -332,38 +332,7 @@ main {
 }
 
 
-#todo {
-}
 
-.todo_list {
-    margin: 0 -10px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: stretch;
-}
-
-.todo_list .task.ui {
-    margin: 0 10px 20px;
-}
-
-.todo_list .task.ui.done {
-    opacity: .2;
-    transition: opacity .3s ease;
-    transition-delay: .3s;
-}
-
-.todo_list .task .field {
-    font-size: 14px;
-}
-
-.todo_list .task .field.disabled {
-    display: none;
-}
-
-.todo_list .task [data-task-details] {
-    cursor: pointer;
-}
 
 
 .tasks__modal .ui.icon.header {

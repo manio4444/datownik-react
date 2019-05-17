@@ -4,6 +4,7 @@ import './css/reset.css';
 import './css/main.css';
 import PageStart from './PageStart';
 import PageNotes from './PageNotes';
+import PageTodo from './PageTodo';
 import MainMenu from './MainMenu';
 import Lockscreen from './Lockscreen';
 
@@ -45,6 +46,7 @@ class App extends Component {
                     <main style={this.getBlurStyles()}>
                         <Route path="/" exact component={PageStart}/>
                         <Route path="/notatki" component={PageNotes}/>
+                        <Route path="/do-zrobienia" component={PageTodo}/>
                     </main>
                 </div>
             </Router>

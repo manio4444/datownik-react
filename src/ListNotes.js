@@ -45,12 +45,10 @@ class ListNotes extends Component {
             }
             return element;
         });
-        this.setState({list});
-
-        setTimeout(() => {
+        this.setState({list}, () => {
             list.unshift({id: "new"});
             this.setState({list})
-        }, 0);
+        });
 
     };
 

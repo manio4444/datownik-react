@@ -25,7 +25,22 @@
     display: none;
   }
 
+  &__list .task .field.deadline {
+    max-height: 100px;
+    transition-property: margin, max-height;
+    transition-duration: .4s;
+    transition-timing-function: ease-out;
+    overflow: hidden;
+  }
+
   &__list .task [data-task-details] {
     cursor: pointer;
+  }
+
+  &__list .task:not(.deadline) {
+    .field.deadline {
+      max-height: 0;
+      margin: 0;
+    }
   }
 }

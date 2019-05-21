@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-// import { Card, Icon, Button } from 'semantic-ui-react'
+import { Card, Icon, Button } from 'semantic-ui-react'
 import 'semantic-ui-css/components/button.css';
 import 'semantic-ui-css/components/card.css';
 import 'semantic-ui-css/components/icon.css';
@@ -13,39 +13,33 @@ class SingleTodo extends Component {
         isFinished: this.props.isFinished,
     };
 
+    handleToggleDeadline = () => {
+        this.setState(prevState => ({
+            isDeadline: !prevState.isDeadline,
+        }))
+    };
+
     render() {
-        const id = this.props.id;
         const title = this.props.title;
         const deadline = this.props.deadline;
-        const created = this.props.created;
-        const finished = this.props.finished;
         const isDeadline = this.state.isDeadline;
         const isFinished = this.state.isFinished;
         const countdown = this.state.countdown;
         const isFinishedClass = isFinished ? 'done' : '';
+        const isDeadlineClass = isDeadline ? 'deadline' : '';
 
         return (
 
-            <div className={`todo_element ui card task ${isFinishedClass}`}>
+            <div className={`todo_element ui card task ${isFinishedClass} ${isDeadlineClass}`}>
                 <div className="content">
                     <div className="header">{title}</div>
                     <span data-task-details className="meta far fa-eye"/>
 
                     <div className="description ui form">
-                        <div className="field disabled">
-                            <label>id:</label>
-                            <input type="text" name="id" value={id}/>
-                        </div>
-
-                        <div className="field disabled">
-                            <label>date_mk:</label>
-                            <input type="text" name="" value={created}/>
-                        </div>
 
                         <div className="field">
                             <div className="ui toggle checkbox">
-                                <input type="hidden" name="no_deadline" value="1"/>
-                                <input type="checkbox" name="no_deadline" value="0" defaultChecked={isDeadline}/>
+                                <input type="checkbox" name="no_deadline" onChange={this.handleToggleDeadline} defaultChecked={isDeadline}/>
                                 <label>enable deadline</label>
                             </div>
                         </div>
@@ -53,38 +47,15 @@ class SingleTodo extends Component {
                         <div className="field deadline">
                             <label>deadline:</label>
                             <div className="ui icon input">
-                                <input type="text" name="deadline" className="flatpickr" value={deadline}/>
+                                <input type="text" name="deadline" readOnly className="flatpickr" value={deadline}/>
                             </div>
-                        </div>
-
-                        <div className="field disabled">
-                            <label>no_deadline:</label>
-                            <input type="text" name="no_deadline" value={isDeadline}/>
-                        </div>
-
-                        <div className="field disabled">
-                            <label>date_fn:</label>
-                            <input type="text" name="" value={finished}/>
-                        </div>
-
-                        <div className="field disabled">
-                            <label>finished:</label>
-                            <input type="text" name="" value={isFinished}/>
                         </div>
 
                         <div className="field">
                             <label>countdown:</label>
-                            <input type="text" name="" value={countdown}/>
+                            <input type="text" name="" readOnly value={countdown}/>
                         </div>
 
-                        <div className="field disabled">
-                            <label>txt:</label>
-                            <textarea rows="2">{title}</textarea>
-                        </div>
-
-                        <div className="field disabled delete">
-                            <div className="ui button fluid">Usuń</div>
-                        </div>
                     </div>
                 </div>
 

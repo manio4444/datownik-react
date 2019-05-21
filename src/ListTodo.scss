@@ -7,40 +7,40 @@
     align-items: stretch;
   }
 
-  &__list .task.ui {
+  &__list .todo_element {
     margin: 0 10px 20px;
-  }
 
-  &__list .task.ui.done {
-    opacity: .2;
-    transition: opacity .3s ease;
-    transition-delay: .3s;
-  }
+    .field {
+      font-size: 14px;
+    }
 
-  &__list .task .field {
-    font-size: 14px;
-  }
+    .field.disabled {
+      display: none;
+    }
 
-  &__list .task .field.disabled {
-    display: none;
-  }
-
-  &__list .task .field.deadline {
-    max-height: 100px;
-    transition-property: margin, max-height;
-    transition-duration: .4s;
-    transition-timing-function: ease-out;
-    overflow: hidden;
-  }
-
-  &__list .task [data-task-details] {
-    cursor: pointer;
-  }
-
-  &__list .task:not(.deadline) {
     .field.deadline {
-      max-height: 0;
-      margin: 0;
+      max-height: 100px;
+      transition-property: margin, max-height;
+      transition-duration: .4s;
+      transition-timing-function: ease-out;
+      overflow: hidden;
+    }
+
+    [data-task-details] {
+      cursor: pointer;
+    }
+
+    &.done {
+      opacity: .2;
+      transition: opacity .3s ease;
+      transition-delay: .3s;
+    }
+
+    &:not(.deadline) {
+      .field.deadline {
+        max-height: 0;
+        margin: 0;
+      }
     }
   }
 }

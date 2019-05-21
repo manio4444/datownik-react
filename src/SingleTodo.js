@@ -20,17 +20,14 @@ class SingleTodo extends Component {
     };
 
     render() {
-        const title = this.props.title;
-        const deadline = this.props.deadline;
-        const isDeadline = this.state.isDeadline;
-        const isFinished = this.state.isFinished;
-        const countdown = this.state.countdown;
+        const { title, deadline } = this.props;
+        const { isDeadline, isFinished, countdown } = this.state;
         const isFinishedClass = isFinished ? 'done' : '';
         const isDeadlineClass = isDeadline ? 'deadline' : '';
 
         return (
 
-            <div className={`todo_element ui card task ${isFinishedClass} ${isDeadlineClass}`}>
+            <Card className={`todo_element task ${isFinishedClass} ${isDeadlineClass}`}>
                 <div className="content">
                     <div className="header">{title}</div>
                     <span data-task-details className="meta far fa-eye"/>
@@ -64,7 +61,7 @@ class SingleTodo extends Component {
                     <i className="square outline icon"/>
                     Zrobione
                 </button>
-            </div>
+            </Card>
 
         );
     }

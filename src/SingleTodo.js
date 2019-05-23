@@ -11,6 +11,8 @@ class SingleTodo extends Component {
     state = {
         isDeadline: this.props.isDeadline,
         isFinished: this.props.isFinished,
+        isDeadlineLoading: false,
+        isFinishedLoading: false,
     };
 
     handleToggleDeadline = () => {
@@ -19,9 +21,22 @@ class SingleTodo extends Component {
         }))
     };
 
+    handleToggleDone = () => {
+        this.setState(prevState => ({
+            isFinishedLoading: true,
+        }));
+        setTimeout(()=>{ this.setState(prevState => ({
+            //TODO temporary simulate ajax call
+            isFinished: !prevState.isFinished,
+            isFinishedLoading: false,
+
+        }))
+        }, 500);
+    };
+
     render() {
         const { title, deadline } = this.props;
-        const { isDeadline, isFinished, countdown } = this.state;
+        const { isDeadline, isFinished, countdown, isFinishedLoading } = this.state;
         const isFinishedClass = isFinished ? 'done' : '';
         const isDeadlineClass = isDeadline ? 'deadline' : '';
 
@@ -58,9 +73,10 @@ class SingleTodo extends Component {
                     </Card.Description>
                 </Card.Content>
 
-                <Button color={"teal"}>
-                    <Icon name="square outline"/>
-                    Zrobione
+                <Button color={"teal"} onClick={this.handleToggleDone} loading={isFinishedLoading}>
+                    <Icon name={((isFinished === true) ? 'check ' : '') + 'square outline'}/>
+                    {isFinished === false && 'Oznacz jako wykonane'}
+                    {isFinished === true && 'Cofnij'}
                 </Button>
             </Card>
 

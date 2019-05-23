@@ -13,6 +13,8 @@ class ListTodo extends Component {
             ajax_action: 'tasksAjax',
             operation: 'getData',
             limit: this.props.limit,
+            getFinished: this.props.getFinished || true,
+            getFinishedOnly: this.props.getFinishedOnly || false,
         })
             .then(res => {
                 const list = res.data.result.map(todo => {

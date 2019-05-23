@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Card, Icon, Button } from 'semantic-ui-react'
+import { Card, Icon, Button, Checkbox, Form } from 'semantic-ui-react'
 import 'semantic-ui-css/components/button.css';
 import 'semantic-ui-css/components/card.css';
 import 'semantic-ui-css/components/icon.css';
@@ -28,39 +28,40 @@ class SingleTodo extends Component {
         return (
 
             <Card className={`todo_element task ${isFinishedClass} ${isDeadlineClass}`}>
-                <div className="content">
-                    <div className="header">{title}</div>
-                    <span data-task-details className="meta far fa-eye"/>
+                <Card.Content>
+                    <Card.Header>{title}</Card.Header>
+                    <Card.Meta>
+                        <Icon name='ellipsis horizontal'/>
+                    </Card.Meta>
+                    <Card.Description className="ui form">
 
-                    <div className="description ui form">
+                        <Form.Field>
+                            <Checkbox
+                                toggle
+                                label={<label>enable deadline</label>}
+                                onChange={this.handleToggleDeadline}
+                                defaultChecked={isDeadline}/>
+                        </Form.Field>
 
-                        <div className="field">
-                            <div className="ui toggle checkbox">
-                                <input type="checkbox" name="no_deadline" onChange={this.handleToggleDeadline} defaultChecked={isDeadline}/>
-                                <label>enable deadline</label>
-                            </div>
-                        </div>
-
-                        <div className="field deadline">
+                        <Form.Field className="deadline">
                             <label>deadline:</label>
                             <div className="ui icon input">
                                 <input type="text" name="deadline" readOnly className="flatpickr" value={deadline}/>
                             </div>
-                        </div>
+                        </Form.Field>
 
-                        <div className="field">
+                        <Form.Field>
                             <label>countdown:</label>
                             <input type="text" name="" readOnly value={countdown}/>
-                        </div>
+                        </Form.Field>
 
-                    </div>
-                </div>
+                    </Card.Description>
+                </Card.Content>
 
-
-                <button className="ui teal button">
-                    <i className="square outline icon"/>
+                <Button color={"teal"}>
+                    <Icon name="square outline"/>
                     Zrobione
-                </button>
+                </Button>
             </Card>
 
         );

@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import { Card, Icon, Button, Checkbox, Form } from 'semantic-ui-react'
-import 'semantic-ui-css/components/button.css';
-import 'semantic-ui-css/components/card.css';
-import 'semantic-ui-css/components/icon.css';
-import 'semantic-ui-css/components/form.css';
-import 'semantic-ui-css/components/input.css';
-import 'semantic-ui-css/components/checkbox.css';
+import { Card, Icon, Button, Checkbox, Form } from 'semantic-ui-react';
+import ModalTodoFinish from './ModalTodoFinish';
+import 'semantic-ui-css/components/button.min.css';
+import 'semantic-ui-css/components/card.min.css';
+import 'semantic-ui-css/components/icon.min.css';
+import 'semantic-ui-css/components/form.min.css';
+import 'semantic-ui-css/components/input.min.css';
+import 'semantic-ui-css/components/checkbox.min.css';
 
 class SingleTodo extends Component {
     state = {
@@ -13,11 +14,18 @@ class SingleTodo extends Component {
         isFinished: this.props.isFinished,
         isDeadlineLoading: false,
         isFinishedLoading: false,
+        openModalTodoFinish: false,
     };
 
     handleToggleDeadline = () => {
         this.setState(prevState => ({
             isDeadline: !prevState.isDeadline,
+        }))
+    };
+
+    handleOpenModalTodoFinish = () => {
+        this.setState(prevState => ({
+            openModalTodoFinish: !prevState.openModalTodoFinish,
         }))
     };
 
@@ -36,7 +44,7 @@ class SingleTodo extends Component {
 
     render() {
         const { title, deadline } = this.props;
-        const { isDeadline, isFinished, countdown, isFinishedLoading } = this.state;
+        const { isDeadline, isFinished, countdown, isFinishedLoading, openModalTodoFinish } = this.state;
         const isFinishedClass = isFinished ? 'done' : '';
         const isDeadlineClass = isDeadline ? 'deadline' : '';
 
@@ -49,7 +57,6 @@ class SingleTodo extends Component {
                         <Icon name='ellipsis horizontal'/>
                     </Card.Meta>
                     <Card.Description className="ui form">
-
                         <Form.Field>
                             <Checkbox
                                 toggle
@@ -69,7 +76,6 @@ class SingleTodo extends Component {
                             <label>countdown:</label>
                             <input type="text" name="" readOnly value={countdown}/>
                         </Form.Field>
-
                     </Card.Description>
                 </Card.Content>
 
@@ -78,6 +84,9 @@ class SingleTodo extends Component {
                     {isFinished === false && 'Oznacz jako wykonane'}
                     {isFinished === true && 'Cofnij'}
                 </Button>
+
+                <ModalTodoFinish open={openModalTodoFinish}/>
+                <Button onClick={this.handleOpenModalTodoFinish}>Basic Modal</Button>
             </Card>
 
         );

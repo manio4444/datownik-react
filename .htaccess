@@ -1,0 +1,7 @@
+# This is htaccess file for hosting React app on Apache server
+#Fixes problems with using BrowserRouter
+
+Options -MultiViews
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.html [QSA,L]

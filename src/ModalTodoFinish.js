@@ -6,22 +6,23 @@ import 'semantic-ui-css/components/header.min.css';
 import 'semantic-ui-css/components/button.min.css';
 
 class ModalTodoFinish extends Component {
-    render() {
-        console.log(this.props.open);
-        return (
+    handleTrue = () => this.props.trueCallback();
+    handleFalse = () => this.props.falseCallback();
 
+    render() {
+        const { header, txt } = this.props;
+
+        return (
             <Modal open={this.props.open} basic size='small'>
-                <Header icon='archive' content='Archive Old Messages'/>
+                <Header icon='archive' content={header}/>
                 <Modal.Content>
-                    <p>
-                        Your inbox is getting full, would you like us to enable automatic archiving of old messages?
-                    </p>
+                    <p>{txt}</p>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button basic color='red' inverted>
+                    <Button color='red' inverted onClick={this.handleFalse}>
                         <Icon name='remove'/> No
                     </Button>
-                    <Button color='green' inverted>
+                    <Button color='green' inverted onClick={this.handleTrue}>
                         <Icon name='checkmark'/> Yes
                     </Button>
                 </Modal.Actions>

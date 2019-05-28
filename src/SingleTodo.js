@@ -7,6 +7,7 @@ import 'semantic-ui-css/components/icon.min.css';
 import 'semantic-ui-css/components/form.min.css';
 import 'semantic-ui-css/components/input.min.css';
 import 'semantic-ui-css/components/checkbox.min.css';
+import axios from "axios";
 
 class SingleTodo extends Component {
     state = {
@@ -16,6 +17,10 @@ class SingleTodo extends Component {
         isFinishedLoading: false,
         openModalTodoFinish: false,
     };
+    placeholder = {
+        questionFinish: 'Czy na pewno chcesz potwierdzić wykonanie zadania?',
+        questionUnFinish: 'Czy na pewno chcesz cofnąć status?',
+    };
 
     handleToggleDeadline = () => {
         this.setState(prevState => ({
@@ -23,23 +28,67 @@ class SingleTodo extends Component {
         }))
     };
 
-    handleOpenModalTodoFinish = () => {
-        this.setState(prevState => ({
-            openModalTodoFinish: !prevState.openModalTodoFinish,
-        }))
+    handleToggleDone = () => {
+        this.setState({
+            openModalTodoFinish: true,
+            isFinishedLoading: true,
+        });
     };
 
-    handleToggleDone = () => {
-        this.setState(prevState => ({
-            isFinishedLoading: true,
-        }));
-        setTimeout(()=>{ this.setState(prevState => ({
-            //TODO temporary simulate ajax call
-            isFinished: !prevState.isFinished,
-            isFinishedLoading: false,
-
-        }))
+    closeFinishModal = () => {
+        this.setState({
+            openModalTodoFinish: false,
+        });
+        setTimeout(() => {
+            this.setState({
+                isFinishedLoading: false,
+            })
         }, 500);
+    };
+
+    setFinished() {
+        axios.post('http://localhost/datownik/', {
+            ajax_action: 'tasksAjax',
+            operation: 'doneTask',
+            id: this.props.id,
+        })
+            .then(res => {
+                this.setState({
+                    isFinished: true,
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
+
+    setUnfinished() {
+        axios.post('http://localhost/datownik/', {
+            ajax_action: 'tasksAjax',
+            operation: 'unDoneTask',
+            id: this.props.id,
+        })
+            .then(res => {
+                this.setState({
+                    isFinished: false,
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
+
+    trueCallback() {
+        if (this.state.isFinished === true) {
+            this.setUnfinished();
+        } else if (this.state.isFinished === false) {
+            this.setFinished();
+        }
+        this.closeFinishModal();
+    };
+
+    falseCallback() {
+        this.closeFinishModal();
     };
 
     render() {
@@ -79,14 +128,23 @@ class SingleTodo extends Component {
                     </Card.Description>
                 </Card.Content>
 
-                <Button color={"teal"} onClick={this.handleToggleDone} loading={isFinishedLoading}>
+                <Button
+                    color={"teal"}
+                    onClick={this.handleToggleDone}
+                    loading={isFinishedLoading}
+                >
                     <Icon name={((isFinished === true) ? 'check ' : '') + 'square outline'}/>
                     {isFinished === false && 'Oznacz jako wykonane'}
                     {isFinished === true && 'Cofnij'}
                 </Button>
 
-                <ModalTodoFinish open={openModalTodoFinish}/>
-                <Button onClick={this.handleOpenModalTodoFinish}>Basic Modal</Button>
+                <ModalTodoFinish
+                    open={openModalTodoFinish}
+                    header={title}
+                    txt={isFinished ? this.placeholder.questionUnFinish : this.placeholder.questionFinish}
+                    trueCallback={this.trueCallback.bind(this)}
+                    falseCallback={this.falseCallback.bind(this)}
+                />
             </Card>
 
         );

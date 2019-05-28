@@ -49,6 +49,7 @@ class ListTodo extends Component {
                 {todos.map((todo) => {
                     return (
                         <SingleTodo
+                            id={todo.id}
                             key={todo.id}
                             title={todo.txt}
                             deadline={todo.deadline}

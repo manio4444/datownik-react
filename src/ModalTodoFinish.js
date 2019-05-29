@@ -10,11 +10,11 @@ class ModalTodoFinish extends Component {
     handleFalse = () => this.props.falseCallback();
 
     render() {
-        const { header, txt } = this.props;
+        const { header, txt, icon } = this.props;
 
         return (
             <Modal open={this.props.open} basic size='small'>
-                <Header icon='archive' content={header}/>
+                <Header icon={icon} content={header}/>
                 <Modal.Content>
                     <p>{txt}</p>
                 </Modal.Content>

@@ -138,13 +138,14 @@ class SingleTodo extends Component {
                     {isFinished === true && 'Cofnij'}
                 </Button>
 
-                <ModalTodoFinish
-                    open={openModalTodoFinish}
+                {openModalTodoFinish && <ModalTodoFinish
+                    open={true}
+                    icon='edit'
                     header={title}
                     txt={isFinished ? this.placeholder.questionUnFinish : this.placeholder.questionFinish}
                     trueCallback={this.trueCallback.bind(this)}
                     falseCallback={this.falseCallback.bind(this)}
-                />
+                />}
             </Card>
 
         );

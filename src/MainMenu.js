@@ -4,7 +4,29 @@ import './MainMenu.css';
 
 class MainMenu extends Component {
     state = {
-        opened: true
+        opened: false
+    };
+
+    componentDidMount() {
+        document.addEventListener('mousedown', this.handleClickOutside);
+    };
+
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside);
+    };
+
+    setWrapperRef = (node) => {
+        this.refMenuWrapper = node;
+    };
+
+    handleClickOutside = (event) => {
+        if (
+            this.refMenuWrapper
+            && !this.refMenuWrapper.contains(event.target)
+            && this.state.opened
+        ) {
+            this.toggleState();
+        }
     };
 
     routeElements = [
@@ -46,27 +68,27 @@ class MainMenu extends Component {
         },
     ];
 
-    openState = () => {
-        this.setState({
-            opened: !this.state.opened,
+    toggleState = () => {
+        this.setState(prevState => ({
+            opened: !prevState.opened,
+        }), () => {
+            this.state.opened ? this.props.blurPage() : this.props.unBlurPage();
         });
-
-        this.state.opened ? this.props.blurPage() : this.props.unBlurPage();
     };
 
     getStylesMenu = () => {
         return {
-            transform: this.state.opened ? 'translateX(-100%)' : '',
+            transform: !this.state.opened ? 'translateX(-100%)' : '',
         }
     };
 
     render() {
         return (
             <div className="MainMenu">
-                <button type="button" className="hamburger" onClick={this.openState}><span className="hamburger_line" /></button>
-                <div className="MainMenuWrapper" style={this.getStylesMenu()}>
+                <button type="button" className="hamburger" onClick={this.toggleState}><span className="hamburger_line" /></button>
+                <div className="MainMenuWrapper" style={this.getStylesMenu()} ref={this.setWrapperRef}>
                 <nav>
-                    <button type="button" className="hamburger_close" onClick={this.openState}><span className="hamburger_line" /></button>
+                    <button type="button" className="hamburger_close" onClick={this.toggleState}><span className="hamburger_line" /></button>
                     <ul>
                         {this.routeElements.map((link, i) => {
                             return (<li key={i}><Link to={link.url}>{link.name}</Link></li>);

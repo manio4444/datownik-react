@@ -7,6 +7,8 @@ class SingleNote extends Component {
         txt: this.props.value,
         fillBarAnimation: false,
         fillBarDelay: 700,
+        isAdding: false,
+        isEditing: false,
     };
     setFocusTarget = React.createRef();
     placeholder = {
@@ -15,6 +17,9 @@ class SingleNote extends Component {
     };
 
     addNew() {
+        this.setState({
+            isAdding: true,
+        });
         axios.post('http://localhost/datownik/', {
             ajax_action: 'notesAjax',
             operation: 'addNote',
@@ -23,8 +28,35 @@ class SingleNote extends Component {
             .then(res => {
                 this.props.addedNew(res.data.result);
             })
-            .catch(function (error) {
+            .catch(error => {
                 console.log(error);
+            })
+            .finally(() => {
+            this.setState({
+                isAdding: false,
+            });
+        });
+    };
+
+    edit() {
+        this.setState({
+            isEditing: true,
+        });
+        axios.post('http://localhost/datownik/', {
+            ajax_action: 'notesAjax',
+            operation: 'editNote',
+            id: this.props.id,
+            txt: this.state.txt,
+        })
+            .then(res => {
+            })
+            .catch(error => {
+                console.log(error);
+            })
+            .finally(() => {
+                this.setState({
+                    isEditing: false,
+                });
             });
     };
 
@@ -43,7 +75,11 @@ class SingleNote extends Component {
         setTimeout(() => this.setState({fillBarAnimation: true}), 0);
 
         this.fillBarTimeout = setTimeout(() => {
-            this.addNew();
+            if (this.props.id === 'new') {
+                this.addNew();
+            } else {
+                this.edit();
+            }
             this.fillBar = false;
         }, this.state.fillBarDelay);
 

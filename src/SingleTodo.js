@@ -22,6 +22,8 @@ class SingleTodo extends Component {
         questionUnFinish: 'Czy na pewno chcesz cofnąć status?',
     };
 
+    handleAddNew = () => this.props.handleAddNew();
+
     handleToggleDeadline = () => {
         this.setState(prevState => ({
             isDeadline: !prevState.isDeadline,
@@ -92,6 +94,21 @@ class SingleTodo extends Component {
     };
 
     render() {
+
+        if (this.props.addNew) {
+            return (
+                <Card className={`todo_element todo_element--new`}>
+                    <Card.Content>
+                        <Icon name='plus' size='massive'/>
+                    </Card.Content>
+
+                    <Button onClick={this.handleAddNew}>
+                        <Icon name={'plus'}/> Dodaj nowy
+                    </Button>
+                </Card>
+            );
+        }
+
         const { title, deadline } = this.props;
         const { isDeadline, isFinished, countdown, isFinishedLoading, openModalTodoFinish } = this.state;
         const isFinishedClass = isFinished ? 'done' : '';

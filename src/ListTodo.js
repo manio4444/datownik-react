@@ -46,6 +46,10 @@ class ListTodo extends Component {
         return (
             <div className="todos__list">
 
+                <SingleTodo
+                    addNew={true}
+                />
+
                 {todos.map((todo) => {
                     return (
                         <SingleTodo

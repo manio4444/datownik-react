@@ -97,12 +97,15 @@ class SingleTodo extends Component {
 
         if (this.props.addNew) {
             return (
-                <Card className={`todo_element todo_element--new`}>
+                <Card
+                    onClick={this.handleAddNew}
+                    className={`todo_element todo_element--new`}
+                >
                     <Card.Content>
-                        <Icon name='plus' size='massive'/>
+                        <Icon name='plus' size='huge'/>
                     </Card.Content>
 
-                    <Button onClick={this.handleAddNew}>
+                    <Button>
                         <Icon name={'plus'}/> Dodaj nowy
                     </Button>
                 </Card>

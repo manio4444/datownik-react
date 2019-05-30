@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import SingleTodo from './SingleTodo';
+import ModalTodoAdd from './ModalTodoAdd';
 import './ListTodo.scss';
 import axios from 'axios';
 
 class ListTodo extends Component {
     state = {
         list: [],
+        openModalTodoAdd: false,
     };
 
     getTodoList() {
@@ -36,19 +38,44 @@ class ListTodo extends Component {
             });
     };
 
+    ModalTodoAdd = () => {
+        this.setState({
+            openModalTodoAdd: true,
+        });
+    };
+
+    ModalTodoAddClose = () => {
+        this.setState({
+            openModalTodoAdd: false,
+        })
+    };
+
+    handleAddNew = (event) => {
+        console.log(event);
+        //TODO: XHR HERE
+    };
+
     componentDidMount() {
         this.getTodoList();
     };
 
     render() {
         const todos = this.state.list;
+        const { openModalTodoAdd } = this.state;
 
         return (
             <div className="todos__list">
 
                 <SingleTodo
                     addNew={true}
+                    handleAddNew={this.ModalTodoAdd}
                 />
+
+                {openModalTodoAdd && <ModalTodoAdd
+                    open={openModalTodoAdd}
+                    trueCallback={this.handleAddNew.bind(this)}
+                    falseCallback={this.ModalTodoAddClose.bind(this)}
+                />}
 
                 {todos.map((todo) => {
                     return (

@@ -19,11 +19,9 @@
       }
        .icon {
         transition: all .2s ease;
-        opacity: .5;
       }
-      &:hover .icon {
-        transform: scale(1.25);
-
+      &:hover .content .icon {
+        font-size: 6em;
       }
     }
 
@@ -48,4 +46,11 @@
       }
     }
   }
+}
+
+/* hotfix */
+.ui.toggle.checkbox input:focus:checked~label,
+.ui.toggle.checkbox input:checked~.box,
+.ui.toggle.checkbox input:checked~label {
+  color: rgba(255,255,255,.9) !important;
 }

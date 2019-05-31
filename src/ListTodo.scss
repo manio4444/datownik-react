@@ -8,7 +8,10 @@
   }
 
   &__list .todo_element {
-    margin: 0 10px 20px;
+    margin: 0 0.714em 1.429em;
+    &:last-child {
+      margin-bottom: 1.429em;
+    }
 
     &--new {
       cursor: pointer;

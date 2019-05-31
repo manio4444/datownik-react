@@ -45,11 +45,11 @@ class ModalTodoAdd extends Component {
                     </Form>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button color='red' inverted onClick={this.handleFalse}>
-                        <Icon name='remove'/> Anuluj
-                    </Button>
                     <Button color='green' inverted onClick={this.handleTrue}>
                         <Icon name='checkmark'/> Dodaj
+                    </Button>
+                    <Button color='red' inverted onClick={this.handleFalse}>
+                        <Icon name='remove'/> Anuluj
                     </Button>
                 </Modal.Actions>
             </Modal>

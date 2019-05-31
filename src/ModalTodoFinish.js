@@ -19,11 +19,11 @@ class ModalTodoFinish extends Component {
                     <p>{txt}</p>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button color='red' inverted onClick={this.handleFalse}>
-                        <Icon name='remove'/> No
-                    </Button>
                     <Button color='green' inverted onClick={this.handleTrue}>
                         <Icon name='checkmark'/> Yes
+                    </Button>
+                    <Button color='red' inverted onClick={this.handleFalse}>
+                        <Icon name='remove'/> No
                     </Button>
                 </Modal.Actions>
             </Modal>

@@ -10,6 +10,18 @@ class ListTodo extends Component {
         openModalTodoAdd: false,
     };
 
+    mapQuery(data) {
+        return {
+            id: data.id,
+            txt: data.txt,
+            deadline: data.deadline,
+            created: data.date_mk,
+            finished: data.date_fn,
+            isDeadline: (data.no_deadline !== "1"),
+            isFinished: (data.finished === "1"),
+        }
+    };
+
     getTodoList() {
         axios.post('http://localhost/datownik/', {
             ajax_action: 'tasksAjax',
@@ -19,17 +31,7 @@ class ListTodo extends Component {
             getFinishedOnly: this.props.getFinishedOnly || false,
         })
             .then(res => {
-                const list = res.data.result.map(todo => {
-                    return {
-                        id: todo.id,
-                        txt: todo.txt,
-                        deadline: todo.deadline,
-                        created: todo.date_mk,
-                        finished: todo.date_fn,
-                        isDeadline: (todo.no_deadline !== "1"),
-                        isFinished: (todo.finished === "1"),
-                    }
-                });
+                const list = res.data.result.map(todo => this.mapQuery(todo));
                 this.setState({list});
 
             })
@@ -50,9 +52,22 @@ class ListTodo extends Component {
         })
     };
 
-    handleAddNew = (event) => {
-        console.log(event);
-        //TODO: XHR HERE
+    handleAddNew = (data) => {
+        axios.post('http://localhost/datownik/', {
+            ajax_action: 'tasksAjax',
+            operation: 'saveTask',
+            txt: data.title,
+            no_deadline: data.isDeadline ? '0' : '1',
+            deadline: data.deadline,
+        })
+            .then(res => {
+                const list = [this.mapQuery(res.data.result.newElement), ...this.state.list];
+                this.setState({ list });
+                this.ModalTodoAddClose();
+            })
+            .catch(error => {
+                console.log(error);
+            });
     };
 
     componentDidMount() {

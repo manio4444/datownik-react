@@ -22,7 +22,7 @@ class SingleTodo extends Component {
         questionUnFinish: 'Czy na pewno chcesz cofnąć status?',
     };
 
-    handleAddNew = () => this.props.handleAddNew();
+    handleAddNew = (data) => this.props.handleAddNew(data);
 
     handleToggleDeadline = () => {
         this.setState(prevState => ({

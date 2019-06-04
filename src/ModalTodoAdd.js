@@ -10,12 +10,14 @@ import 'semantic-ui-css/components/form.min.css';
 class ModalTodoAdd extends Component {
     state = {
         isDeadline: true,
+        deadline: '',
+        title: '',
     };
 
-    handleTrue = () => this.props.trueCallback();
-    handleFalse = () => this.props.falseCallback();
+    handleTrue = () => this.props.trueCallback(this.state);
+    handleFalse = () => this.props.falseCallback(this.state);
     handleToggleDeadline = () => this.setState(prevState => ({isDeadline: !prevState.isDeadline}));
-
+    handleChange = (e, {name, value}) => this.setState({ [name]: value });
 
     render() {
         const {isDeadline} = this.state;
@@ -27,20 +29,21 @@ class ModalTodoAdd extends Component {
                     <Form inverted>
                         <Form.Field>
                             <label>Tytuł</label>
-                            <Input/>
+                            <Input onChange={this.handleChange} name='title'/>
                         </Form.Field>
                         <Form.Field>
                             <Checkbox
                                 toggle
                                 label={<label>enable deadline</label>}
                                 onChange={this.handleToggleDeadline}
+                                name='isDeadline'
                                 defaultChecked={isDeadline}
                             />
                         </Form.Field>
 
                         {isDeadline && <Form.Field>
                             <label>Deadline</label>
-                            <Input/>
+                            <Input onChange={this.handleChange} name='deadline'/>
                         </Form.Field>}
                     </Form>
                 </Modal.Content>

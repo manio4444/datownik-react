@@ -29,6 +29,10 @@ class MainMenu extends Component {
         }
     };
 
+    handleClickElement = () => {
+        this.toggleState();
+    };
+
     routeElements = [
         {
             url: "/",
@@ -91,7 +95,11 @@ class MainMenu extends Component {
                     <button type="button" className="hamburger_close" onClick={this.toggleState}><span className="hamburger_line" /></button>
                     <ul>
                         {this.routeElements.map((link, i) => {
-                            return (<li key={i}><Link to={link.url}>{link.name}</Link></li>);
+                            return (
+                                <li key={i} onClick={this.handleClickElement}>
+                                    <Link to={link.url}>{link.name}</Link>
+                                </li>
+                            );
                         })}
                     </ul>
                 </nav>

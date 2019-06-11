@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
+import 'dotenv';
 import './css/reset.css';
 import './css/main.css';
 import PageStart from './PageStart';

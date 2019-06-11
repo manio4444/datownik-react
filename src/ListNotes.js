@@ -9,7 +9,7 @@ class ListNotes extends Component {
     };
 
     getNotesList() {
-        axios.post('http://localhost/datownik/?ajax_action=notesAjax', {
+        axios.post(process.env.REACT_APP_ENDPOINT_URL, {
             ajax_action: 'notesAjax',
             operation: 'getData',
             limit: this.props.limit,

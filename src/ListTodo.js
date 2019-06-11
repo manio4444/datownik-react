@@ -23,7 +23,7 @@ class ListTodo extends Component {
     };
 
     getTodoList() {
-        axios.post('http://localhost/datownik/', {
+        axios.post(process.env.REACT_APP_ENDPOINT_URL, {
             ajax_action: 'tasksAjax',
             operation: 'getData',
             limit: this.props.limit,
@@ -53,7 +53,7 @@ class ListTodo extends Component {
     };
 
     handleAddNew = (data) => {
-        axios.post('http://localhost/datownik/', {
+        axios.post(process.env.REACT_APP_ENDPOINT_URL, {
             ajax_action: 'tasksAjax',
             operation: 'saveTask',
             txt: data.title,

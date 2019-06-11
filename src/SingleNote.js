@@ -20,7 +20,7 @@ class SingleNote extends Component {
         this.setState({
             isAdding: true,
         });
-        axios.post('http://localhost/datownik/', {
+        axios.post(process.env.REACT_APP_ENDPOINT_URL, {
             ajax_action: 'notesAjax',
             operation: 'addNote',
             txt: this.state.txt,
@@ -42,7 +42,7 @@ class SingleNote extends Component {
         this.setState({
             isEditing: true,
         });
-        axios.post('http://localhost/datownik/', {
+        axios.post(process.env.REACT_APP_ENDPOINT_URL, {
             ajax_action: 'notesAjax',
             operation: 'editNote',
             id: this.props.id,

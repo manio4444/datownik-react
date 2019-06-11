@@ -49,7 +49,7 @@ class SingleTodo extends Component {
     };
 
     setFinished() {
-        axios.post('http://localhost/datownik/', {
+        axios.post(process.env.REACT_APP_ENDPOINT_URL, {
             ajax_action: 'tasksAjax',
             operation: 'doneTask',
             id: this.props.id,
@@ -65,7 +65,7 @@ class SingleTodo extends Component {
     };
 
     setUnfinished() {
-        axios.post('http://localhost/datownik/', {
+        axios.post(process.env.REACT_APP_ENDPOINT_URL, {
             ajax_action: 'tasksAjax',
             operation: 'unDoneTask',
             id: this.props.id,

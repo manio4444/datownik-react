@@ -7,6 +7,7 @@ import PageStart from './PageStart';
 import PageNotes from './PageNotes';
 import PageTodo from './PageTodo';
 import MainMenu from './MainMenu';
+import Footer from './Footer';
 import Lockscreen from './Lockscreen';
 
 class App extends Component {
@@ -49,6 +50,7 @@ class App extends Component {
                         <Route path="/notatki" component={PageNotes}/>
                         <Route path="/do-zrobienia" component={PageTodo}/>
                     </main>
+                    <Footer/>
                 </div>
             </Router>
         );

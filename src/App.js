@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import 'dotenv';
 import './assets/css/reset.css';
 import './assets/css/main.css';
+import './assets/scss/page.scss';
 import PageStart from './PageStart';
 import PageNotes from './PageNotes';
 import PageTodo from './PageTodo';

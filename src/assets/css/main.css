@@ -41,7 +41,7 @@ main {
     width: 100%;
 }
 
-main section {
+main section:not(.page__section) {
     max-width: 1200px;
     box-sizing: border-box;
     padding: 60px 10px;

@@ -9,8 +9,11 @@ import ListNotes from "./ListNotes";
 class PageStart extends Component {
     render() {
         return (
-        <div className={"PageStart"}>
-          <section id="main_page">
+        <div className='PageStart'>
+          <section id="main_page" className='page__section'>
+
+            <div className='page__container PageStart__first-section'>
+
 
             <form method="POST" className="start_form">
 
@@ -168,16 +171,19 @@ class PageStart extends Component {
 
             </div>
 
+            </div>
 
-
+            <div className="page__container">
             <pre>    Current PHP version: 5.6.40  </pre>
             <pre>    https://stackoverflow.com/questions/18377891/how-can-i-let-user-paste-image-data-from-the-clipboard-into-a-canvas-element-in
   </pre>
             <pre>    do code snippetów -
     https://codepen.io/chriscoyier/pen/GBbOJd
   </pre>
+            </div>
 
-          </section>
+
+    </section>
 
           <section id="main_page_notes">
 

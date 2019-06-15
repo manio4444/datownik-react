@@ -1,0 +1,18 @@
+.page {
+
+  &__section {
+    width: 100%;
+    &:first-of-type {
+      .page__container:first-of-type {
+        padding-top: 60px;
+      }
+    }
+  }
+
+  &__container {
+    max-width: 1200px;
+    padding: 25px 10px;
+    margin: 0 auto;
+
+  }
+}

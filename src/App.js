@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import 'dotenv';
-import './css/reset.css';
-import './css/main.css';
+import './assets/css/reset.css';
+import './assets/css/main.css';
 import PageStart from './PageStart';
 import PageNotes from './PageNotes';
 import PageTodo from './PageTodo';

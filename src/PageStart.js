@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import 'semantic-ui-css/components/button.min.css'; // TODO - import this in specific component
 import 'semantic-ui-css/components/card.min.css'; // TODO - import this in specific component
 import 'semantic-ui-css/components/icon.min.css'; // TODO - import this in specific component
-import './css/notes.css'; // TODO - import this in notes component
+import './assets/css/notes.css'; // TODO - import this in notes component
 import {Link} from "react-router-dom";
 import ListNotes from "./ListNotes";
 

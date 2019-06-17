@@ -5,38 +5,24 @@
     flex-wrap: wrap;
     justify-content: space-between;
 
-    .start_form {
-      flex-basis: calc(50% - 10px);
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-start;
-      align-content: flex-start;
+    .multisearch {
+      margin-bottom: 25px;
+    }
+    .multicontent {
       margin-bottom: 25px;
     }
 
-    .start_form_title {
-      flex-basis: 100%;
+    .multicontent__title {
     }
 
-    .start_form textarea {
-      margin-right: 10px;
-      width: 100%;
-      flex-grow: 1;
-      flex-basis: 0;
-    }
 
     @media (max-width: 1023px) {
-      .start_form {
-        flex-basis: 100%;
-      }
     }
   }
 }
 
 //TODO - rest to sort ###########################
 .main_page_dates {
-  flex-basis: calc(25% - 10px);
-  margin-bottom: 40px;
 }
 
 .main_page_dates .ui.card {
@@ -61,15 +47,9 @@
 }
 
 @media (max-width: 1023px) {
-  .main_page_dates {
-    flex-basis: calc(50% - 10px);
-  }
 }
 
 @media (max-width: 479px) {
-  .main_page_dates {
-    flex-basis: 100%;
-  }
 }
 
 #main_page_notes .notes_title {

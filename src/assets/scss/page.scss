@@ -15,4 +15,31 @@
     margin: 0 auto;
 
   }
+  &__grid-half {
+    width: calc(50% - 10px);
+    @media (max-width: 1023px) {
+      width: 100%;
+    }
+  }
+  &__grid-quarter {
+    width: calc(25% - 10px);
+    @media (max-width: 1023px) {
+      width: calc(50% - 10px);
+    }
+    @media (max-width: 479px) {
+      width: 100%;
+    }
+  }
+  &__grid-half,
+  &__grid-quarter {
+    margin-bottom: 1em;
+  }
+
+  &__divider {
+    width: calc(100% - 0px);
+    height: 1px;
+    background-color: #000;
+    opacity: .1;
+    margin: 2em auto;
+  }
 }

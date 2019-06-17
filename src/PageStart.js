@@ -5,6 +5,8 @@ import 'semantic-ui-css/components/icon.min.css'; // TODO - import this in speci
 import './PageStart.scss';
 import {Link} from "react-router-dom";
 import ListNotes from "./ListNotes";
+import Multicontent from "./Multicontent";
+import { Input } from "semantic-ui-react";
 
 class PageStart extends Component {
     render() {
@@ -14,57 +16,32 @@ class PageStart extends Component {
 
             <div className='page__container PageStart__first-section'>
 
+              <div className=" page__grid-half">
 
-            <form method="POST" className="start_form">
+                <div className="multisearch">
 
-              <h1 className="start_form_title">Multicontent:</h1>
-              <textarea name="urladd" rows="5" cols="100"></textarea>
+                  <h2 className="multisearch__title">Multi Search:</h2>
 
+                  <Input fluid placeholder='Not working yet' icon='search'/>
 
-              <div className="ui vertical buttons">
+                </div>
 
-                <button type="send" name="action" className="ui labeled icon button" value="zadanie">
-                  <span className="far fa-calendar-check icon"></span>
-                  <span>Zadanie</span>
-                </button>
+                <div className="page__divider"/>
 
-                <button type="send" name="action" className="ui labeled icon button" value="wydarzenie">
-                  <span className="far fa-calendar icon"></span>
-                  <span>Wydarzenie</span>
-                </button>
+                <div className="multicontent">
 
-                <button type="send" name="action" className="ui labeled icon button" value="zakladka">
-                  <span className="fas fa-external-link-square-alt icon"></span>
-                  <span>Zakładka</span>
-                </button>
+                  <h2 className="multicontent__title">Multicontent:</h2>
 
-                <button type="send" name="action" className="ui labeled icon button" value="notatka">
-                  <span className="far fa-sticky-note icon"></span>
-                  <span>Notatka</span>
-                </button>
+                  <Multicontent/>
 
-                <button type="send" name="action" className="ui labeled icon disabled button" value="dokument">
-                  <span className="far fa- icon"></span>
-                  <span>Dokument</span>
-                </button>
-
-                <button type="send" name="action" className="ui labeled icon disabled button" value="kontakt">
-                  <span className="far fa- icon"></span>
-                  <span>Kontakt</span>
-                </button>
-
-                <button type="send" name="action" className="ui labeled icon disabled button" value="kod/haslo">
-                  <span className="far fa- icon"></span>
-                  <span>Kod/hasło</span>
-                </button>
+                </div>
 
               </div>
 
-            </form>
 
-            <div className="main_page_dates">
+            <div className="main_page_dates page__grid-quarter">
 
-              <h1 className="start_form_title">Kalendarz:</h1>
+              <h2 className="start_form_title">Kalendarz:</h2>
 
 
               <div className="ui card red task" data-task="90">
@@ -87,9 +64,9 @@ class PageStart extends Component {
             </div>
 
 
-            <div className="main_page_dates">
+            <div className="main_page_dates page__grid-quarter">
 
-              <h1 className="start_form_title">To do:</h1>
+              <h2 className="start_form_title">To do:</h2>
 
 
               <div className="ui card teal task" data-task="57">
@@ -187,7 +164,7 @@ class PageStart extends Component {
 
           <section id="main_page_notes">
 
-            <h1 className="notes_title">Ostatnie notatki:</h1>
+            <h2 className="notes_title">Ostatnie notatki:</h2>
 
             <ListNotes
               viewOnly={false}

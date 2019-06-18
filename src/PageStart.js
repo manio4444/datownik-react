@@ -22,7 +22,13 @@ class PageStart extends Component {
 
                   <h2 className="multisearch__title">Multi Search:</h2>
 
-                  <Input fluid placeholder='Not working yet' icon='search'/>
+                  <Input
+                      fluid
+                      placeholder='Not working yet'
+                      icon='search'
+                      iconPosition='left'
+                      action='Szukaj'
+                  />
 
                 </div>
 

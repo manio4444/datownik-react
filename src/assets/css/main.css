@@ -293,26 +293,16 @@ main {
 
 
 @media (max-width: 1023px) {
-
-
 }
 
 /* media end*/
 
 @media (max-width: 767px) {
-
-    main section {
-        padding: 60px 5px;
-    }
-
-
 }
 
 /* media end*/
 
 @media (max-width: 640px) {
-
-
 }
 
 /* media end*/

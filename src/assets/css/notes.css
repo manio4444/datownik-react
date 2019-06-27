@@ -24,9 +24,8 @@
     -moz-box-shadow: -3px 5px 12px 0 rgba(0, 0, 0, 0.3);
     box-shadow: -3px 5px 12px 0 rgba(0, 0, 0, 0.3);
     margin: 10px;
-    -webkit-transition: all 1s ease-in-out;
-    -moz-transition: all 1s ease-in-out;
-    -o-transition: all 1s ease-in-out;
+    transition: all .2s ease;
+    transition-property: width, height;
 }
 
 .note_element::before {
@@ -85,7 +84,14 @@
 
 /* ERROR */
 .note_element.error {
+    background-color: #fa6161;  /* TODO - maybe another color */
+}
+
+.note_element.deleting {
     background-color: #fa6161;
+    transition-property: transform;
+    transform: rotate(-45deg);
+    transform-origin: center left;
 }
 
 .note_element__progress {

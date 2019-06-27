@@ -52,6 +52,11 @@ class ListNotes extends Component {
 
     };
 
+    deletedNote(id) {
+        const list = this.state.list.filter(element => element.id !== id);
+        this.setState({list});
+    };
+
     render() {
         const notes = this.state.list;
 
@@ -66,6 +71,7 @@ class ListNotes extends Component {
                             value={note.value}
                             addedNew={this.addedNew.bind(this)}
                             setFocus={note.setFocus}
+                            deletedCallback={this.deletedNote.bind(this)}
                         />
                     );
                 })}

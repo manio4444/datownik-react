@@ -9,11 +9,12 @@ class SingleNote extends Component {
         fillBarDelay: 700,
         isAdding: false,
         isEditing: false,
+        isDeleting: false,
     };
     setFocusTarget = React.createRef();
     placeholder = {
         adding: "Zacznij wpisywać tekst aby dodać nową notatkę",
-        deleting: "Kliknięcie poza notatką spowoduje usunięcie",
+        deleting: "Kliknięcie poza notatką spowoduje usunięcie, naciśnij Ctrl + Z, aby przywrócić",
     };
 
     addNew() {
@@ -60,6 +61,24 @@ class SingleNote extends Component {
             });
     };
 
+    delete() {
+        axios.post(process.env.REACT_APP_ENDPOINT_URL, {
+            ajax_action: 'notesAjax',
+            operation: 'deleteNote',
+            id: this.props.id,
+        })
+            .then(res => {
+                this.setState({
+                    isDeleting: true,
+                }, () => {
+                    this.props.deletedCallback(this.props.id);
+                });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
+
     onChange = (e) => {
         this.setState({
             fillBarAnimation: false,
@@ -75,6 +94,10 @@ class SingleNote extends Component {
         setTimeout(() => this.setState({fillBarAnimation: true}), 0);
 
         this.fillBarTimeout = setTimeout(() => {
+            if (this.state.txt === '') {
+                return;
+            }
+
             if (this.props.id === 'new') {
                 this.addNew();
             } else {
@@ -85,7 +108,13 @@ class SingleNote extends Component {
 
     };
 
-    componentDidMount() {
+    onBlur = (e) => {
+        if (e.target.value === '' && this.props.id !== 'new') {
+            this.delete();
+        }
+    };
+
+        componentDidMount() {
         if (this.props.setFocus) {
             this.setFocusTarget.current.focus();
         }
@@ -98,20 +127,21 @@ class SingleNote extends Component {
         const progressStyle = {
             transitionDuration: this.state.fillBarDelay + 'ms',
         };
-
+        const placeholder = (id === "new") ? this.placeholder.adding : this.placeholder.deleting;
+        const isDeleting = (this.state.isDeleting) ? 'deleting' : '';
         return (
 
             <div
-                className="note_element"
+                className={`note_element ${isDeleting}`}
                 data-note={id}
             >
                 <textarea
                     name="note"
-                    placeholder={this.placeholder.adding}
-                    data-placeholder={this.placeholder.deleting}
+                    placeholder={placeholder}
                     value={value}
                     onChange={this.onChange}
                     ref={this.setFocusTarget}
+                    onBlur={this.onBlur}
                 />
                 <div className={`note_element__progress ${progress}`} style={progressStyle}/>
             </div>

@@ -91,7 +91,7 @@
     background-color: #fa6161;
     transition-property: transform;
     transform: rotate(-45deg);
-    transform-origin: center left;
+    transform-origin: left center;
 }
 
 .note_element__progress {

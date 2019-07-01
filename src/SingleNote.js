@@ -71,7 +71,9 @@ class SingleNote extends Component {
                 this.setState({
                     isDeleting: true,
                 }, () => {
-                    this.props.deletedCallback(this.props.id);
+                    setTimeout(() => {
+                        this.props.deletedCallback(this.props.id);
+                    }, 300);
                 });
             })
             .catch(error => {

@@ -10,16 +10,31 @@ import 'semantic-ui-css/components/checkbox.min.css';
 import axios from "axios";
 
 class SingleTodo extends Component {
+    interval = null; // can't be in state
     state = {
         isDeadline: this.props.isDeadline,
         isFinished: this.props.isFinished,
         isDeadlineLoading: false,
         isFinishedLoading: false,
         openModalTodoFinish: false,
+        countdown: '',
+        isDeadlineExceeded: false,
     };
     placeholder = {
         questionFinish: 'Czy na pewno chcesz potwierdzić wykonanie zadania?',
         questionUnFinish: 'Czy na pewno chcesz cofnąć status?',
+    };
+
+    componentDidMount() {
+        if (this.state.isDeadline) {
+            this.interval = setInterval(()=> {
+                this.renderCountdown();
+            }, 1000);
+        }
+    };
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
     };
 
     handleAddNew = (data) => this.props.handleAddNew(data);
@@ -93,6 +108,30 @@ class SingleTodo extends Component {
         this.closeFinishModal();
     };
 
+    getDiffTimestamps(start, end) {
+        const diff = end - start;
+        return {
+            'days': Math.floor(diff / (1000 * 60 * 60 * 24)),
+            'hours': Math.floor((diff / (1000 * 60 * 60)) % 24),
+            'minutes': Math.floor((diff / 1000 / 60) % 60),
+            'seconds': Math.floor((diff / 1000) % 60),
+        };
+    };
+
+    renderCountdown = () => {
+        const nowTs = new Date().getTime();
+        const deadlineTs = new Date(this.props.deadline).getTime();
+        const diff = this.getDiffTimestamps(nowTs, deadlineTs);
+
+        const isDeadlineExceeded = (deadlineTs <= nowTs);
+        const countdown = `${diff.days} Dni, ${diff.hours} Godz. ${diff.minutes} Min. ${diff.seconds} Sek.`;
+
+        this.setState({
+            isDeadlineExceeded,
+            countdown,
+        });
+    };
+
     render() {
 
         if (this.props.addNew) {
@@ -113,7 +152,14 @@ class SingleTodo extends Component {
         }
 
         const { title, deadline } = this.props;
-        const { isDeadline, isFinished, countdown, isFinishedLoading, openModalTodoFinish } = this.state;
+        const {
+            isDeadline,
+            isFinished,
+            countdown,
+            isFinishedLoading,
+            openModalTodoFinish,
+            isDeadlineExceeded,
+        } = this.state;
         const isFinishedClass = isFinished ? 'done' : '';
         const isDeadlineClass = isDeadline ? 'deadline' : '';
 
@@ -141,9 +187,9 @@ class SingleTodo extends Component {
                             </div>
                         </Form.Field>
 
-                        <Form.Field>
+                        <Form.Field className={`${(isDeadline && isDeadlineExceeded) ? 'error' : ''}`}>
                             <label>countdown:</label>
-                            <input type="text" name="" readOnly value={countdown}/>
+                            <input type="text" name="" readOnly value={isDeadline ? countdown : ''}/>
                         </Form.Field>
                     </Card.Description>
                 </Card.Content>

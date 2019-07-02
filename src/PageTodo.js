@@ -5,7 +5,7 @@ class PageTodo extends Component {
 
     render() {
         return (
-            <section className="todos">
+            <section className="todos todos__page">
 
                 <ListTodo
                     viewOnly={false}

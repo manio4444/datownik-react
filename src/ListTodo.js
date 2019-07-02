@@ -27,8 +27,8 @@ class ListTodo extends Component {
             ajax_action: 'tasksAjax',
             operation: 'getData',
             limit: this.props.limit,
-            getFinished: this.props.getFinished || true,
-            getFinishedOnly: this.props.getFinishedOnly || false,
+            getFinished: this.props.getFinished,
+            getFinishedOnly: this.props.getFinishedOnly,
         })
             .then(res => {
                 const list = res.data.result.map(todo => this.mapQuery(todo));
@@ -77,14 +77,16 @@ class ListTodo extends Component {
     render() {
         const todos = this.state.list;
         const { openModalTodoAdd } = this.state;
+        const { viewOnly } = this.props;
 
         return (
             <div className="todos__list">
 
-                <SingleTodo
+                {!viewOnly && <SingleTodo
                     addNew={true}
                     handleAddNew={this.ModalTodoAdd}
                 />
+                }
 
                 {openModalTodoAdd && <ModalTodoAdd
                     open={openModalTodoAdd}
@@ -103,6 +105,7 @@ class ListTodo extends Component {
                             finished={todo.finished}
                             isDeadline={todo.isDeadline}
                             isFinished={todo.isFinished}
+                            viewOnly={viewOnly}
                         />
                     );
                 })}

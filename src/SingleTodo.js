@@ -151,7 +151,7 @@ class SingleTodo extends Component {
             );
         }
 
-        const { title, deadline } = this.props;
+        const { title, deadline, viewOnly } = this.props;
         const {
             isDeadline,
             isFinished,
@@ -162,6 +162,22 @@ class SingleTodo extends Component {
         } = this.state;
         const isFinishedClass = isFinished ? 'done' : '';
         const isDeadlineClass = isDeadline ? 'deadline' : '';
+
+        if (viewOnly) {
+            return (
+                <Card color='teal'>
+                    <Card.Content>
+                        <Card.Header>{title}</Card.Header>
+                        <Card.Meta>{isDeadline ? deadline : 'brak deadline'}</Card.Meta>
+                    </Card.Content>
+                    <Card.Content extra>
+                        <Icon name='stopwatch'/>
+                        {countdown}
+                    </Card.Content>
+
+                </Card>
+            );
+        }
 
         return (
 

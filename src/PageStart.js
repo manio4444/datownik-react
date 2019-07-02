@@ -6,7 +6,8 @@ import './PageStart.scss';
 import {Link} from "react-router-dom";
 import ListNotes from "./ListNotes";
 import Multicontent from "./Multicontent";
-import { Input } from "semantic-ui-react";
+import { Input, Button } from "semantic-ui-react";
+import ListTodo from "./ListTodo";
 
 class PageStart extends Component {
     render() {
@@ -74,83 +75,15 @@ class PageStart extends Component {
 
               <h2 className="start_form_title">To do:</h2>
 
+              <ListTodo
+                  viewOnly={true}
+                  limit={5}
+                  getFinished={false}
+              />
 
-              <div className="ui card teal task" data-task="57">
-                <input type="hidden" data-timer-deadline="" value="2019-02-06 19:00:00" />
-                  <div className="content">
-                    <div className="header">kossmann basket3 timeout 1s</div>
-                    <div className="meta">2019-02-06 19:00:00</div>
-
-                  </div>
-                  <div className="extra content error">
-                    <i className="fas fa-stopwatch"></i>
-                    <span type="text" name="" data-timer-output="" value="">-28 Dni, -16 Godz. -52 Min. -10 Sek.</span>
-
-                  </div>
-              </div>
-
-
-              <div className="ui card teal task" data-task="56">
-                <input type="hidden" data-timer-deadline="" value="0000-00-00 00:00:00" />
-                  <div className="content">
-                    <div className="header">spróbować zrobić namiot z zipów i patyków</div>
-                    <div className="meta">0000-00-00 00:00:00</div>
-
-                  </div>
-                  <div className="extra content">
-                    <i className="fas fa-stopwatch"></i>
-                    <span type="text" name="" data-timer-output="" value=""></span>
-
-                  </div>
-              </div>
-
-
-              <div className="ui card teal task" data-task="55">
-                <input type="hidden" data-timer-deadline="" value="0000-00-00 00:00:00" />
-                  <div className="content">
-                    <div className="header">druknąć faktury orange</div>
-                    <div className="meta">0000-00-00 00:00:00</div>
-
-                  </div>
-                  <div className="extra content">
-                    <i className="fas fa-stopwatch"></i>
-                    <span type="text" name="" data-timer-output="" value=""></span>
-
-                  </div>
-              </div>
-
-
-              <div className="ui card teal task" data-task="54">
-                <input type="hidden" data-timer-deadline="" value="0000-00-00 00:00:00" />
-                  <div className="content">
-                    <div className="header">druknać fakturę wfirma i sprawdzić resztę</div>
-                    <div className="meta">0000-00-00 00:00:00</div>
-
-                  </div>
-                  <div className="extra content">
-                    <i className="fas fa-stopwatch"></i>
-                    <span type="text" name="" data-timer-output="" value=""></span>
-
-                  </div>
-              </div>
-
-
-              <div className="ui card teal task" data-task="47">
-                <input type="hidden" data-timer-deadline="" value="0000-00-00 00:00:00" />
-                  <div className="content">
-                    <div className="header">obczaić paliwo tańsze alior</div>
-                    <div className="meta">0000-00-00 00:00:00</div>
-
-                  </div>
-                  <div className="extra content">
-                    <i className="fas fa-stopwatch"></i>
-                    <span type="text" name="" data-timer-output="" value=""></span>
-
-                  </div>
-              </div>
-
-
-              <a className="ui button fluid" href="?page=do-zrobienia">Zobacz wszystkie</a>
+              <Link to="/do-zrobienia">
+                <Button fluid>Zobacz wszystkie</Button>
+              </Link>
 
             </div>
 

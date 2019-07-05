@@ -110,7 +110,12 @@ class SingleTodo extends Component {
 
     getDiffTimestamps(start, end) {
         const diff = end - start;
-        return {
+        return (diff < 0) ? {
+            'days': Math.ceil(diff / (1000 * 60 * 60 * 24)),
+            'hours': Math.ceil((diff / (1000 * 60 * 60)) % 24),
+            'minutes': Math.ceil((diff / 1000 / 60) % 60),
+            'seconds': Math.ceil((diff / 1000) % 60),
+        } : {
             'days': Math.floor(diff / (1000 * 60 * 60 * 24)),
             'hours': Math.floor((diff / (1000 * 60 * 60)) % 24),
             'minutes': Math.floor((diff / 1000 / 60) % 60),

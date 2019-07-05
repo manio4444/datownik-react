@@ -7,6 +7,7 @@ import './assets/scss/page.scss';
 import PageStart from './PageStart';
 import PageNotes from './PageNotes';
 import PageTodo from './PageTodo';
+import PageCalendar from './PageCalendar';
 import MainMenu from './MainMenu';
 import Footer from './Footer';
 import Lockscreen from './Lockscreen';
@@ -50,6 +51,7 @@ class App extends Component {
                         <Route path="/" exact component={PageStart}/>
                         <Route path="/notatki" component={PageNotes}/>
                         <Route path="/do-zrobienia" component={PageTodo}/>
+                        <Route path="/kalendarz" component={PageCalendar}/>
                     </main>
                     <Footer/>
                 </div>

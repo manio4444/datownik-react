@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ListNotes from "./ListNotes";
+import ListNotes from "../../components/Notes/ListNotes";
 
 class PageNotes extends Component {
 

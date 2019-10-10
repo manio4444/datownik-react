@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import 'semantic-ui-css/components/button.min.css'; // TODO - import this in specific component
 import 'semantic-ui-css/components/card.min.css'; // TODO - import this in specific component
 import 'semantic-ui-css/components/icon.min.css'; // TODO - import this in specific component
-import './assets/scss/semantic-custom.scss';
+import '../../assets/scss/semantic-custom.scss';
 import './PageStart.scss';
 import {Link} from "react-router-dom";
-import ListNotes from "./ListNotes";
-import Multicontent from "./Multicontent";
+import ListNotes from "../../components/Notes/ListNotes";
+import Multicontent from "../../components/Multicontent/Multicontent";
 import { Input, Button } from "semantic-ui-react";
-import ListTodo from "./ListTodo";
+import ListTodo from "../../components/Todo/ListTodo";
 
 class PageStart extends Component {
     render() {

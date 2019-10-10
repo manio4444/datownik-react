@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter, Route} from 'react-router-dom';
 import 'dotenv';
 import './assets/css/reset.css';
 import './assets/css/main.css';
 import './assets/scss/page.scss';
-import PageStart from './PageStart';
-import PageNotes from './PageNotes';
-import PageTodo from './PageTodo';
-import PageCalendar from './PageCalendar';
-import MainMenu from './MainMenu';
-import Footer from './Footer';
-import Lockscreen from './Lockscreen';
+import PageStart from './pages/PageStart/PageStart';
+import PageNotes from './pages/PageNotes/PageNotes';
+import PageTodo from './pages/PageTodo/PageTodo';
+import PageCalendar from './pages/PageCalendar/PageCalendar';
+import MainMenu from './components/MainMenu/MainMenu';
+import Footer from './components/Footer/Footer';
+import Lockscreen from './components/Lockscreen/Lockscreen';
 
 class App extends Component {
     state = {
@@ -42,7 +42,7 @@ class App extends Component {
             )
         }
         return (
-            <Router>
+            <BrowserRouter>
                 <div className="App">
                     <header className="App-header">
                         <MainMenu blurPage={this.blurPage} unBlurPage={this.unBlurPage}/>
@@ -55,7 +55,7 @@ class App extends Component {
                     </main>
                     <Footer/>
                 </div>
-            </Router>
+            </BrowserRouter>
         );
     }
 }

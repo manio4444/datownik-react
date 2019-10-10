@@ -4,7 +4,7 @@
 }
 
 .MainMenuWrapper {
-    background-image: url('LockscreenBg.png');
+    background-image: url('../Lockscreen/LockscreenBg.png');
     background-repeat: no-repeat;
     background-size: cover;
     position: fixed;

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ListTodo from "./ListTodo";
+import ListTodo from "../../components/Todo/ListTodo";
 
 class PageTodo extends Component {
 

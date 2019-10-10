@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Form, TextArea, Dropdown } from "semantic-ui-react";
-import ModalTodoAdd from './ModalTodoAdd';
+import ModalTodoAdd from '../Todo/ModalTodoAdd';
 import 'semantic-ui-css/components/form.min.css';
 import 'semantic-ui-css/components/dropdown.min.css';
 import 'semantic-ui-css/components/transition.min.css';

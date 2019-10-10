@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import BuildDate from "./BuildDate";
+import BuildDate from "../BuildDate/BuildDate";
 
 class Footer extends Component {
 

@@ -71,7 +71,7 @@ class Multicontent extends Component {
                         rows="2"
                     />
 
-                    <Dropdown className='multicontent__button' text='Dodaj nowy' button>
+                    <Dropdown className='multicontent__button purple' text='Dodaj nowy' button>
                         <Dropdown.Menu>
                             {options.map((option, i) => {
                                 if (option.divider === true) return (<Dropdown.Divider key={i}/>);

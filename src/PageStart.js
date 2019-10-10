@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import 'semantic-ui-css/components/button.min.css'; // TODO - import this in specific component
 import 'semantic-ui-css/components/card.min.css'; // TODO - import this in specific component
 import 'semantic-ui-css/components/icon.min.css'; // TODO - import this in specific component
+import './assets/scss/semantic-custom.scss';
 import './PageStart.scss';
 import {Link} from "react-router-dom";
 import ListNotes from "./ListNotes";
@@ -28,7 +29,10 @@ class PageStart extends Component {
                       placeholder='Not working yet'
                       icon='search'
                       iconPosition='left'
-                      action='Szukaj'
+                      action={{
+                        color: 'purple',
+                        content: 'Szukaj',
+                      }}
                   />
 
                 </div>
@@ -66,7 +70,7 @@ class PageStart extends Component {
               </div>
 
 
-              <a className="ui button fluid" href="?page=kalendarz">Zobacz wszystkie</a>
+              <Button fluid color='purple'>Zobacz wszystkie</Button>
 
             </div>
 
@@ -82,7 +86,7 @@ class PageStart extends Component {
               />
 
               <Link to="/do-zrobienia">
-                <Button fluid>Zobacz wszystkie</Button>
+                <Button fluid color='purple'>Zobacz wszystkie</Button>
               </Link>
 
             </div>

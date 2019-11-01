@@ -6,7 +6,8 @@ import './PageStart.scss';
 import {Link} from "react-router-dom";
 import ListNotes from "../../components/Notes/ListNotes";
 import Multicontent from "../../components/Multicontent/Multicontent";
-import { Input, Button } from "semantic-ui-react";
+import MultiSearch from "../../components/MultiSearch/MultiSearch";
+import {Button} from "semantic-ui-react";
 import ListTodo from "../../components/Todo/ListTodo";
 
 class PageStart extends Component {
@@ -23,13 +24,7 @@ class PageStart extends Component {
 
                   <h2 className="multisearch__title">Multi Search:</h2>
 
-                  <Input
-                      fluid
-                      placeholder='Not working yet'
-                      icon='search'
-                      iconPosition='left'
-                      action='Szukaj'
-                  />
+                  <MultiSearch/>
 
                 </div>
 

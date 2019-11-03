@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Input} from "semantic-ui-react";
 import './MultiSearch.scss';
 import axios from "axios";
+import Results from "./MultiSearchResults";
+import SingleNote from "../Notes/SingleNote";
 
 class MultiSearch extends Component {
     state = {
@@ -9,6 +11,8 @@ class MultiSearch extends Component {
         searchDelay: 500,
         searchMinLength: 3,
         isLoading: false,
+        isResults: false,
+        results: {},
     };
 
     inputSearch = (e, {value}) => {
@@ -36,8 +40,10 @@ class MultiSearch extends Component {
             txt: this.state.searchInput,
         })
             .then(res => {
-                console.log('API response');
-                console.log(res);
+                this.setState({
+                    results: res.data.result,
+                    isResults: true,
+                });
             })
             .catch(error => {
                 console.log(error);
@@ -49,7 +55,12 @@ class MultiSearch extends Component {
 
     render() {
 
-        const {searchInput, isLoading} = this.state;
+        const {
+            searchInput,
+            isLoading,
+            isResults,
+            results,
+        } = this.state;
 
         return (
             <div className="multisearch">
@@ -68,6 +79,26 @@ class MultiSearch extends Component {
                     value={searchInput}
                     onChange={this.inputSearch}
                 />
+
+                {isResults && <Results>
+
+                    <Results.Result>
+                        <Results.Title>Notes</Results.Title>
+                        {(results.notes && results.notes.length) ? <Results.Content>
+                            <SingleNote style={{opacity: 0}}/> {/*for css hack*/}
+                            <div className={'multisearch__result-notes'}>
+                                {results.notes.map((el) =>
+                                    <SingleNote
+                                        key={el.id}
+                                        value={el.txt}
+                                        readonly
+                                    />
+                                )}
+                            </div>
+                        </Results.Content> : <Results.Content className='no-data'>No data found</Results.Content>}
+                    </Results.Result>
+
+                </Results>}
             </div>
         );
     }

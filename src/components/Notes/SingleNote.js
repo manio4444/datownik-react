@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from "axios";
+import './SingleNote.scss'
 
 class SingleNote extends Component {
     fillBar = false; //for logic only, can't be async
@@ -82,6 +83,8 @@ class SingleNote extends Component {
     };
 
     onChange = (e) => {
+        if (this.props.readonly) return;
+
         this.setState({
             fillBarAnimation: false,
             txt: e.target.value,
@@ -123,7 +126,7 @@ class SingleNote extends Component {
     }
 
     render() {
-        const id = this.props.id;
+        const {id, readonly, style} = this.props;
         const value = this.state.txt;
         const progress = (this.state.fillBarAnimation) ? 'fill' : '';
         const progressStyle = {
@@ -134,8 +137,8 @@ class SingleNote extends Component {
         return (
 
             <div
-                className={`note_element ${isDeleting}`}
-                data-note={id}
+                className={`note-element ${isDeleting}`}
+                style={style}
             >
                 <textarea
                     name="note"
@@ -144,8 +147,9 @@ class SingleNote extends Component {
                     onChange={this.onChange}
                     ref={this.setFocusTarget}
                     onBlur={this.onBlur}
+                    disabled={readonly}
                 />
-                <div className={`note_element__progress ${progress}`} style={progressStyle}/>
+                <div className={`note-element__progress ${progress}`} style={progressStyle}/>
             </div>
 
         );

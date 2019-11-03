@@ -52,7 +52,7 @@ class MultiSearch extends Component {
         const {searchInput, isLoading} = this.state;
 
         return (
-            <React.Fragment>
+            <div className="multisearch">
                 <Input
                     fluid
                     placeholder='Zacznij wpisywać'
@@ -68,7 +68,7 @@ class MultiSearch extends Component {
                     value={searchInput}
                     onChange={this.inputSearch}
                 />
-            </React.Fragment>
+            </div>
         );
     }
 }

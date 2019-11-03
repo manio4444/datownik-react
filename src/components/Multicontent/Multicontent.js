@@ -62,7 +62,7 @@ class Multicontent extends Component {
         ];
 
         return (
-            <React.Fragment>
+            <div className="multicontent">
                 <Form method="POST" className="multicontent__form">
 
                     <TextArea
@@ -96,7 +96,7 @@ class Multicontent extends Component {
                     trueCallback={() => console.log('trueCallback')}
                     falseCallback={() => this.setState({openModalTodoAdd: false})}
                 />}
-            </React.Fragment>
+            </div>
         );
     }
 }

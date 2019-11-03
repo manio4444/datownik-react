@@ -18,25 +18,17 @@ class PageStart extends Component {
 
             <div className='page__container PageStart__first-section'>
 
-              <div className=" page__grid-half">
+              <div className="page__grid-half">
 
-                <div className="multisearch">
+                <h2 className="multisearch__title">Multi Search:</h2>
 
-                  <h2 className="multisearch__title">Multi Search:</h2>
-
-                  <MultiSearch/>
-
-                </div>
+                <MultiSearch/>
 
                 <div className="page__divider"/>
 
-                <div className="multicontent">
+                <h2 className="multicontent__title">Multicontent:</h2>
 
-                  <h2 className="multicontent__title">Multicontent:</h2>
-
-                  <Multicontent/>
-
-                </div>
+                <Multicontent/>
 
               </div>
 

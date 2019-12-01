@@ -8,6 +8,7 @@ import 'semantic-ui-css/components/form.min.css';
 import 'semantic-ui-css/components/input.min.css';
 import 'semantic-ui-css/components/checkbox.min.css';
 import axios from "axios";
+import Placeholder from '../Placeholder/Placeholder';
 
 class SingleTodo extends Component {
     interval = null; // can't be in state
@@ -156,7 +157,12 @@ class SingleTodo extends Component {
             );
         }
 
-        const { title, deadline, viewOnly } = this.props;
+        const {
+            title,
+            deadline,
+            viewOnly,
+            placeholder
+        } = this.props;
         const {
             isDeadline,
             isFinished,
@@ -167,6 +173,20 @@ class SingleTodo extends Component {
         } = this.state;
         const isFinishedClass = isFinished ? 'done' : '';
         const isDeadlineClass = isDeadline ? 'deadline' : '';
+
+        if (placeholder && viewOnly) {
+            return (
+                <Card color='teal'>
+                    <Card.Content>
+                        <Card.Header><Placeholder /></Card.Header>
+                        <Card.Meta><Placeholder /></Card.Meta>
+                    </Card.Content>
+                    <Card.Content extra>
+                        <Placeholder />
+                    </Card.Content>
+                </Card>
+            );
+        }
 
         if (viewOnly) {
             return (

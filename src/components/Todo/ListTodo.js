@@ -8,6 +8,7 @@ class ListTodo extends Component {
     state = {
         list: [],
         openModalTodoAdd: false,
+        fetchingData: true,
     };
 
     mapQuery(data) {
@@ -32,7 +33,10 @@ class ListTodo extends Component {
         })
             .then(res => {
                 const list = res.data.result.map(todo => this.mapQuery(todo));
-                this.setState({list});
+                this.setState({
+                    list,
+                    fetchingData: false
+                });
 
             })
             .catch(function (error) {
@@ -76,7 +80,10 @@ class ListTodo extends Component {
 
     render() {
         const todos = this.state.list;
-        const { openModalTodoAdd } = this.state;
+        const {
+            fetchingData,
+            openModalTodoAdd,
+        } = this.state;
         const { viewOnly } = this.props;
 
         return (
@@ -94,7 +101,15 @@ class ListTodo extends Component {
                     falseCallback={this.ModalTodoAddClose.bind(this)}
                 />}
 
-                {todos.map((todo) => {
+                {fetchingData &&
+                    <React.Fragment>
+                        <SingleTodo placeholder {...this.props}/>
+                        <SingleTodo placeholder {...this.props}/>
+                        <SingleTodo placeholder {...this.props}/>
+                    </React.Fragment>
+                }
+
+                {!fetchingData && todos.map((todo) => {
                     return (
                         <SingleTodo
                             id={todo.id}

@@ -5,7 +5,7 @@ import 'semantic-ui-css/components/dimmer.min.css';
 import 'semantic-ui-css/components/header.min.css';
 import 'semantic-ui-css/components/button.min.css';
 
-class ModalTodoFinish extends Component {
+class ModalYesNo extends Component {
     handleTrue = () => this.props.trueCallback();
     handleFalse = () => this.props.falseCallback();
 
@@ -30,4 +30,4 @@ class ModalTodoFinish extends Component {
         )
     };
 }
-export default ModalTodoFinish;
+export default ModalYesNo;

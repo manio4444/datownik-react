@@ -14,12 +14,13 @@ class ListTodo extends Component {
     mapQuery(data) {
         return {
             id: data.id,
-            txt: data.txt,
+            title: data.txt,
             deadline: data.deadline,
             created: data.date_mk,
             finished: data.date_fn,
             isDeadline: (data.no_deadline !== "1"),
             isFinished: (data.finished === "1"),
+            isDeleted: (data.deleted === "1"),
         }
     };
 
@@ -112,14 +113,8 @@ class ListTodo extends Component {
                 {!fetchingData && todos.map((todo) => {
                     return (
                         <SingleTodo
-                            id={todo.id}
                             key={todo.id}
-                            title={todo.txt}
-                            deadline={todo.deadline}
-                            created={todo.created}
-                            finished={todo.finished}
-                            isDeadline={todo.isDeadline}
-                            isFinished={todo.isFinished}
+                            {...todo}
                             viewOnly={viewOnly}
                         />
                     );

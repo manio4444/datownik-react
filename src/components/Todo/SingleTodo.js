@@ -1,6 +1,13 @@
 import React, {Component} from 'react';
-import { Card, Icon, Button, Checkbox, Form } from 'semantic-ui-react';
-import ModalTodoFinish from './ModalTodoFinish';
+import {
+    Card,
+    Icon,
+    Button,
+    Checkbox,
+    Form,
+    Dropdown
+} from 'semantic-ui-react';
+import ModalYesNo from './ModalYesNo';
 import 'semantic-ui-css/components/button.min.css';
 import 'semantic-ui-css/components/card.min.css';
 import 'semantic-ui-css/components/icon.min.css';
@@ -15,15 +22,19 @@ class SingleTodo extends Component {
     state = {
         isDeadline: this.props.isDeadline,
         isFinished: this.props.isFinished,
+        isDeleted: this.props.isDeleted,
         isDeadlineLoading: false,
-        isFinishedLoading: false,
-        openModalTodoFinish: false,
+        isLoading: false,
+        openModalYesNo: false,
+        modalProps: {},
         countdown: '',
         isDeadlineExceeded: false,
     };
     placeholder = {
         questionFinish: 'Czy na pewno chcesz potwierdzić wykonanie zadania?',
         questionUnFinish: 'Czy na pewno chcesz cofnąć status?',
+        questionDelete: 'Czy na pewno chcesz usunąć zadania?',
+        questionUnDelete: 'Czy na pewno chcesz cofnąć usunięcie?',
     };
 
     componentDidMount() {
@@ -46,67 +57,96 @@ class SingleTodo extends Component {
         }))
     };
 
-    handleToggleDone = () => {
+    handleToggleDone = () => this.handleModalYesNo({
+        icon: 'edit',
+        txt: this.state.isFinished ? this.placeholder.questionUnFinish : this.placeholder.questionFinish,
+        trueCallback: this.state.isFinished ? this.setUnfinished : this.setFinished,
+    });
+
+    handleToggleDelete = () => this.handleModalYesNo({
+        icon: 'trash alternate',
+        txt: this.state.isDeleted ? this.placeholder.questionUnDelete : this.placeholder.questionDelete,
+        trueCallback: this.state.isDeleted ? this.setUndeleted : this.setDeleted,
+    });
+
+    handleModalYesNo = modalProps => {
         this.setState({
-            openModalTodoFinish: true,
-            isFinishedLoading: true,
+            modalProps: {
+                ...modalProps,
+                open: true,
+                header: this.props.title,
+                falseCallback: this.closeModalYesNo.bind(this),
+            },
+            openModalYesNo: true,
+            isLoading: true,
         });
     };
 
-    closeFinishModal = () => {
+    setFinished = () => axios
+        .post(
+            process.env.REACT_APP_ENDPOINT_URL,
+            {
+                ajax_action: 'tasksAjax',
+                operation: 'doneTask',
+                id: this.props.id,
+            })
+        .then(() => this.setState({
+            isFinished: true,
+            openModalYesNo: false,
+            isLoading: false,
+        }))
+        .catch( error => console.log(error));
+
+    setUnfinished = () => axios
+        .post(
+            process.env.REACT_APP_ENDPOINT_URL,
+            {
+                ajax_action: 'tasksAjax',
+                operation: 'unDoneTask',
+                id: this.props.id,
+            })
+        .then(() => this.setState({
+            isFinished: false,
+            openModalYesNo: false,
+            isLoading: false,
+        }))
+        .catch( error => console.log(error));
+
+    setDeleted = () => axios
+        .post(
+            process.env.REACT_APP_ENDPOINT_URL,
+            {
+                ajax_action: 'tasksAjax',
+                operation: 'deleteTask',
+                id: this.props.id,
+            })
+        .then(() => this.setState({
+            isDeleted: true,
+            openModalYesNo: false,
+            isLoading: false,
+        }))
+        .catch( error => console.log(error));
+
+    setUndeleted = () => axios
+        .post(
+            process.env.REACT_APP_ENDPOINT_URL,
+            {
+                ajax_action: 'tasksAjax',
+                operation: 'unDeleteTask',
+                id: this.props.id,
+            })
+        .then(() => this.setState({
+            isDeleted: false,
+            openModalYesNo: false,
+            isLoading: false,
+        }))
+        .catch( error => console.log(error));
+
+    closeModalYesNo() {
         this.setState({
-            openModalTodoFinish: false,
+            isLoading: false,
+            openModalYesNo: false,
         });
-        setTimeout(() => {
-            this.setState({
-                isFinishedLoading: false,
-            })
-        }, 500);
-    };
-
-    setFinished() {
-        axios.post(process.env.REACT_APP_ENDPOINT_URL, {
-            ajax_action: 'tasksAjax',
-            operation: 'doneTask',
-            id: this.props.id,
-        })
-            .then(res => {
-                this.setState({
-                    isFinished: true,
-                });
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
-
-    setUnfinished() {
-        axios.post(process.env.REACT_APP_ENDPOINT_URL, {
-            ajax_action: 'tasksAjax',
-            operation: 'unDoneTask',
-            id: this.props.id,
-        })
-            .then(res => {
-                this.setState({
-                    isFinished: false,
-                });
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
-
-    trueCallback() {
-        if (this.state.isFinished === true) {
-            this.setUnfinished();
-        } else if (this.state.isFinished === false) {
-            this.setFinished();
-        }
-        this.closeFinishModal();
-    };
-
-    falseCallback() {
-        this.closeFinishModal();
     };
 
     getDiffTimestamps(start, end) {
@@ -138,6 +178,21 @@ class SingleTodo extends Component {
         });
     };
 
+    actionOptions = [
+        {
+            key: 'done',
+            text: 'Wykonane',
+            icon: 'user',
+            onClick: this.handleToggleDone
+        },
+        {
+            key: 'delete',
+            text: 'Usuń',
+            icon: 'settings',
+            onClick: this.handleToggleDelete
+        },
+    ];
+
     render() {
 
         if (this.props.addNew) {
@@ -166,9 +221,10 @@ class SingleTodo extends Component {
         const {
             isDeadline,
             isFinished,
+            isDeleted,
             countdown,
-            isFinishedLoading,
-            openModalTodoFinish,
+            isLoading,
+            openModalYesNo,
             isDeadlineExceeded,
         } = this.state;
         const isFinishedClass = isFinished ? 'done' : '';
@@ -210,7 +266,11 @@ class SingleTodo extends Component {
                 <Card.Content>
                     <Card.Header>{title}</Card.Header>
                     <Card.Meta>
-                        <Icon name='ellipsis horizontal'/>
+                        <Dropdown
+                            trigger={<Icon name='ellipsis horizontal'/>}
+                            options={this.actionOptions}
+                            icon={null}
+                        />
                     </Card.Meta>
                     <Card.Description className="ui form">
                         <Form.Field>
@@ -232,27 +292,21 @@ class SingleTodo extends Component {
                             <label>countdown:</label>
                             <input type="text" name="" readOnly value={isDeadline ? countdown : ''}/>
                         </Form.Field>
+
+                        {isDeleted && <div>DELETED</div>}
                     </Card.Description>
                 </Card.Content>
 
                 <Button
                     color={"teal"}
                     onClick={this.handleToggleDone}
-                    loading={isFinishedLoading}
                 >
                     <Icon name={((isFinished === true) ? 'check ' : '') + 'square outline'}/>
                     {isFinished === false && 'Oznacz jako wykonane'}
                     {isFinished === true && 'Cofnij'}
                 </Button>
 
-                {openModalTodoFinish && <ModalTodoFinish
-                    open={true}
-                    icon='edit'
-                    header={title}
-                    txt={isFinished ? this.placeholder.questionUnFinish : this.placeholder.questionFinish}
-                    trueCallback={this.trueCallback.bind(this)}
-                    falseCallback={this.falseCallback.bind(this)}
-                />}
+                {openModalYesNo && <ModalYesNo {...this.state.modalProps} />}
             </Card>
 
         );

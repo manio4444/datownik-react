@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './Lockscreen.css';
 import 'animate.css'
+import axios from "axios";
 
 class Lockscreen extends Component {
     state = {
@@ -57,13 +58,23 @@ class Lockscreen extends Component {
         }
     };
 
-    tryCode = (code) => {
-        console.log('xhr');
-        if (code === "1111") { //TODO - temp
-            this.allowCode();
-        } else {
+    tryCode = () => {
+        axios.post(process.env.REACT_APP_ENDPOINT_URL, {
+            ajax_action: 'lockscreenAjax',
+            operation: 'tryPasscode',
+            code: this.state.codeInput,
+        })
+        .then(res => {
+            if (res.data.result.isValid) {
+                this.allowCode();
+            } else {
+                this.resetCode();
+            }
+        })
+        .catch(error => {
+            console.log(error);
             this.resetCode();
-        }
+        })
     };
 
     resetCode = () => {
@@ -71,15 +82,12 @@ class Lockscreen extends Component {
             resetCodeAnimation: true,
         });
         setTimeout(() => {
-
             this.setState({
                 codeInput: '',
                 lockInput: false,
                 resetCodeAnimation: false,
             });
-        },
-            1000
-        );
+        }, 1000);
     };
 
     allowCode = () => {

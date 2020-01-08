@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './Lockscreen.css';
 import 'animate.css'
 
-class MainMenu extends Component {
+class Lockscreen extends Component {
     state = {
         opened: true,
         codeInput: '',
@@ -97,13 +97,12 @@ class MainMenu extends Component {
         );
     };
 
-    onKeyDown = (e) => {
+    onKeyDown = e => {
         const keyCode = e.keyCode;
         this.keyCodesMap.forEach((item) => {
             if (item.keyCode === keyCode) {
                 this.updateCode(item.clickNumber);
             }
-
         })
     };
 
@@ -115,8 +114,22 @@ class MainMenu extends Component {
         document.removeEventListener('keydown', this.onKeyDown);
     }
 
+    createButtonsRow = ({ buttons }) => <div className="lockscreen__buttons_row">
+        {buttons.map((button) => <button data-button={button} onClick={this.buttonClick}>{button}</button>)}
+    </div>;
+
+    createInputsRow = ({count, className}) => {
+        const codeLength = this.state.codeInput.length;
+        let inputs = [];
+
+        for (let i = 0; i < count; i++) {
+            inputs.push(<span data-input={i} className={(codeLength > i) ? 'filled' : ''} />)
+        }
+
+        return <div className={`lockscreen__inputs ${className}`}>{inputs}</div>
+    };
+
     render() {
-        const code = () => this.state.codeInput;
         const dotsInputClasses = (this.state.resetCodeAnimation) ? 'animated shake' : '';
         const lockscreenClasses = ((this.state.lockInput) ? 'lockscreen--locked' : '')
         + ((this.state.allowCodeAnimation) ? ' lockscreen--allowed' : '');
@@ -124,34 +137,15 @@ class MainMenu extends Component {
             <section className={`lockscreen ${lockscreenClasses}`}>
                 <div className="lockscreen__container">
                     <div className="lockscreen__title">Enter Passcode</div>
-                    <div className={`lockscreen__inputs ${dotsInputClasses}`}>
-                        <span data-input="1" className={(code().length >= 1) ? 'filled' : ''} />
-                        <span data-input="2" className={(code().length >= 2) ? 'filled' : ''} />
-                        <span data-input="3" className={(code().length >= 3) ? 'filled' : ''} />
-                        <span data-input="4" className={(code().length >= 4) ? 'filled' : ''} />
-                    </div>
-                    <div className="lockscreen__buttons_row">
-                        <button data-button="1" onClick={this.numberClick}>1</button>
-                        <button data-button="2" onClick={this.numberClick}>2</button>
-                        <button data-button="3" onClick={this.numberClick}>3</button>
-                    </div>
-                    <div className="lockscreen__buttons_row">
-                        <button data-button="4" onClick={this.numberClick}>4</button>
-                        <button data-button="5" onClick={this.numberClick}>5</button>
-                        <button data-button="6" onClick={this.numberClick}>6</button>
-                    </div>
-                    <div className="lockscreen__buttons_row">
-                        <button data-button="7" onClick={this.numberClick}>7</button>
-                        <button data-button="8" onClick={this.numberClick}>8</button>
-                        <button data-button="9" onClick={this.numberClick}>9</button>
-                    </div>
-                    <div className="lockscreen__buttons_row">
-                        <button data-button="0" onClick={this.numberClick}>0</button>
-                    </div>
+                    {this.createInputsRow({ count: 4, className: dotsInputClasses })}
+                    {this.createButtonsRow({ buttons: [1,2,3] })}
+                    {this.createButtonsRow({ buttons: [4,5,6] })}
+                    {this.createButtonsRow({ buttons: [7,8,9] })}
+                    {this.createButtonsRow({ buttons: [0] })}
                 </div>
             </section>
         );
     }
 }
 
-export default MainMenu;
+export default Lockscreen;

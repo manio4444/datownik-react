@@ -1,15 +1,43 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './Lockscreen.css';
 import 'animate.css'
 import axios from "axios";
 
+const LockscreenTitle = ({ resetCodeAnimation, allowCodeAnimation }) => (
+    <div className="lockscreen__title">
+        {!resetCodeAnimation && !allowCodeAnimation && 'Enter Passcode'}
+        {resetCodeAnimation && 'Wrong Code'}
+        {allowCodeAnimation && 'OK'}
+    </div>
+);
+
+const LockscreenButtonsRow = ({ buttons, handleClick }) => (
+    <div className="lockscreen__buttons_row">
+        {buttons.map((i) => <button className={`btn-${i}`} value={i} onClick={handleClick}>{i}</button>)}
+    </div>
+);
+
+const LockscreenInputsRow = ({ codeInput, codeMaxLength, resetCodeAnimation }) => {
+    const codeLength = codeInput.length;
+    const resetClassAnimation = resetCodeAnimation ? ' animated shake' : '';
+    let inputs = [];
+
+    for (let i = 0; i < codeMaxLength; i++) {
+        inputs.push(<span className={(codeLength > i) ? 'filled' : ''} />)
+    }
+
+    return <div className={`lockscreen__inputs${resetClassAnimation}`}>{inputs}</div>
+};
+
 class Lockscreen extends Component {
     state = {
-        opened: true,
         codeInput: '',
         lockInput: false,
         resetCodeAnimation: false,
         allowCodeAnimation: false,
+        resetAnimationTimeout: 1000,
+        allowAnimationTimeout: 1000,
+        codeMaxLength: 4,
     };
 
     keyCodesMap = [
@@ -35,34 +63,28 @@ class Lockscreen extends Component {
         {keyCode: 105, clickNumber: "9"}, //numpad 9
     ];
 
-    numberClick = (e) => {
-        const number = e.target.attributes['data-button'].value;
+    handleClick = e => this.updateCode(e.target.value);
 
-        this.updateCode(number);
-    };
-
-    updateCode = (number) => {
+    updateCode = number => {
         if (this.state.lockInput) return;
 
         const newCode = `${this.state.codeInput}${number}`;
 
         this.setState({
             codeInput: newCode,
+        }, () => {
+            if (newCode.length >= this.state.codeMaxLength) {
+                this.setState({lockInput: true});
+                this.tryCode(newCode);
+            }
         });
-
-        if (newCode.length >= 4) {
-            this.setState({
-                lockInput: true,
-            });
-            this.tryCode(newCode);
-        }
     };
 
-    tryCode = () => {
+    tryCode = codeInput => {
         axios.post(process.env.REACT_APP_ENDPOINT_URL, {
             ajax_action: 'lockscreenAjax',
             operation: 'tryPasscode',
-            code: this.state.codeInput,
+            code: codeInput,
         })
         .then(res => {
             if (res.data.result.isValid) {
@@ -87,7 +109,7 @@ class Lockscreen extends Component {
                 lockInput: false,
                 resetCodeAnimation: false,
             });
-        }, 1000);
+        }, this.state.resetAnimationTimeout);
     };
 
     allowCode = () => {
@@ -95,20 +117,13 @@ class Lockscreen extends Component {
             allowCodeAnimation: true,
         });
         setTimeout(() => {
-                this.setState({
-                    codeInput: '',
-                    allowCodeAnimation: false,
-                });
-                this.props.isLogged(); //TODO - temp ?
-            },
-            1000
-        );
+            this.props.isLogged(); //TODO - temp ?
+        }, this.state.allowAnimationTimeout);
     };
 
     onKeyDown = e => {
-        const keyCode = e.keyCode;
-        this.keyCodesMap.forEach((item) => {
-            if (item.keyCode === keyCode) {
+        this.keyCodesMap.forEach(item => {
+            if (item.keyCode === e.keyCode) {
                 this.updateCode(item.clickNumber);
             }
         })
@@ -122,34 +137,26 @@ class Lockscreen extends Component {
         document.removeEventListener('keydown', this.onKeyDown);
     }
 
-    createButtonsRow = ({ buttons }) => <div className="lockscreen__buttons_row">
-        {buttons.map((button) => <button data-button={button} onClick={this.buttonClick}>{button}</button>)}
-    </div>;
-
-    createInputsRow = ({count, className}) => {
-        const codeLength = this.state.codeInput.length;
-        let inputs = [];
-
-        for (let i = 0; i < count; i++) {
-            inputs.push(<span data-input={i} className={(codeLength > i) ? 'filled' : ''} />)
-        }
-
-        return <div className={`lockscreen__inputs ${className}`}>{inputs}</div>
-    };
-
     render() {
-        const dotsInputClasses = (this.state.resetCodeAnimation) ? 'animated shake' : '';
-        const lockscreenClasses = ((this.state.lockInput) ? 'lockscreen--locked' : '')
-        + ((this.state.allowCodeAnimation) ? ' lockscreen--allowed' : '');
+        const lockedClass = ((this.state.lockInput) ? 'lockscreen--locked' : '');
+        const allowedClass = ((this.state.allowCodeAnimation) ? ' lockscreen--allowed' : '');
+
         return (
-            <section className={`lockscreen ${lockscreenClasses}`}>
+            <section className={`lockscreen ${lockedClass} ${allowedClass}`}>
                 <div className="lockscreen__container">
-                    <div className="lockscreen__title">Enter Passcode</div>
-                    {this.createInputsRow({ count: 4, className: dotsInputClasses })}
-                    {this.createButtonsRow({ buttons: [1,2,3] })}
-                    {this.createButtonsRow({ buttons: [4,5,6] })}
-                    {this.createButtonsRow({ buttons: [7,8,9] })}
-                    {this.createButtonsRow({ buttons: [0] })}
+                    <LockscreenTitle
+                        resetCodeAnimation={this.state.resetCodeAnimation}
+                        allowCodeAnimation={this.state.allowCodeAnimation}
+                    />
+                    <LockscreenInputsRow
+                        codeInput={this.state.codeInput}
+                        codeMaxLength={this.state.codeMaxLength}
+                        resetCodeAnimation={this.state.resetCodeAnimation}
+                    />
+                    <LockscreenButtonsRow buttons={[1,2,3]} handleClick={this.handleClick} />
+                    <LockscreenButtonsRow buttons={[4,5,6]} handleClick={this.handleClick} />
+                    <LockscreenButtonsRow buttons={[7,8,9]} handleClick={this.handleClick} />
+                    <LockscreenButtonsRow buttons={[0]} handleClick={this.handleClick} />
                 </div>
             </section>
         );

@@ -22,15 +22,9 @@ class App extends Component {
         };
 
         if (!this.state.isLogged) {
-            return (
-                <Lockscreen isLogged={this.setIsLogged}/>
-            )
+            return <Lockscreen isLogged={this.setIsLogged} />
         }
-        return (
-            <MainRouter
-                pageConfig={pageConfig}
-            />
-        );
+        return <MainRouter pageConfig={pageConfig} />
     }
 }
 

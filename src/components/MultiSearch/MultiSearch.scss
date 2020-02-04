@@ -16,6 +16,19 @@
     &.ui.table td:not(.no-data) {
       padding: 0;
     }
+
+    &.ui.table td.data-cell-scroll {
+      overflow-x: auto;
+    }
+
+    .result {
+      &__title {
+        a {
+          color: inherit;
+          text-decoration: underline;
+        }
+      }
+    }
   }
 
   &__result-notes {
@@ -27,7 +40,7 @@
   .note-element {
     font-size: 6px;
 
-    &:nth-child(n+5) {
+    &:nth-child(n+9) {
       display: none;
     }
   }

@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
-import BuildDate from "../BuildDate/BuildDate";
+import {
+    BuildVersion,
+    BuildDate,
+    BuildEnv
+} from "../../components";
 
 class Footer extends Component {
 
@@ -12,7 +16,9 @@ class Footer extends Component {
         return (
             <footer className="App-Footer page__section" style={this.getStyles}>
                 <div className='page__container'>
-                    Build Date: <BuildDate/>
+                    <BuildVersion/>
+                    <BuildDate/>
+                    <BuildEnv/>
                 </div>
             </footer>
         );

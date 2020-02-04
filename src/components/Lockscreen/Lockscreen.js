@@ -13,7 +13,7 @@ const LockscreenTitle = ({ resetCodeAnimation, allowCodeAnimation }) => (
 
 const LockscreenButtonsRow = ({ buttons, handleClick }) => (
     <div className="lockscreen__buttons_row">
-        {buttons.map((button) => <button data-button={button} value={button} onClick={handleClick}>{button}</button>)}
+        {buttons.map((i) => <button className={`btn-${i}`} value={i} onClick={handleClick}>{i}</button>)}
     </div>
 );
 
@@ -24,7 +24,7 @@ const LockscreenInputsRow = ({ codeInput, codeMaxLength, resetCodeAnimation }) =
 
     for (let i = 0; i < codeMaxLength; i++) {
         console.log(i);
-        inputs.push(<span data-input={i} className={(codeLength > i) ? 'filled' : ''} />)
+        inputs.push(<span className={(codeLength > i) ? 'filled' : ''} />)
     }
 
     return <div className={`lockscreen__inputs${resetClassAnimation}`}>{inputs}</div>
@@ -66,7 +66,7 @@ class Lockscreen extends Component {
 
     handleClick = e => this.updateCode(e.target.value);
 
-    updateCode = (number) => {
+    updateCode = number => {
         if (this.state.lockInput) return;
 
         const newCode = `${this.state.codeInput}${number}`;
@@ -75,6 +75,7 @@ class Lockscreen extends Component {
             codeInput: newCode,
         }, () => {
             if (newCode.length >= this.state.codeMaxLength) {
+                this.setState({lockInput: true});
                 this.tryCode(newCode);
             }
         });

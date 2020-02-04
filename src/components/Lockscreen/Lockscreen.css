@@ -58,7 +58,7 @@
     margin-bottom: 22px;
 }
 
-.lockscreen [data-input] {
+.lockscreen__inputs span {
     width: 10px;
     height: 10px;
     border: 1px solid white;
@@ -67,7 +67,7 @@
     border-radius: 50%;
 }
 
-.lockscreen [data-input].filled {
+.lockscreen__inputs span.filled {
     background-color: white;
 }
 
@@ -77,7 +77,7 @@
     flex-wrap: nowrap;
     justify-content: center;
 }
-.lockscreen [data-button] {
+.lockscreen__buttons_row button {
     width: 70px;
     min-width: 70px;
     height: 70px;
@@ -95,15 +95,15 @@
     transition: all 0.1s ease;
 }
 
-.lockscreen [data-button]:active {
+.lockscreen__buttons_row button:active {
     background-color: white;
 }
 
-.lockscreen--locked [data-button]:active {
+.lockscreen--locked .lockscreen__buttons_row button:active {
     background-color: red;
 }
 
-.lockscreen [data-button]::after {
+.lockscreen__buttons_row button::after {
     display: block;
     font-size: 10px;
     text-transform: uppercase;
@@ -111,12 +111,12 @@
     font-weight: normal;
 }
 
-.lockscreen [data-button="1"]::after { content: '\0000a0'; }
-.lockscreen [data-button="2"]::after { content: 'abc'; }
-.lockscreen [data-button="3"]::after { content: 'def'; }
-.lockscreen [data-button="4"]::after { content: 'ghi'; }
-.lockscreen [data-button="5"]::after { content: 'jkl'; }
-.lockscreen [data-button="6"]::after { content: 'mno'; }
-.lockscreen [data-button="7"]::after { content: 'pqrs'; }
-.lockscreen [data-button="8"]::after { content: 'tuv'; }
-.lockscreen [data-button="9"]::after { content: 'wxyz'; }
+.lockscreen__buttons_row button.btn-1::after { content: '\0000a0'; }
+.lockscreen__buttons_row button.btn-2::after { content: 'abc'; }
+.lockscreen__buttons_row button.btn-3::after { content: 'def'; }
+.lockscreen__buttons_row button.btn-4::after { content: 'ghi'; }
+.lockscreen__buttons_row button.btn-5::after { content: 'jkl'; }
+.lockscreen__buttons_row button.btn-6::after { content: 'mno'; }
+.lockscreen__buttons_row button.btn-7::after { content: 'pqrs'; }
+.lockscreen__buttons_row button.btn-8::after { content: 'tuv'; }
+.lockscreen__buttons_row button.btn-9::after { content: 'wxyz'; }

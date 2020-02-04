@@ -89,8 +89,11 @@ class MultiSearch extends Component {
 
                 {isResults && <Results>
 
-                    <Results.Result>
-                        <Results.Title>Notes</Results.Title>
+                    <Results.Result
+                        title={'Notes'}
+                        titleUrlTo={'/notatki'}
+                        count={results.notes.length}
+                    >
                         {(results.notes && results.notes.length) ? <Results.Content className='data-cell-scroll'>
                             <SingleNote style={{opacity: 0}}/> {/*for css hack*/}
                             <div className={'multisearch__result-notes'}>

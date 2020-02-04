@@ -1,21 +1,26 @@
 import React, {Component} from 'react';
-import { Button, Table } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { Table } from "semantic-ui-react";
 import 'semantic-ui-css/components/table.min.css'; // TODO - import this in specific component
 
 class MultiSearchResults extends Component {
-    static Result = ({children}) => <Table>{children}</Table>;
-
-    static Title = ({children}) => (
-        <Table.Header>
-            <Table.Row>
-                <Table.HeaderCell verticalAlign={'middle'}>
-                    {children}
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                    <Button size={'mini'} floated='right'>Zobacz więcej</Button>
-                </Table.HeaderCell>
-            </Table.Row>
-        </Table.Header>
+    static Result = ({ children, title, titleUrlTo, count }) => (
+        <Table>
+            <Table.Header>
+                <Table.Row>
+                    <Table.HeaderCell
+                        className={'result__title'}
+                    >
+                        {titleUrlTo && <Link to="/notatki">{title}</Link>}
+                        {!titleUrlTo && {title}}
+                    </Table.HeaderCell>
+                    <Table.HeaderCell textAlign={'right'}>
+                        Znaleziono {count} rekordów
+                    </Table.HeaderCell>
+                </Table.Row>
+            </Table.Header>
+            {children}
+        </Table>
     );
 
     static Content = ({children, className}) => (

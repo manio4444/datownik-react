@@ -21,6 +21,14 @@
       overflow-x: auto;
     }
 
+    .result {
+      &__title {
+        a {
+          color: inherit;
+          text-decoration: underline;
+        }
+      }
+    }
   }
 
   &__result-notes {

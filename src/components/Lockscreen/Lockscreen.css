@@ -62,19 +62,13 @@
     width: 10px;
     height: 10px;
     border: 1px solid white;
-    margin: 11px;
+    margin: 11px 13px;
     display: inline-block;
     border-radius: 50%;
 }
 
 .lockscreen [data-input].filled {
     background-color: white;
-}
-
-.lockscreen--allowed [data-input].filled {
-    border-color: #00ff00;
-    background-color: #00ff00;
-    transition: border-color .3s ease, background-color .3s ease;
 }
 
 .lockscreen__buttons_row {

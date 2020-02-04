@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Table} from "semantic-ui-react";
+import { Button, Table } from "semantic-ui-react";
 import 'semantic-ui-css/components/table.min.css'; // TODO - import this in specific component
 
 class MultiSearchResults extends Component {
@@ -8,7 +8,12 @@ class MultiSearchResults extends Component {
     static Title = ({children}) => (
         <Table.Header>
             <Table.Row>
-                <Table.HeaderCell>{children}</Table.HeaderCell>
+                <Table.HeaderCell verticalAlign={'middle'}>
+                    {children}
+                </Table.HeaderCell>
+                <Table.HeaderCell>
+                    <Button size={'mini'} floated='right'>Zobacz więcej</Button>
+                </Table.HeaderCell>
             </Table.Row>
         </Table.Header>
     );
@@ -16,7 +21,13 @@ class MultiSearchResults extends Component {
     static Content = ({children, className}) => (
         <Table.Body>
             <Table.Row>
-                <Table.Cell style={{position: 'relative'}} className={className}>{children}</Table.Cell>
+                <Table.Cell
+                    style={{ position: 'relative' }}
+                    className={className}
+                    colSpan={2}
+                >
+                    {children}
+                </Table.Cell>
             </Table.Row>
         </Table.Body>
     );

@@ -15,7 +15,11 @@ class MultiSearch extends Component {
         results: {},
     };
 
-    inputSearch = (e, {value}) => {
+    handleKeyDown = e => e.keyCode === 13 && this.doSearch(); // Enter
+
+    handleOnChange = (e, {value}) => {
+        if (this.state.isLoading) return;
+
         this.setState({searchInput: value});
 
         clearTimeout(this.searchTimeout);
@@ -30,6 +34,8 @@ class MultiSearch extends Component {
     };
 
     doSearch = () => {
+        if (this.state.isLoading) return;
+
         clearTimeout(this.searchTimeout);
 
         this.setState({isLoading: true});
@@ -75,16 +81,17 @@ class MultiSearch extends Component {
                         loading: isLoading,
                         disabled: isLoading,
                     }}
-                    disabled={isLoading}
+                    // disabled={isLoading}
                     value={searchInput}
-                    onChange={this.inputSearch}
+                    onChange={this.handleOnChange}
+                    onKeyDown={this.handleKeyDown}
                 />
 
                 {isResults && <Results>
 
                     <Results.Result>
                         <Results.Title>Notes</Results.Title>
-                        {(results.notes && results.notes.length) ? <Results.Content>
+                        {(results.notes && results.notes.length) ? <Results.Content className='data-cell-scroll'>
                             <SingleNote style={{opacity: 0}}/> {/*for css hack*/}
                             <div className={'multisearch__result-notes'}>
                                 {results.notes.map((el) =>

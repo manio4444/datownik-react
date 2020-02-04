@@ -23,7 +23,6 @@ const LockscreenInputsRow = ({ codeInput, codeMaxLength, resetCodeAnimation }) =
     let inputs = [];
 
     for (let i = 0; i < codeMaxLength; i++) {
-        console.log(i);
         inputs.push(<span className={(codeLength > i) ? 'filled' : ''} />)
     }
 

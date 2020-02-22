@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from "axios";
 import './SingleNote.scss'
+import Linkify from 'react-linkify';
 
 class SingleNote extends Component {
     fillBar = false; //for logic only, can't be async
@@ -11,6 +12,7 @@ class SingleNote extends Component {
         isAdding: false,
         isEditing: false,
         isDeleting: false,
+        isFocus: false,
     };
     setFocusTarget = React.createRef();
     placeholder = {
@@ -113,17 +115,22 @@ class SingleNote extends Component {
 
     };
 
+    onFocus = () => this.setState({ isFocus: true });
+
     onBlur = (e) => {
+        this.setState({ isFocus: false });
         if (e.target.value === '' && this.props.id !== 'new') {
             this.delete();
         }
     };
 
-        componentDidMount() {
+    componentDidMount() {
         if (this.props.setFocus) {
             this.setFocusTarget.current.focus();
         }
     }
+
+    LinkifyComponentDecorator = (href, text, key) => <a href={href} key={key} target="_blank">{text}</a>;
 
     render() {
         const {id, readonly, style} = this.props;
@@ -131,6 +138,9 @@ class SingleNote extends Component {
         const progress = (this.state.fillBarAnimation) ? 'fill' : '';
         const progressStyle = {
             transitionDuration: this.state.fillBarDelay + 'ms',
+        };
+        const urlifyStyle = {
+            display: this.state.isFocus ? 'none' : 'block',
         };
         const placeholder = (id === "new") ? this.placeholder.adding : this.placeholder.deleting;
         const isDeleting = (this.state.isDeleting) ? 'deleting' : '';
@@ -146,10 +156,16 @@ class SingleNote extends Component {
                     value={value}
                     onChange={this.onChange}
                     ref={this.setFocusTarget}
+                    onFocus={this.onFocus}
                     onBlur={this.onBlur}
                     disabled={readonly}
                 />
                 <div className={`note-element__progress ${progress}`} style={progressStyle}/>
+                <div className={'note-element__urlify'} style={urlifyStyle}>
+                    <Linkify componentDecorator={this.LinkifyComponentDecorator}>
+                        {value}
+                    </Linkify>
+                </div>
             </div>
 
         );

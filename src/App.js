@@ -8,7 +8,7 @@ import Lockscreen from './components/Lockscreen/Lockscreen';
 
 class App extends Component {
     state = {
-        isLogged: false, //TODO - CREATE QUERY FOR CHECKING
+        isLogged: true, //TODO - CREATE QUERY FOR CHECKING
     };
 
     setIsLogged = () => {

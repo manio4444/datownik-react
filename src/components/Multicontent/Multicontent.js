@@ -1,21 +1,41 @@
 import React, {Component} from 'react';
 import { Form, TextArea, Dropdown } from "semantic-ui-react";
+import ModalNoteAdd from '../Notes/ModalNoteAdd';
 import ModalTodoAdd from '../Todo/ModalTodoAdd';
 import 'semantic-ui-css/components/form.min.css';
 import 'semantic-ui-css/components/dropdown.min.css';
 import 'semantic-ui-css/components/transition.min.css';
 import './Multicontent.scss';
 
+const MULTICONTENT_INPUT_NAME = 'multicontentValue';
+
 class Multicontent extends Component {
     state = {
+        openModalNoteAdd: false,
         openModalTodoAdd: false,
+        openModalEventAdd: false,
+        openModalBookmarkAdd: false,
+        openModalDocAdd: false,
+        openModalContactAdd: false,
+        openModalPassAdd: false,
+        [MULTICONTENT_INPUT_NAME]: '',
     };
 
     handleOption = (e, {action}) => this.setState({[action]: true});
 
+    handleOnChange = (e, {name, value}) => this.setState({[name]: value});
+
     render() {
 
-        const {openModalTodoAdd} = this.state;
+        const {
+            openModalNoteAdd,
+            openModalTodoAdd,
+            openModalEventAdd,
+            openModalBookmarkAdd,
+            openModalDocAdd,
+            openModalContactAdd,
+            openModalPassAdd,
+        } = this.state;
         const options = [
             {
                 text: "Notatka",
@@ -67,8 +87,10 @@ class Multicontent extends Component {
 
                     <TextArea
                         className='multicontent__textarea icon'
-                        name="urladd"
+                        name={[MULTICONTENT_INPUT_NAME]}
                         rows="2"
+                        value={this.state[MULTICONTENT_INPUT_NAME]}
+                        onChange={this.handleOnChange}
                     />
 
                     <Dropdown className='multicontent__button' text='Dodaj nowy' button>
@@ -95,6 +117,12 @@ class Multicontent extends Component {
                     open={openModalTodoAdd}
                     trueCallback={() => console.log('trueCallback')}
                     falseCallback={() => this.setState({openModalTodoAdd: false})}
+                />}
+
+                {openModalNoteAdd && <ModalNoteAdd
+                    value={this.state.multicontentValue}
+                    trueCallback={() => console.log('trueCallback')}
+                    falseCallback={() => this.setState({openModalNoteAdd: false})}
                 />}
             </div>
         );

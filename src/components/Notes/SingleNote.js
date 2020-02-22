@@ -18,6 +18,7 @@ class SingleNote extends Component {
     placeholder = {
         adding: "Zacznij wpisywać tekst aby dodać nową notatkę",
         deleting: "Kliknięcie poza notatką spowoduje usunięcie, naciśnij Ctrl + Z, aby przywrócić",
+        empty: "Notatka jest pusta",
     };
 
     addNew() {
@@ -152,7 +153,7 @@ class SingleNote extends Component {
             >
                 <textarea
                     name="note"
-                    placeholder={placeholder}
+                    placeholder={readonly ? this.placeholder.empty : placeholder}
                     value={value}
                     onChange={this.onChange}
                     ref={this.setFocusTarget}

@@ -88,7 +88,7 @@ class Multicontent extends Component {
                     <TextArea
                         className='multicontent__textarea icon'
                         name={[MULTICONTENT_INPUT_NAME]}
-                        rows="2"
+                        rows="4"
                         value={this.state[MULTICONTENT_INPUT_NAME]}
                         onChange={this.handleOnChange}
                     />

@@ -81,7 +81,7 @@ class MultiSearch extends Component {
                         loading: isLoading,
                         disabled: isLoading,
                     }}
-                    // disabled={isLoading}
+                    className={isLoading && 'disabled'}
                     value={searchInput}
                     onChange={this.handleOnChange}
                     onKeyDown={this.handleKeyDown}

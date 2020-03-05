@@ -10,8 +10,10 @@ import MultiSearch from "../../components/MultiSearch/MultiSearch";
 import { Button } from "semantic-ui-react";
 import ListTodo from "../../components/Todo/ListTodo";
 
-class PageStart extends Component {
-    render() {
+const PageDivider = () => <div className="page__divider"/>;
+const FirstSectionTitle = ({value}) => <h2 className="title">{value}</h2>;
+
+const PageStart = () => {
         return (
             <div className='PageStart'>
                 <section id="main_page" className='page__section'>
@@ -20,13 +22,13 @@ class PageStart extends Component {
 
                         <div className="page__grid-half">
 
-                            <h2 className="multisearch__title">Multi Search:</h2>
+                            <FirstSectionTitle value="Multi Search:" />
 
                             <MultiSearch/>
 
-                            <div className="page__divider"/>
+                            <PageDivider />
 
-                            <h2 className="multicontent__title">Multicontent:</h2>
+                            <FirstSectionTitle value="Multicontent" />
 
                             <Multicontent/>
 
@@ -105,6 +107,5 @@ class PageStart extends Component {
             </div>
         );
     }
-}
 
 export default PageStart;

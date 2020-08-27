@@ -173,6 +173,7 @@ class SingleTodo extends Component {
         const countdown = `${diff.days} Dni, ${diff.hours} Godz. ${diff.minutes} Min. ${diff.seconds} Sek.`;
 
         this.setState({
+            
             isDeadlineExceeded,
             countdown,
         });

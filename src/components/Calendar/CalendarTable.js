@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import moment from "moment";
+import { Icon, Label, Menu, Table } from 'semantic-ui-react'
 
 const DayOfMonth = ({day}) => {
     return <div
@@ -13,49 +13,98 @@ const DayOfMonth = ({day}) => {
 
 class CalendarTable extends Component {
 
-    daysOfMonth = date => {
-        const days = [];
-        const daysInMonth = Number(date.daysInMonth());
-        let dateDay = Number(date.startOf('month').format('D'));
+    daysOfWeek = [
+        'Poniedziałek',
+        'Wtorek',
+        'Środa',
+        'Czwartek',
+        'Piątek',
+        'Sobota',
+        'Niedziela',
+    ];
 
-        while (dateDay <= daysInMonth) {
-            days.push(dateDay);
-            dateDay++;
+    isLastWeekDay = day => Number(day.isoWeekday()) === 7;
+
+    currentMonth = date => {
+        const days = [];
+        let dateDay = date.clone().startOf('month');
+
+        while (dateDay.isSame(date, 'month')) {
+            days.push({
+                id: dateDay.format('YMD'),
+                day: dateDay.format('D'),
+            });
+            dateDay.add(1, 'day');
         }
-        return days
+        return days;
     };
 
-    daysOfPreviousMonth = date => {
-        const prevDate = date.subtract(1, 'months'); //temp
-        const daysInPrevMonth = Number(date.daysInMonth());
-        const endOfPrevMonth = prevDate.endOf('month');
-        const endWeekdayOfPrevMonth = Number(endOfPrevMonth.isoWeekday());
+    previousMonthWeek = date => {
+        const lastDay = date.endOf('month');
+        const lastWeekday = Number(lastDay.isoWeekday());
+
+        if (this.isLastWeekDay(lastDay)) return [];
+
         const prevMonthDays = [];
-        let dateDay = daysInPrevMonth - endWeekdayOfPrevMonth + 1;
+        let day = lastDay.clone().subtract(lastWeekday - 1, 'days');
 
-        if (endWeekdayOfPrevMonth === 7) return [];
-
-        while (dateDay <= daysInPrevMonth) {
-            prevMonthDays.push(dateDay);
-            dateDay++;
+        while (day.isSame(date, 'month')) {
+            prevMonthDays.push({
+                id: day.format('YMD'),
+                day: day.format('D'),
+            });
+            day.add(1, 'day');
         }
-        console.log(prevMonthDays);
-        return prevMonthDays
+
+        return prevMonthDays;
+    };
+
+    daysIntoRows = days => {
+        const rows = [];
+        let row = 1;
+
+        days.forEach((day, i) => {
+            if (!rows[row]) rows[row] = [];
+
+            rows[row].push(day);
+
+            if ((i + 1) % 7 === 0) row++;
+        });
+
+        return rows;
     };
 
     render () {
-        const daysToShow = [
-            ...this.daysOfPreviousMonth(moment()),
-            ...this.daysOfMonth(moment()),
-            // ...this.daysOfNextMonth(moment()),
+        const {date} = this.props;
+        const previousMonth = date.clone().subtract(1, 'months');
+
+        const calendarDays = [
+            ...this.previousMonthWeek(previousMonth),
+            ...this.currentMonth(date),
+            // ...this.nextMonthWeek(nextMonth),
         ];
+        const calendarRows = this.daysIntoRows(calendarDays);
 
         return (
             <React.Fragment>
-                <br/>
-                <div style={{display: 'flex', 'flex-wrap': 'wrap'}}>
-                    {daysToShow.map(day => <DayOfMonth day={day} />)}
-                </div>
+
+                <Table celled>
+                    <Table.Header>
+                        <Table.Row>
+                            {this.daysOfWeek.map(name => <Table.HeaderCell key={name}>
+                                {name}
+                            </Table.HeaderCell>)}
+                        </Table.Row>
+                    </Table.Header>
+
+                    <Table.Body>
+                        {calendarRows.map((row, i) => <Table.Row key={i}>
+                            {row.map(day => <Table.Cell key={day.id}>
+                                {day.day}
+                            </Table.Cell>)}
+                        </Table.Row>)}
+                    </Table.Body>
+                </Table>
 
             </React.Fragment>
         );

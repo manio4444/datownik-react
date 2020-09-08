@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React  from 'react';
 import 'semantic-ui-css/components/button.min.css'; // TODO - import this in specific component
 import 'semantic-ui-css/components/card.min.css'; // TODO - import this in specific component
 import 'semantic-ui-css/components/icon.min.css'; // TODO - import this in specific component

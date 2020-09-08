@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from "moment";
 import CalendarTable from "../../components/Calendar/CalendarTable";
 
 const PageCalendar = () => {
@@ -6,7 +7,7 @@ const PageCalendar = () => {
         <React.Fragment>
             <section className="calendar">
 
-                <CalendarTable />
+                <CalendarTable date={moment('2020-03-03')} />
 
             </section>
         </React.Fragment>

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Table } from 'semantic-ui-react'
+import CalendarDay from './CalendarDay';
+import './CalendarTable.scss';
 
 const daysOfWeek = [
     'Poniedziałek',
@@ -39,6 +41,7 @@ class CalendarTable extends Component {
             prevMonthDays.unshift({
                 iso: day.format(),
                 day: day.format('D'),
+                offset: true,
             });
             day.subtract(1, 'day');
         }
@@ -54,6 +57,7 @@ class CalendarTable extends Component {
             nextMonthDays.push({
                 iso: day.format(),
                 day: day.format('D'),
+                offset: true,
             });
             day.add(1, 'day');
         }
@@ -100,8 +104,11 @@ class CalendarTable extends Component {
 
                 <Table.Body>
                     {calendarRows.map((row, i) => <Table.Row key={i}>
-                        {row.map(day => <Table.Cell key={day.iso}>
-                            {day.day}
+                        {row.map(day => <Table.Cell
+                            key={day.iso}
+                            className={'calendar-table__cell'}
+                        >
+                            <CalendarDay day={day}/>
                         </Table.Cell>)}
                     </Table.Row>)}
                 </Table.Body>

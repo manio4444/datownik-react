@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Table } from 'semantic-ui-react'
 import CalendarDay from './CalendarDay';
 import './CalendarTable.scss';
 
@@ -12,6 +11,17 @@ const daysOfWeek = [
     'Sobota',
     'Niedziela',
 ];
+
+export class Table extends Component {
+    static HeaderRow = ({children}) => <div className="calendar-table__header-row">{children}</div>;
+    static HeaderCell = ({children}) => <div className="calendar-table__header-cell">{children}</div>;
+    static Row = ({children}) => <div className="calendar-table__row">{children}</div>;
+    static Cell = ({children}) => <div className="calendar-table__cell">{children}</div>;
+
+    render() {
+        return <div className={'calendar-table'}>{this.props.children}</div>
+    }
+}
 
 class CalendarTable extends Component {
 
@@ -93,25 +103,20 @@ class CalendarTable extends Component {
         const calendarRows = this.daysIntoRows(calendarDays);
 
         return (
-            <Table celled>
-                <Table.Header>
-                    <Table.Row>
-                        {daysOfWeek.map(name => <Table.HeaderCell key={name}>
-                            {name}
-                        </Table.HeaderCell>)}
-                    </Table.Row>
-                </Table.Header>
+            <Table>
+                <Table.HeaderRow>
+                    {daysOfWeek.map(name => <Table.HeaderCell key={name}>
+                        {name}
+                    </Table.HeaderCell>)}
+                </Table.HeaderRow>
 
-                <Table.Body>
-                    {calendarRows.map((row, i) => <Table.Row key={i}>
-                        {row.map(day => <Table.Cell
-                            key={day.iso}
-                            className={'calendar-table__cell'}
-                        >
-                            <CalendarDay day={day}/>
-                        </Table.Cell>)}
-                    </Table.Row>)}
-                </Table.Body>
+                {calendarRows.map((row, i) => <Table.Row key={i}>
+                    {row.map(day => <Table.Cell
+                        key={day.iso}
+                    >
+                        <CalendarDay day={day}/>
+                    </Table.Cell>)}
+                </Table.Row>)}
             </Table>
         );
     }

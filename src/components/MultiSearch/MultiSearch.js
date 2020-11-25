@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Input} from "semantic-ui-react";
+import React, { Component } from 'react';
+import { Input, Icon } from "semantic-ui-react";
 import './MultiSearch.scss';
 import axios from "axios";
 import Results from "./MultiSearchResults";
@@ -14,6 +14,17 @@ class MultiSearch extends Component {
         isResults: false,
         results: {},
     };
+    clearSearch = () => {
+        this.setState({
+            isResults: false,
+            results: {},
+        })
+    };
+
+    handleClearInput = () => {
+        this.setState({searchInput: ''});
+        this.clearSearch();
+    };
 
     handleKeyDown = e => e.keyCode === 13 && this.doSearch(); // Enter
 
@@ -26,7 +37,7 @@ class MultiSearch extends Component {
 
         this.searchTimeout = setTimeout(() => {
             if (this.state.searchInput.length < this.state.searchMinLength) {
-                console.log('clear search');
+                this.clearSearch();
                 return;
             }
             this.doSearch();
@@ -73,7 +84,11 @@ class MultiSearch extends Component {
                 <Input
                     fluid
                     placeholder='Zacznij wpisywać'
-                    icon='search'
+                    icon={<Icon
+                        name={isResults ? 'close' : 'search'}
+                        link={isResults}
+                        onClick={this.handleClearInput}
+                    />}
                     iconPosition='left'
                     action={{
                         content: 'Szukaj',

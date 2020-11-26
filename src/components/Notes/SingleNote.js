@@ -131,7 +131,7 @@ class SingleNote extends Component {
         }
     }
 
-    LinkifyComponentDecorator = (href, text, key) => <a href={href} key={key} target="_blank">{text}</a>;
+    LinkifyComponentDecorator = (href, text, key) => <a href={href} key={key} target="_blank" rel="noopener noreferrer">{text}</a>;
 
     render() {
         const {id, readonly, style} = this.props;

@@ -7,6 +7,7 @@ import Results from "./MultiSearchResults";
 class MultiSearch extends Component {
     state = {
         searchInput: '',
+        queryString: '',
         searchDelay: 500,
         searchMinLength: 3,
         isLoading: false,
@@ -58,6 +59,7 @@ class MultiSearch extends Component {
             .then(res => {
                 this.setState({
                     results: res.data.result,
+                    queryString: this.state.searchInput,
                     isResults: true,
                 });
             })
@@ -73,6 +75,7 @@ class MultiSearch extends Component {
 
         const {
             searchInput,
+            queryString,
             isLoading,
             isResults,
             results,
@@ -101,7 +104,7 @@ class MultiSearch extends Component {
                     onKeyDown={this.handleKeyDown}
                 />
 
-                {isResults && <Results results={results}/>}
+                {isResults && <Results results={results} query={queryString}/>}
             </div>
         );
     }

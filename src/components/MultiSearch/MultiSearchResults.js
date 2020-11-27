@@ -18,15 +18,20 @@ const ResultsWrapper = ({children}) => (
     </Table>
 );
 
-const ResultsResult = ({resultsComponent, title, titleUrlTo, count}) => (
+const ResultsResult = ({resultsComponent, title, urlTo, count, query}) => (
     <Table>
-        <Table.Header>
+        <Table.Header className={'result__title'}>
             <Table.Row>
-                <Table.HeaderCell className={'result__title'}>
-                    Znaleziono {count} rekordów {titleUrlTo && title && <>typu <Link to={titleUrlTo}>{title}</Link></>}
+                <Table.HeaderCell>
+                    Znaleziono {count} rekordów {urlTo && title && <>typu <Link to={urlTo}>{title}</Link></>}
                 </Table.HeaderCell>
                 <Table.HeaderCell textAlign={'right'}>
-                    więcej >
+                    <Link to={{
+                        pathname: urlTo,
+                        state: {query}
+                    }}>
+                        więcej >>
+                    </Link>
                 </Table.HeaderCell>
             </Table.Row>
         </Table.Header>
@@ -52,7 +57,7 @@ const ResultsContent = ({children, className}) => (
     </Table.Body>
 );
 
-const MultiSearchResults = ({results}) => {
+const MultiSearchResults = ({results, query}) => {
     return (
         <ResultsWrapper>
             {results.map(({type, data}) => {
@@ -61,8 +66,9 @@ const MultiSearchResults = ({results}) => {
                         return <ResultsResult
                             key={type}
                             title={'Notes'}
-                            titleUrlTo={`/${RouterPaths.NOTES}`}
+                            urlTo={`/${RouterPaths.NOTES}`}
                             count={data.length}
+                            query={query}
                             resultsComponent={<ResultsNotes data={data}/>}
                         />;
 
@@ -70,8 +76,9 @@ const MultiSearchResults = ({results}) => {
                         return <ResultsResult
                             key={type}
                             title={'Notes'}
-                            titleUrlTo={`/${RouterPaths.NOTES}`}
+                            urlTo={`/${RouterPaths.NOTES}`}
                             count={data.length}
+                            query={query}
                             resultsComponent={<ResultsNotes data={data}/>}
                         />;
 

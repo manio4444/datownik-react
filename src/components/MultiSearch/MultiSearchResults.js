@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { Table } from "semantic-ui-react";
 import { ResultTypes } from './consts'
+import { RouterPaths } from "../../router/consts";
 
 import ResultsNotes from './components/ResultsNotes'
 
@@ -60,7 +61,7 @@ const MultiSearchResults = ({results}) => {
                         return <ResultsResult
                             key={type}
                             title={'Notes'}
-                            titleUrlTo={'/notatki'}
+                            titleUrlTo={`/${RouterPaths.NOTES}`}
                             count={data.length}
                             resultsComponent={<ResultsNotes data={data}/>}
                         />;
@@ -69,7 +70,7 @@ const MultiSearchResults = ({results}) => {
                         return <ResultsResult
                             key={type}
                             title={'Notes'}
-                            titleUrlTo={'/notatki'}
+                            titleUrlTo={`/${RouterPaths.NOTES}`}
                             count={data.length}
                             resultsComponent={<ResultsNotes data={data}/>}
                         />;

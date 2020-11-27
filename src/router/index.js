@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {BrowserRouter, Route} from 'react-router-dom';
+import { RouterPaths } from "./consts";
 import {
     PageStart,
     PageNotes,
@@ -33,9 +34,9 @@ class MainRouter extends Component {
                     </header>
                     <main style={this.getBlurStyles()}>
                         <Route path="/" exact component={PageStart}/>
-                        <Route path="/notatki" component={PageNotes}/>
-                        <Route path="/do-zrobienia" component={PageTodo}/>
-                        <Route path="/kalendarz" component={PageCalendar}/>
+                        <Route path={`/${RouterPaths.NOTES}`} component={PageNotes}/>
+                        <Route path={`/${RouterPaths.TODO}`} component={PageTodo}/>
+                        <Route path={`/${RouterPaths.CALENDAR}`} component={PageCalendar}/>
                     </main>
                     <Footer/>
                 </div>

@@ -4,6 +4,7 @@ import 'semantic-ui-css/components/card.min.css'; // TODO - import this in speci
 import 'semantic-ui-css/components/icon.min.css'; // TODO - import this in specific component
 import './PageStart.scss';
 import { Link } from "react-router-dom";
+import { RouterPaths } from "../../router/consts";
 import ListNotes from "../../components/Notes/ListNotes";
 import Multicontent from "../../components/Multicontent/Multicontent";
 import MultiSearch from "../../components/MultiSearch/MultiSearch";
@@ -70,7 +71,7 @@ const PageStart = () => {
                                 getFinished={false}
                             />
 
-                            <Link to="/do-zrobienia">
+                            <Link to={`/${RouterPaths.TODO}`}>
                                 <Button fluid>Zobacz wszystkie</Button>
                             </Link>
 
@@ -100,7 +101,7 @@ const PageStart = () => {
                     />
 
                     <div className="notes_more">
-                        <Link className="ui button" to="/notatki">Zobacz wszystkie</Link>
+                        <Link className="ui button" to={`/${RouterPaths.NOTES}`}>Zobacz wszystkie</Link>
                     </div>
 
                 </section>

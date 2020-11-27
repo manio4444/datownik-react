@@ -10,8 +10,7 @@
   -moz-box-shadow: -3px 5px 12px 0 rgba(0, 0, 0, 0.3);
   box-shadow: -3px 5px 12px 0 rgba(0, 0, 0, 0.3);
   margin: 10px;
-  transition: all .2s ease;
-  transition-property: width, height;
+  transition: all .3s ease;
   @media screen and (max-width: 1023px) {
     font-size: 8.5px;
   }
@@ -89,9 +88,7 @@
   }
 
   &.deleting {
-    background-color: #fa6161;
-    transition-property: transform;
-    transform: rotate(-45deg);
-    transform-origin: center left;
+    transform: scale(0.5);
+    opacity: 0;
   }
 }

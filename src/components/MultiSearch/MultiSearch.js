@@ -104,7 +104,7 @@ class MultiSearch extends Component {
                     onKeyDown={this.handleKeyDown}
                 />
 
-                {isResults && <Results results={results} query={queryString}/>}
+                {isResults && <Results results={results} queryString={queryString}/>}
             </div>
         );
     }

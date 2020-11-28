@@ -18,7 +18,7 @@ const ResultsWrapper = ({children}) => (
     </Table>
 );
 
-const ResultsResult = ({resultsComponent, title, urlTo, count, query}) => (
+const ResultsResult = ({resultsComponent, title, urlTo, count, queryString}) => (
     <Table>
         <Table.Header className={'result__title'}>
             <Table.Row>
@@ -28,7 +28,7 @@ const ResultsResult = ({resultsComponent, title, urlTo, count, query}) => (
                 <Table.HeaderCell textAlign={'right'}>
                     <Link to={{
                         pathname: urlTo,
-                        state: {query}
+                        state: {queryString}
                     }}>
                         więcej >>
                     </Link>
@@ -57,7 +57,7 @@ const ResultsContent = ({children, className}) => (
     </Table.Body>
 );
 
-const MultiSearchResults = ({results, query}) => {
+const MultiSearchResults = ({results, queryString}) => {
     return (
         <ResultsWrapper>
             {results.map(({type, data}) => {
@@ -68,7 +68,7 @@ const MultiSearchResults = ({results, query}) => {
                             title={'Notes'}
                             urlTo={`/${RouterPaths.NOTES}`}
                             count={data.length}
-                            query={query}
+                            queryString={queryString}
                             resultsComponent={<ResultsNotes data={data}/>}
                         />;
 
@@ -78,7 +78,7 @@ const MultiSearchResults = ({results, query}) => {
                             title={'Notes'}
                             urlTo={`/${RouterPaths.NOTES}`}
                             count={data.length}
-                            query={query}
+                            queryString={queryString}
                             resultsComponent={<ResultsNotes data={data}/>}
                         />;
 

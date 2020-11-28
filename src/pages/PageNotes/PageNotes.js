@@ -1,22 +1,28 @@
-import React, {Component} from 'react';
+import React, { useState } from 'react';
 import ListNotes from "../../components/Notes/ListNotes";
+import SearchNotes from "../../components/Notes/SearchNotes";
 
-class PageNotes extends Component {
+const PageNotes = ({location: {state: {queryString} = {}}}) => {
 
-    render() {
-        return (
+    const [searchQuery, setSearchQuery] = useState(queryString ? queryString : null);
+
+    return (
         <React.Fragment>
             <section className="notes">
+                <SearchNotes
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
+                />
 
                 <ListNotes
                     viewOnly={false}
                     limit={0}
+                    searchQuery={searchQuery}
                 />
 
             </section>
         </React.Fragment>
-        );
-    }
-}
+    );
+};
 
 export default PageNotes;

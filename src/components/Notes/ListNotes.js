@@ -57,8 +57,16 @@ class ListNotes extends Component {
         this.setState({list});
     };
 
+    getSearch () {
+        return this.state.list.filter(note => {
+            if (!note.value) return false;
+
+            return note.value.toLowerCase().indexOf(this.props.searchQuery.toLowerCase()) !== -1
+        })
+    }
+
     render() {
-        const notes = this.state.list;
+        const notes = this.props.searchQuery ? this.getSearch() : this.state.list;
 
         return (
             <div className="notes_container">

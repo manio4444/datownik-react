@@ -99,8 +99,9 @@
     background-color: white;
 }
 
-.lockscreen--locked .lockscreen__buttons_row button:active {
-    background-color: red;
+.lockscreen--locked .lockscreen__buttons_row {
+    opacity: .3;
+    pointer-events: none;
 }
 
 .lockscreen__buttons_row button::after {

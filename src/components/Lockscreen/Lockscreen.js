@@ -19,7 +19,7 @@ const LockscreenButtonsRow = ({ buttons, handleClick }) => (
 
 const LockscreenInputsRow = ({ codeInput, codeMaxLength, resetCodeAnimation }) => {
     const codeLength = codeInput.length;
-    const resetClassAnimation = resetCodeAnimation ? ' animated shake' : '';
+    const resetClassAnimation = resetCodeAnimation ? ' animate__animated animate__shakeX' : '';
     let inputs = [];
 
     for (let i = 0; i < codeMaxLength; i++) {

@@ -1,7 +1,12 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import { Form, TextArea, Dropdown } from "semantic-ui-react";
+
+import { DropdownOptions } from "./const";
+import { RouterPaths } from "../../router/consts"; //TEMP
 import ModalNoteAdd from '../Notes/ModalNoteAdd';
 import ModalTodoAdd from '../Todo/ModalTodoAdd';
+
 import 'semantic-ui-css/components/form.min.css';
 import 'semantic-ui-css/components/dropdown.min.css';
 import 'semantic-ui-css/components/transition.min.css';
@@ -11,75 +16,37 @@ const MULTICONTENT_INPUT_NAME = 'multicontentValue';
 
 class Multicontent extends Component {
     state = {
-        openModalNoteAdd: false,
-        openModalTodoAdd: false,
-        openModalEventAdd: false,
-        openModalBookmarkAdd: false,
-        openModalDocAdd: false,
-        openModalContactAdd: false,
-        openModalPassAdd: false,
+        modalNoteAdd: false,
+        modalTodoAdd: false,
+        modalEventAdd: false,
+        modalBookmarkAdd: false,
+        modalDocAdd: false,
+        modalContactAdd: false,
+        modalPassAdd: false,
         [MULTICONTENT_INPUT_NAME]: '',
     };
+
+    closeModal = (modal) => this.setState({[modal]: false});
 
     handleOption = (e, {action}) => this.setState({[action]: true});
 
     handleOnChange = (e, {name, value}) => this.setState({[name]: value});
 
-    render() {
+    handleTrueCallback = (modal = '') => {
+        this.setState({[MULTICONTENT_INPUT_NAME]: ''});
 
-        const {
-            openModalNoteAdd,
-            openModalTodoAdd,
-            openModalEventAdd,
-            openModalBookmarkAdd,
-            openModalDocAdd,
-            openModalContactAdd,
-            openModalPassAdd,
-        } = this.state;
-        const options = [
-            {
-                text: "Notatka",
-                icon: 'sticky note outline',
-                description: 'Not ready',
-                action: 'openModalNoteAdd'
-            },
-            {
-                text: "Zadanie",
-                icon: 'calendar check outline',
-                action: 'openModalTodoAdd'
-            },
-            {divider: true},
-            {
-                text: "Wydarzenie",
-                icon: 'calendar outline',
-                description: 'Not ready',
-                action: 'openModalEventAdd'
-            },
-            {
-                text: "Zakładka",
-                icon: 'external',
-                description: 'Not ready',
-                action: 'openModalBookmarkAdd'
-            },
-            {
-                text: "Dokument",
-                icon: 'question',
-                description: 'Not ready',
-                action: 'openModalDocAdd'
-            },
-            {
-                text: "Kontakt",
-                icon: 'question',
-                description: 'Not ready',
-                action: 'openModalContactAdd'
-            },
-            {
-                text: "Kod/hasło",
-                icon: 'question',
-                description: 'Not ready',
-                action: 'openModalPassAdd'
-            },
-        ];
+        if (modal) {
+            this.setState({[modal]: false});
+        }
+
+        const redirectAfter = RouterPaths.NOTES; //TEMP
+        if (redirectAfter) {
+            this.props.history.push(`/${redirectAfter}`);
+        }
+    };
+
+    render() {
+        const {state} = this;
 
         return (
             <div className="multicontent">
@@ -95,7 +62,7 @@ class Multicontent extends Component {
 
                     <Dropdown className='multicontent__button' text='Dodaj nowy' button>
                         <Dropdown.Menu>
-                            {options.map((option, i) => {
+                            {DropdownOptions.map((option, i) => {
                                 if (option.divider === true) return (<Dropdown.Divider key={i}/>);
                                 return (
                                     <Dropdown.Item
@@ -113,20 +80,20 @@ class Multicontent extends Component {
 
                 </Form>
 
-                {openModalTodoAdd && <ModalTodoAdd
-                    open={openModalTodoAdd}
-                    trueCallback={() => console.log('trueCallback')}
-                    falseCallback={() => this.setState({openModalTodoAdd: false})}
+                {state.modalTodoAdd && <ModalTodoAdd
+                    open={state.modalTodoAdd}
+                    trueCallback={() => this.handleTrueCallback('modalTodoAdd')}
+                    falseCallback={() => this.closeModal('modalTodoAdd')}
                 />}
 
-                {openModalNoteAdd && <ModalNoteAdd
-                    value={this.state.multicontentValue}
-                    trueCallback={() => console.log('trueCallback')}
-                    falseCallback={() => this.setState({openModalNoteAdd: false})}
+                {state.modalNoteAdd && <ModalNoteAdd
+                    value={state.multicontentValue}
+                    trueCallback={() => this.handleTrueCallback('modalNoteAdd')}
+                    falseCallback={() => this.closeModal('modalNoteAdd')}
                 />}
             </div>
         );
     }
 }
 
-export default Multicontent;
+export default withRouter(Multicontent);

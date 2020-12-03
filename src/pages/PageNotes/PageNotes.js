@@ -4,7 +4,7 @@ import SearchNotes from "../../components/Notes/SearchNotes";
 
 const PageNotes = ({location: {state: {queryString} = {}}}) => {
 
-    const [searchQuery, setSearchQuery] = useState(queryString ? queryString : null);
+    const [searchQuery, setSearchQuery] = useState(queryString ? queryString : '');
 
     return (
         <React.Fragment>

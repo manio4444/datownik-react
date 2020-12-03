@@ -13,7 +13,7 @@ const SearchNotes = ({searchQuery, setSearchQuery}) => {
             placeholder='Szukaj notatek'
             icon={<Icon
                 name={searchQuery ? 'close' : 'search'}
-                link={searchQuery}
+                link={!!searchQuery}
                 onClick={handleClearValue}
             />}
             iconPosition='left'

@@ -1,7 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import axios from "axios";
-import './SingleNote.scss'
 import Linkify from 'react-linkify';
+
+import addNewNote from './actions';
+
+import './SingleNote.scss'
 
 class SingleNote extends Component {
     fillBar = false; //for logic only, can't be async
@@ -22,25 +25,15 @@ class SingleNote extends Component {
     };
 
     addNew() {
-        this.setState({
-            isAdding: true,
-        });
-        axios.post(process.env.REACT_APP_ENDPOINT_URL, {
-            ajax_action: 'notesAjax',
-            operation: 'addNote',
-            txt: this.state.txt,
+        this.setState({isAdding: true});
+
+        addNewNote({
+            txt: this.state.txt
         })
-            .then(res => {
-                this.props.addedNew(res.data.result);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-            .finally(() => {
-            this.setState({
-                isAdding: false,
-            });
-        });
+            .then(res => this.props.addedNew(res.data.result))
+            .catch(error => console.error(error))
+            .finally(() => this.setState({isAdding: false})
+            );
     };
 
     edit() {

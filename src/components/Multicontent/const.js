@@ -10,6 +10,7 @@ export const DropdownOptions = [
     {
         text: "Zadanie",
         icon: 'calendar check outline',
+        description: 'Not ready',
         action: 'modalTodoAdd',
     },
     {divider: true},

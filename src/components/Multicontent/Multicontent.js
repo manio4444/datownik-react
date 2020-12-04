@@ -3,7 +3,6 @@ import { withRouter } from 'react-router';
 import { Form, TextArea, Dropdown } from "semantic-ui-react";
 
 import { DropdownOptions } from "./const";
-import { RouterPaths } from "../../router/consts"; //TEMP
 import ModalNoteAdd from '../Notes/ModalNoteAdd';
 import ModalTodoAdd from '../Todo/ModalTodoAdd';
 
@@ -26,22 +25,24 @@ class Multicontent extends Component {
         [MULTICONTENT_INPUT_NAME]: '',
     };
 
-    closeModal = (modal) => this.setState({[modal]: false});
+    closeModal = modalName => this.setState({[modalName]: false});
+
+    getModalConfig = modalName => DropdownOptions.find(option => option.action === modalName);
 
     handleOption = (e, {action}) => this.setState({[action]: true});
 
     handleOnChange = (e, {name, value}) => this.setState({[name]: value});
 
-    handleTrueCallback = (modal = '') => {
-        this.setState({[MULTICONTENT_INPUT_NAME]: ''});
+    handleTrueCallback = (modalName) => {
+        const {redirectAfter} = this.getModalConfig(modalName);
 
-        if (modal) {
-            this.setState({[modal]: false});
-        }
-
-        const redirectAfter = RouterPaths.NOTES; //TEMP
         if (redirectAfter) {
             this.props.history.push(`/${redirectAfter}`);
+        } else {
+            this.setState({
+                [MULTICONTENT_INPUT_NAME]: '',
+                [modalName]: false,
+            });
         }
     };
 

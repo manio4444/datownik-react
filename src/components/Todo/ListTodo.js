@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
+
 import SingleTodo from './SingleTodo';
+import SingleTodoAdd from './SingleTodoAdd';
 import ModalTodoAdd from './ModalTodoAdd';
+
 import './ListTodo.scss';
 import axios from 'axios';
 
@@ -57,22 +60,11 @@ class ListTodo extends Component {
         })
     };
 
-    handleAddNew = (data) => {
-        axios.post(process.env.REACT_APP_ENDPOINT_URL, {
-            ajax_action: 'tasksAjax',
-            operation: 'saveTask',
-            txt: data.title,
-            no_deadline: data.isDeadline ? '0' : '1',
-            deadline: data.deadline,
-        })
-            .then(res => {
-                const list = [this.mapQuery(res.data.result.newElement), ...this.state.list];
-                this.setState({ list });
-                this.ModalTodoAddClose();
-            })
-            .catch(error => {
-                console.log(error);
-            });
+    handleAddNew = (newElement) => {
+        this.setState({
+            list: [this.mapQuery(newElement), ...this.state.list],
+        });
+        this.ModalTodoAddClose();
     };
 
     componentDidMount() {
@@ -90,16 +82,11 @@ class ListTodo extends Component {
         return (
             <div className="todos__list">
 
-                {!viewOnly && <SingleTodo
-                    addNew={true}
-                    handleAddNew={this.ModalTodoAdd}
-                />
-                }
+                {!viewOnly && <SingleTodoAdd handleAddNew={this.ModalTodoAdd}/>}
 
                 {openModalTodoAdd && <ModalTodoAdd
-                    open={openModalTodoAdd}
-                    trueCallback={this.handleAddNew.bind(this)}
-                    falseCallback={this.ModalTodoAddClose.bind(this)}
+                    trueCallback={this.handleAddNew}
+                    falseCallback={this.ModalTodoAddClose}
                 />}
 
                 {fetchingData &&

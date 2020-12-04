@@ -82,7 +82,7 @@ class Multicontent extends Component {
                 </Form>
 
                 {state.modalTodoAdd && <ModalTodoAdd
-                    open={state.modalTodoAdd}
+                    value={state.multicontentValue}
                     trueCallback={() => this.handleTrueCallback('modalTodoAdd')}
                     falseCallback={() => this.closeModal('modalTodoAdd')}
                 />}

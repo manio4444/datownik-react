@@ -16,7 +16,7 @@ const ModalTodoAdd = ({ value, trueCallback, falseCallback }) => {
         addNewNote({
             txt: value
         })
-            .then(response => trueCallback(response))
+            .then(response => response && trueCallback(response))
             .catch(error => console.error(error))
             .finally(() => setIsAdding(false))
     };

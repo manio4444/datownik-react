@@ -32,8 +32,7 @@ class SingleNote extends Component {
         })
             .then(res => this.props.addedNew(res.data.result))
             .catch(error => console.error(error))
-            .finally(() => this.setState({isAdding: false})
-            );
+            .finally(() => this.setState({isAdding: false}));
     };
 
     edit() {

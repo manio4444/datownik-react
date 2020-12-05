@@ -12,6 +12,7 @@ class ListTodo extends Component {
         list: [],
         openModalTodoAdd: false,
         fetchingData: true,
+        placeholders: Number.isInteger(this.props.placeholders) ? this.props.placeholders : 3,
     };
 
     mapQuery(data) {
@@ -76,8 +77,15 @@ class ListTodo extends Component {
         const {
             fetchingData,
             openModalTodoAdd,
+            placeholders,
         } = this.state;
         const { viewOnly } = this.props;
+
+        const placeholdersRender = [];
+
+        for (let i = 0; i < placeholders; i++) {
+            placeholdersRender.push(<SingleTodo key={i} placeholder {...this.props}/>)
+        }
 
         return (
             <div className="todos__list">
@@ -89,13 +97,7 @@ class ListTodo extends Component {
                     falseCallback={this.ModalTodoAddClose}
                 />}
 
-                {fetchingData &&
-                    <React.Fragment>
-                        <SingleTodo placeholder {...this.props}/>
-                        <SingleTodo placeholder {...this.props}/>
-                        <SingleTodo placeholder {...this.props}/>
-                    </React.Fragment>
-                }
+                {fetchingData && <React.Fragment>{placeholdersRender}</React.Fragment>}
 
                 {!fetchingData && todos.map((todo) => {
                     return (

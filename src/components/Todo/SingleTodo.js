@@ -261,6 +261,36 @@ class SingleTodo extends Component {
             );
         }
 
+        if (placeholder) {
+            return (
+                <Card className={'todo_element'}>
+                    <Card.Content>
+                        <Card.Header><Placeholder/></Card.Header>
+                        <Card.Description className="ui form">
+                            <Form.Field>
+                                <Checkbox toggle disabled defaultChecked/>
+                            </Form.Field>
+
+                            <Form.Field>
+                                <label>deadline:</label>
+                                <Placeholder/>
+                            </Form.Field>
+
+                            <Form.Field>
+                                <label>countdown:</label>
+                                <Placeholder/>
+                            </Form.Field>
+                        </Card.Description>
+                    </Card.Content>
+
+                    <Button color={"teal"} disabled>
+                        <Icon name={'check square outline'}/>
+                        Oznacz jako wykonane
+                    </Button>
+                </Card>
+            );
+        }
+
         return (
 
             <Card className={`todo_element task ${isFinishedClass} ${isDeadlineClass}`}>

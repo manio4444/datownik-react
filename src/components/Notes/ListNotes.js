@@ -8,6 +8,8 @@ import './ListNotes.scss'
 class ListNotes extends Component {
     state = {
         list: [],
+        fetchingData: true,
+        placeholders: Number.isInteger(this.props.placeholders) ? this.props.placeholders : 4,
     };
 
     getNotesList() {
@@ -24,7 +26,10 @@ class ListNotes extends Component {
                     }
                 });
                 list.unshift({id: "new"});
-                this.setState({list});
+                this.setState({
+                    list,
+                    fetchingData: false
+                });
 
             })
             .catch(function (error) {
@@ -68,7 +73,15 @@ class ListNotes extends Component {
     }
 
     render() {
-        const notes = this.props.searchQuery ? this.getSearch() : this.state.list;
+        let notes = [];
+        if (this.state.fetchingData) {
+            for (let id = 0; id < this.state.placeholders; id++) notes.push({
+                id,
+                placeholder: true,
+            });
+        } else {
+            notes = this.props.searchQuery ? this.getSearch() : this.state.list;
+        }
 
         return (
             <React.Fragment>
@@ -87,6 +100,7 @@ class ListNotes extends Component {
                                 addedNew={this.addedNew.bind(this)}
                                 setFocus={note.setFocus}
                                 deletedCallback={this.deletedNote.bind(this)}
+                                placeholder={note.placeholder}
                             />
                         );
                     })}

@@ -3,6 +3,7 @@ import axios from "axios";
 import Linkify from 'react-linkify';
 
 import addNewNote from './actions';
+import Placeholder from "../Placeholder/Placeholder";
 
 import './SingleNote.scss'
 
@@ -137,6 +138,19 @@ class SingleNote extends Component {
         };
         const placeholder = (id === "new") ? this.placeholder.adding : this.placeholder.deleting;
         const isDeleting = (this.state.isDeleting) ? 'deleting' : '';
+
+        if (this.props.placeholder) {
+            return (
+                <div className={'note-element'}>
+                    <div className={'note-element__urlify'}>
+                        <Placeholder />
+                        <Placeholder />
+                        <Placeholder />
+                    </div>
+                </div>
+            );
+        }
+
         return (
 
             <div

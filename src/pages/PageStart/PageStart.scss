@@ -12,7 +12,7 @@
       margin-bottom: 25px;
     }
 
-    .multicontent__title {
+    .title {
     }
 
 
@@ -36,6 +36,12 @@
 
 .main_page_dates .ui.card > .content > .header:hover {
   overflow: visible;
+}
+
+.main_page_dates .ui.card > .extra.content {
+  font-size: 0.85714em;
+  color: rgba(0,0,0,.6);
+  padding: .5em .75em;
 }
 
 .main_page_dates .ui.red.card {

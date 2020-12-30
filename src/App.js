@@ -8,7 +8,7 @@ import Lockscreen from './components/Lockscreen/Lockscreen';
 
 class App extends Component {
     state = {
-        isLogged: false, //TODO - CREATE QUERY FOR CHECKING
+        isLogged: process.env.REACT_APP_ENV === 'dev', //TODO - CREATE QUERY FOR CHECKING
     };
 
     setIsLogged = () => {

@@ -1,18 +1,29 @@
-import React, {Component} from 'react';
-import {Input} from "semantic-ui-react";
+import React, { Component } from 'react';
+import { Input, Icon } from "semantic-ui-react";
 import './MultiSearch.scss';
 import axios from "axios";
 import Results from "./MultiSearchResults";
-import SingleNote from "../Notes/SingleNote";
 
 class MultiSearch extends Component {
     state = {
         searchInput: '',
+        queryString: '',
         searchDelay: 500,
         searchMinLength: 3,
         isLoading: false,
         isResults: false,
         results: {},
+    };
+    clearSearch = () => {
+        this.setState({
+            isResults: false,
+            results: {},
+        })
+    };
+
+    handleClearInput = () => {
+        this.setState({searchInput: ''});
+        this.clearSearch();
     };
 
     handleKeyDown = e => e.keyCode === 13 && this.doSearch(); // Enter
@@ -26,7 +37,7 @@ class MultiSearch extends Component {
 
         this.searchTimeout = setTimeout(() => {
             if (this.state.searchInput.length < this.state.searchMinLength) {
-                console.log('clear search');
+                this.clearSearch();
                 return;
             }
             this.doSearch();
@@ -48,6 +59,7 @@ class MultiSearch extends Component {
             .then(res => {
                 this.setState({
                     results: res.data.result,
+                    queryString: this.state.searchInput,
                     isResults: true,
                 });
             })
@@ -63,6 +75,7 @@ class MultiSearch extends Component {
 
         const {
             searchInput,
+            queryString,
             isLoading,
             isResults,
             results,
@@ -73,7 +86,11 @@ class MultiSearch extends Component {
                 <Input
                     fluid
                     placeholder='Zacznij wpisywać'
-                    icon='search'
+                    icon={<Icon
+                        name={isResults ? 'close' : 'search'}
+                        link={isResults}
+                        onClick={this.handleClearInput}
+                    />}
                     iconPosition='left'
                     action={{
                         content: 'Szukaj',
@@ -81,34 +98,13 @@ class MultiSearch extends Component {
                         loading: isLoading,
                         disabled: isLoading,
                     }}
-                    // disabled={isLoading}
+                    className={isLoading ? 'disabled' : ''}
                     value={searchInput}
                     onChange={this.handleOnChange}
                     onKeyDown={this.handleKeyDown}
                 />
 
-                {isResults && <Results>
-
-                    <Results.Result
-                        title={'Notes'}
-                        titleUrlTo={'/notatki'}
-                        count={results.notes.length}
-                    >
-                        {(results.notes && results.notes.length) ? <Results.Content className='data-cell-scroll'>
-                            <SingleNote style={{opacity: 0}}/> {/*for css hack*/}
-                            <div className={'multisearch__result-notes'}>
-                                {results.notes.map((el) =>
-                                    <SingleNote
-                                        key={el.id}
-                                        value={el.txt}
-                                        readonly
-                                    />
-                                )}
-                            </div>
-                        </Results.Content> : <Results.Content className='no-data'>No data found</Results.Content>}
-                    </Results.Result>
-
-                </Results>}
+                {isResults && <Results results={results} queryString={queryString}/>}
             </div>
         );
     }

@@ -10,6 +10,7 @@ class PageTodo extends Component {
                 <ListTodo
                     viewOnly={false}
                     limit={0}
+                    placeholders={5}
                 />
 
             </section>

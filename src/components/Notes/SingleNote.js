@@ -1,5 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import axios from "axios";
+import Linkify from 'react-linkify';
+
+import addNewNote from './actions';
+
 import './SingleNote.scss'
 
 class SingleNote extends Component {
@@ -11,33 +15,24 @@ class SingleNote extends Component {
         isAdding: false,
         isEditing: false,
         isDeleting: false,
+        isFocus: false,
     };
     setFocusTarget = React.createRef();
     placeholder = {
         adding: "Zacznij wpisywać tekst aby dodać nową notatkę",
         deleting: "Kliknięcie poza notatką spowoduje usunięcie, naciśnij Ctrl + Z, aby przywrócić",
+        empty: "Notatka jest pusta",
     };
 
     addNew() {
-        this.setState({
-            isAdding: true,
-        });
-        axios.post(process.env.REACT_APP_ENDPOINT_URL, {
-            ajax_action: 'notesAjax',
-            operation: 'addNote',
-            txt: this.state.txt,
+        this.setState({isAdding: true});
+
+        addNewNote({
+            txt: this.state.txt
         })
-            .then(res => {
-                this.props.addedNew(res.data.result);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-            .finally(() => {
-            this.setState({
-                isAdding: false,
-            });
-        });
+            .then(res => this.props.addedNew(res.data.result))
+            .catch(error => console.error(error))
+            .finally(() => this.setState({isAdding: false}));
     };
 
     edit() {
@@ -113,17 +108,22 @@ class SingleNote extends Component {
 
     };
 
+    onFocus = () => this.setState({ isFocus: true });
+
     onBlur = (e) => {
+        this.setState({ isFocus: false });
         if (e.target.value === '' && this.props.id !== 'new') {
             this.delete();
         }
     };
 
-        componentDidMount() {
+    componentDidMount() {
         if (this.props.setFocus) {
             this.setFocusTarget.current.focus();
         }
     }
+
+    LinkifyComponentDecorator = (href, text, key) => <a href={href} key={key} target="_blank" rel="noopener noreferrer">{text}</a>;
 
     render() {
         const {id, readonly, style} = this.props;
@@ -131,6 +131,9 @@ class SingleNote extends Component {
         const progress = (this.state.fillBarAnimation) ? 'fill' : '';
         const progressStyle = {
             transitionDuration: this.state.fillBarDelay + 'ms',
+        };
+        const urlifyStyle = {
+            display: this.state.isFocus ? 'none' : 'block',
         };
         const placeholder = (id === "new") ? this.placeholder.adding : this.placeholder.deleting;
         const isDeleting = (this.state.isDeleting) ? 'deleting' : '';
@@ -142,14 +145,20 @@ class SingleNote extends Component {
             >
                 <textarea
                     name="note"
-                    placeholder={placeholder}
+                    placeholder={readonly ? this.placeholder.empty : placeholder}
                     value={value}
                     onChange={this.onChange}
                     ref={this.setFocusTarget}
+                    onFocus={this.onFocus}
                     onBlur={this.onBlur}
                     disabled={readonly}
                 />
                 <div className={`note-element__progress ${progress}`} style={progressStyle}/>
+                <div className={'note-element__urlify'} style={urlifyStyle}>
+                    <Linkify componentDecorator={this.LinkifyComponentDecorator}>
+                        {value}
+                    </Linkify>
+                </div>
             </div>
 
         );

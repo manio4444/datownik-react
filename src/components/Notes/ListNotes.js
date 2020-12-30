@@ -1,7 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import SingleNote from './SingleNote';
 import '../../assets/css/notes.css';
 import axios from 'axios';
+
+import './ListNotes.scss'
 
 class ListNotes extends Component {
     state = {
@@ -57,26 +59,41 @@ class ListNotes extends Component {
         this.setState({list});
     };
 
+    getSearch () {
+        return this.state.list.filter(note => {
+            if (!note.value) return false;
+
+            return note.value.toLowerCase().indexOf(this.props.searchQuery.toLowerCase()) !== -1
+        })
+    }
+
     render() {
-        const notes = this.state.list;
+        const notes = this.props.searchQuery ? this.getSearch() : this.state.list;
 
         return (
-            <div className="notes_container">
+            <React.Fragment>
+                {this.props.searchQuery && <div className={'notes_found'}>
+                    <p>Znaleziono {notes.length} wyników dla "{this.props.searchQuery}"</p>
+                </div>}
 
-                {notes.map((note) => {
-                    return (
-                        <SingleNote
-                            key={note.id}
-                            id={note.id}
-                            value={note.value}
-                            addedNew={this.addedNew.bind(this)}
-                            setFocus={note.setFocus}
-                            deletedCallback={this.deletedNote.bind(this)}
-                        />
-                    );
-                })}
+                <div className="notes_container">
 
-            </div>
+                    {notes.map((note) => {
+                        return (
+                            <SingleNote
+                                key={note.id}
+                                id={note.id}
+                                value={note.value}
+                                addedNew={this.addedNew.bind(this)}
+                                setFocus={note.setFocus}
+                                deletedCallback={this.deletedNote.bind(this)}
+                            />
+                        );
+                    })}
+
+                </div>
+            </React.Fragment>
+
         );
     }
 }

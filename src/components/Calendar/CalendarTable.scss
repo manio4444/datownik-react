@@ -1,0 +1,65 @@
+.calendar-table {
+  width: 100%;
+  background: #fff;
+  margin: 1em 0;
+  border: 1px solid rgba(34,36,38,.15);
+  box-shadow: none;
+  border-radius: .28571429rem;
+  text-align: left;
+  color: rgba(0,0,0,.87);
+  border-collapse: separate;
+  border-spacing: 0;
+
+  &__row {
+    display: flex;
+  }
+  &__row + &__row &__cell {
+    border-top: 1px solid rgba(34,36,38,.1);
+  }
+  &__cell,
+  &__header-cell {
+    border-left: 1px solid rgba(34,36,38,.1);
+    width: calc(100% / 7);
+    padding: 0;
+    padding-bottom: calc(100% / 7);
+    position: relative;
+    &:first-child {
+      border-left: none;
+    }
+  }
+
+  &__header-row {
+    display: flex;
+  }
+  &__header-cell {
+    cursor: auto;
+    background: #f9fafb;
+    text-align: inherit;
+    color: rgba(0, 0, 0, .87);
+    padding: .92857143em .78571429em;
+    vertical-align: inherit;
+    font-style: none;
+    font-weight: 700;
+    text-transform: none;
+    border-bottom: 1px solid rgba(34, 36, 38, .1);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    &:first-child {
+      border-radius: .28571429rem 0 0 0;
+    }
+  }
+
+  &__day {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 2.5rem;
+    opacity: .6;
+    &--offset {
+      opacity: .2;
+    }
+  }
+}

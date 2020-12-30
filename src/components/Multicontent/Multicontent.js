@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
-import { Form, TextArea, Dropdown } from "semantic-ui-react";
+import { Form, TextArea, Dropdown, Button } from "semantic-ui-react";
 
-import { DropdownOptions } from "./const";
+import { DropdownOptions, DropdownDefault } from "./const";
 import ModalNoteAdd from '../Notes/ModalNoteAdd';
 import ModalTodoAdd from '../Todo/ModalTodoAdd';
 
 import 'semantic-ui-css/components/form.min.css';
+import 'semantic-ui-css/components/button.min.css';
 import 'semantic-ui-css/components/dropdown.min.css';
 import 'semantic-ui-css/components/transition.min.css';
 import './Multicontent.scss';
@@ -23,13 +24,37 @@ class Multicontent extends Component {
         modalContactAdd: false,
         modalPassAdd: false,
         [MULTICONTENT_INPUT_NAME]: '',
+        lastUsedAction: '',
     };
 
     closeModal = modalName => this.setState({[modalName]: false});
 
+    getLastUsedActionName = () => {
+        if (!this.state.lastUsedAction) {
+            return DropdownDefault.text;
+        }
+        const {text} = this.getModalConfig(this.state.lastUsedAction) || {};
+        return DropdownDefault.prefix + text;
+    };
+
     getModalConfig = modalName => DropdownOptions.find(option => option.action === modalName);
 
-    handleOption = (e, {action}) => this.setState({[action]: true});
+    handleAction = action => this.setState({[action]: true});
+
+    handleButton = () => {
+        if (this.state.lastUsedAction) {
+            this.handleAction(this.state.lastUsedAction);
+        }
+    };
+
+    handleOption = (e, {action}) => {
+        if (!action) {
+            console.error('[Multicontent] - No action specified');
+            return;
+        }
+        this.handleAction(action);
+        this.setState({lastUsedAction: action});
+    };
 
     handleOnChange = (e, {name, value}) => this.setState({[name]: value});
 
@@ -61,23 +86,35 @@ class Multicontent extends Component {
                         onChange={this.handleOnChange}
                     />
 
-                    <Dropdown className='multicontent__button' text='Dodaj nowy' button>
-                        <Dropdown.Menu>
-                            {DropdownOptions.map((option, i) => {
-                                if (option.divider === true) return (<Dropdown.Divider key={i}/>);
-                                return (
-                                    <Dropdown.Item
-                                        key={i}
-                                        text={option.text}
-                                        icon={option.icon}
-                                        description={option.description}
-                                        action={option.action}
-                                        onClick={this.handleOption}
-                                    />
-                                );
-                            })}
-                        </Dropdown.Menu>
-                    </Dropdown>
+                    <Button.Group fluid>
+                        <Button onClick={this.handleButton}>
+                            {this.getLastUsedActionName()}
+                        </Button>
+
+                        <Dropdown
+                            className='multicontent__button-change button icon'
+                            color={'grey'}
+                            trigger={<></>}
+                        >
+                            <Dropdown.Menu>
+                                {DropdownOptions.map((option, i) => {
+                                    if (option.divider === true) return (<Dropdown.Divider key={i}/>);
+                                    return (
+                                        <Dropdown.Item
+                                            key={i}
+                                            text={option.text}
+                                            icon={option.icon}
+                                            description={option.description}
+                                            action={option.action}
+                                            onClick={this.handleOption}
+                                        />
+                                    );
+                                })}
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </Button.Group>
+
+
 
                 </Form>
 

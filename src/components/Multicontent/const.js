@@ -1,5 +1,10 @@
 import { RouterPaths } from "../../router/consts";
 
+export const DropdownDefault = {
+    text: 'Dodaj nowy',
+    prefix: 'Dodaj: ',
+};
+
 export const DropdownOptions = [
     {
         text: "Notatka",
@@ -10,7 +15,6 @@ export const DropdownOptions = [
     {
         text: "Zadanie",
         icon: 'calendar check outline',
-        description: 'Not ready',
         action: 'modalTodoAdd',
     },
     {divider: true},

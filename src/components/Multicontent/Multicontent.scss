@@ -5,9 +5,9 @@
   &__textarea {
     margin-bottom: 1em !important;
   }
-  &__button {
-    width: 100%;
-    text-align: center !important;
+  &__button-change:not(#hack) {
+    flex-grow: 0;
+    position: static;
   }
 
 }

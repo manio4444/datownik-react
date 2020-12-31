@@ -10,7 +10,7 @@ import flatpickr from "flatpickr";
 import 'flatpickr/dist/themes/material_red.css'
 import 'flatpickr/dist/l10n/pl'
 import scrollPlugin from "flatpickr/dist/plugins/scrollPlugin";
-import addNewTodo from "./actions";
+import { addNewTodo } from "./actions";
 
 class ModalTodoAdd extends Component {
     state = {

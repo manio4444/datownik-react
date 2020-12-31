@@ -72,6 +72,10 @@ class ListTodo extends Component {
         this.getTodoList();
     };
 
+    deletedTodo(id) {
+        this.setState({list: this.state.list.filter(element => element.id !== id)});
+    };
+
     render() {
         const todos = this.state.list;
         const {
@@ -105,6 +109,7 @@ class ListTodo extends Component {
                             key={todo.id}
                             {...todo}
                             viewOnly={viewOnly}
+                            deletedCallback={this.deletedTodo.bind(this)}
                         />
                     );
                 })}

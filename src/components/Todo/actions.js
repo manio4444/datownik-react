@@ -14,3 +14,16 @@ export function addNewTodo ({txt, no_deadline, deadline}) {
         deadline,
     }).catch(error => console.error(error, error.response.data.message))
 }
+
+/**
+ *
+ * @param {Object} data
+ * @returns {Promise<AxiosResponse<T>>}
+ */
+export function deleteTodo ({id}) {
+    return axios.post(process.env.REACT_APP_ENDPOINT_URL, {
+        ajax_action: 'tasksAjax',
+        operation: 'deleteTask',
+        id,
+    }).catch(error => console.error(error, error.response.data.message))
+}

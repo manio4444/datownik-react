@@ -137,7 +137,7 @@ class SingleNote extends Component {
             display: this.state.isFocus ? 'none' : 'block',
         };
         const placeholder = (id === "new") ? this.placeholder.adding : this.placeholder.deleting;
-        const isDeleting = (this.state.isDeleting) ? 'deleting' : '';
+        const isDeletingClass = (this.state.isDeleting) ? 'deleting' : '';
 
         if (this.props.placeholder) {
             return (
@@ -154,7 +154,7 @@ class SingleNote extends Component {
         return (
 
             <div
-                className={`note-element ${isDeleting}`}
+                className={`note-element ${isDeletingClass}`}
                 style={style}
             >
                 <textarea

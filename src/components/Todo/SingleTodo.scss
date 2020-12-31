@@ -1,0 +1,8 @@
+.todo_element {
+
+  &.deleting {
+    transition: all .3s ease;
+    transform: scale(0.5);
+    opacity: 0;
+  }
+}

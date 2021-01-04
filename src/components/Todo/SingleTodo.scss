@@ -1,8 +1,29 @@
 .todo_element {
 
+  &.done {
+    opacity: .2;
+    transition: opacity .3s ease;
+    transition-delay: .3s;
+  }
+
   &.deleting {
     transition: all .3s ease;
     transform: scale(0.5);
     opacity: 0;
   }
+
+  .content > .header:not(#hack) {
+    display: flex;
+    justify-content: space-between;
+
+    .placeholder-item {
+      flex-grow: 1;
+    }
+
+    .ui.dropdown .menu {
+      left: auto;
+      right: 0;
+    }
+  }
+
 }

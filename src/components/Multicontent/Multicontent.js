@@ -15,6 +15,11 @@ import './Multicontent.scss';
 const MULTICONTENT_INPUT_NAME = 'multicontentValue';
 
 class Multicontent extends Component {
+    constructor(props) {
+        super(props);
+        this.dropdownTrigger = React.createRef();
+    }
+
     state = {
         modalNoteAdd: false,
         modalTodoAdd: false,
@@ -44,6 +49,8 @@ class Multicontent extends Component {
     handleButton = () => {
         if (this.state.lastUsedAction) {
             this.handleAction(this.state.lastUsedAction);
+        } else {
+            this.dropdownTrigger.current.click();
         }
     };
 
@@ -94,7 +101,8 @@ class Multicontent extends Component {
                         <Dropdown
                             className='multicontent__button-change button icon'
                             color={'grey'}
-                            trigger={<></>}
+                            trigger={<div ref={this.dropdownTrigger}/>}
+
                         >
                             <Dropdown.Menu>
                                 {DropdownOptions.map((option, i) => {

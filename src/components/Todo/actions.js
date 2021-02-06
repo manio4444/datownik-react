@@ -1,18 +1,18 @@
-import axios from "axios";
+import api from "../../api/api";
 
 /**
  *
  * @param {Object} data
  * @returns {Promise<AxiosResponse<T>>}
  */
-export function addNewTodo ({txt, no_deadline, deadline}) {
-    return axios.post(process.env.REACT_APP_ENDPOINT_URL, {
-        ajax_action: 'tasksAjax',
-        operation: 'saveTask',
-        txt,
-        no_deadline,
-        deadline,
-    }).catch(error => console.error(error, error.response.data.message))
+export function addNewTodo({txt, no_deadline, deadline}) {
+    return api.post(
+        'tasksAjax',
+        'saveTask', {
+            txt,
+            no_deadline,
+            deadline,
+        })
 }
 
 /**
@@ -20,10 +20,10 @@ export function addNewTodo ({txt, no_deadline, deadline}) {
  * @param {Object} data
  * @returns {Promise<AxiosResponse<T>>}
  */
-export function deleteTodo ({id}) {
-    return axios.post(process.env.REACT_APP_ENDPOINT_URL, {
-        ajax_action: 'tasksAjax',
-        operation: 'deleteTask',
-        id,
-    }).catch(error => console.error(error, error.response.data.message))
+export function deleteTodo({id}) {
+    return api.post(
+        'tasksAjax',
+        'deleteTask', {
+            id,
+        })
 }

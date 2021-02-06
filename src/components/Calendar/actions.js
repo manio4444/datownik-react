@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from '../../api/api'
 
 /**
  *
@@ -6,10 +6,11 @@ import axios from "axios";
  * @returns {Promise<AxiosResponse<T>>}
  */
 export function addNewEvent ({txt, data}) {
-    return axios.post(process.env.REACT_APP_ENDPOINT_URL, {
-        ajax_action: 'calendarAjax',
-        operation: 'saveEvent',
-        txt,
-        data,
-    }).catch(error => console.error(error, error.response.data.message))
+    return api.post(
+        'calendarAjax',
+        'saveEvent',
+        {
+            txt,
+            data,
+        });
 }

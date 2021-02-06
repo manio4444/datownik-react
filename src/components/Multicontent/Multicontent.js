@@ -5,6 +5,7 @@ import { Form, TextArea, Dropdown, Button } from "semantic-ui-react";
 import { DropdownOptions, DropdownDefault } from "./const";
 import ModalNoteAdd from '../Notes/ModalNoteAdd';
 import ModalTodoAdd from '../Todo/ModalTodoAdd';
+import ModalEventAdd from '../Calendar/ModalEventAdd';
 
 import 'semantic-ui-css/components/form.min.css';
 import 'semantic-ui-css/components/button.min.css';
@@ -127,15 +128,21 @@ class Multicontent extends Component {
                 </Form>
 
                 {state.modalTodoAdd && <ModalTodoAdd
-                    value={state.multicontentValue}
+                    value={state[MULTICONTENT_INPUT_NAME]}
                     trueCallback={() => this.handleTrueCallback('modalTodoAdd')}
                     falseCallback={() => this.closeModal('modalTodoAdd')}
                 />}
 
                 {state.modalNoteAdd && <ModalNoteAdd
-                    value={state.multicontentValue}
+                    value={state[MULTICONTENT_INPUT_NAME]}
                     trueCallback={() => this.handleTrueCallback('modalNoteAdd')}
                     falseCallback={() => this.closeModal('modalNoteAdd')}
+                />}
+
+                {state.modalEventAdd && <ModalEventAdd
+                    value={state[MULTICONTENT_INPUT_NAME]}
+                    trueCallback={() => this.handleTrueCallback('modalEventAdd')}
+                    falseCallback={() => this.closeModal('modalEventAdd')}
                 />}
             </div>
         );

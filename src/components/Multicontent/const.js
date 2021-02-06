@@ -17,13 +17,12 @@ export const DropdownOptions = [
         icon: 'calendar check outline',
         action: 'modalTodoAdd',
     },
-    {divider: true},
     {
         text: "Wydarzenie",
         icon: 'calendar outline',
-        description: 'Not ready',
         action: 'modalEventAdd',
     },
+    {divider: true},
     {
         text: "Zakładka",
         icon: 'external',

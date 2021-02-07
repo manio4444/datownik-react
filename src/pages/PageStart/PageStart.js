@@ -10,6 +10,7 @@ import Multicontent from "../../components/Multicontent/Multicontent";
 import MultiSearch from "../../components/MultiSearch/MultiSearch";
 import { Button } from "semantic-ui-react";
 import ListTodo from "../../components/Todo/ListTodo";
+import ListCalendar from "../../components/Calendar/ListCalendar";
 
 const PageDivider = () => <div className="page__divider"/>;
 const FirstSectionTitle = ({value}) => <h2 className="title">{value}</h2>;
@@ -40,23 +41,9 @@ const PageStart = () => {
 
                             <h2 className="start_form_title">Kalendarz:</h2>
 
+                            <ListCalendar limit={5}/>
 
-                            <div className="ui card red task" data-task="90">
-                                <input type="hidden" data-timer-deadline="" value="2020-06-13 21:09:00"/>
-                                <div className="content">
-                                    <div className="header">Dominik wesele</div>
-                                    <div className="meta">2020-06-13 21:09:00</div>
-
-                                </div>
-                                <div className="extra content">
-                                    <i className="fas fa-stopwatch"></i>
-                                    <span type="text" name="" data-timer-output="" value="">465 Dni, 9 Godz. 17 Min. 50 Sek.</span>
-
-                                </div>
-                            </div>
-
-
-                            <Button fluid>Zobacz wszystkie</Button>
+                            <Button fluid style={{marginTop: '1em'}}>Zobacz wszystkie</Button>
 
                         </div>
 
@@ -72,7 +59,7 @@ const PageStart = () => {
                             />
 
                             <Link to={`/${RouterPaths.TODO}`}>
-                                <Button fluid>Zobacz wszystkie</Button>
+                                <Button fluid style={{marginTop: '1em'}}>Zobacz wszystkie</Button>
                             </Link>
 
                         </div>

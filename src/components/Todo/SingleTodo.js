@@ -3,10 +3,11 @@ import {
     Card,
     Icon,
     Button,
-    Checkbox,
-    Form,
     Dropdown
 } from 'semantic-ui-react';
+
+import { getDiffTimestamps } from '../../utils/commonTime'
+
 import ModalYesNo from './ModalYesNo';
 import 'semantic-ui-css/components/button.min.css';
 import 'semantic-ui-css/components/card.min.css';
@@ -145,31 +146,15 @@ class SingleTodo extends Component {
         this.setState({openModalYesNo: false});
     };
 
-    getDiffTimestamps(start, end) {
-        const diff = end - start;
-        return (diff < 0) ? {
-            'days': Math.ceil(diff / (1000 * 60 * 60 * 24)),
-            'hours': Math.ceil((diff / (1000 * 60 * 60)) % 24),
-            'minutes': Math.ceil((diff / 1000 / 60) % 60),
-            'seconds': Math.ceil((diff / 1000) % 60),
-        } : {
-            'days': Math.floor(diff / (1000 * 60 * 60 * 24)),
-            'hours': Math.floor((diff / (1000 * 60 * 60)) % 24),
-            'minutes': Math.floor((diff / 1000 / 60) % 60),
-            'seconds': Math.floor((diff / 1000) % 60),
-        };
-    };
-
     renderCountdown = () => {
         const nowTs = new Date().getTime();
         const deadlineTs = new Date(this.props.deadline).getTime();
-        const diff = this.getDiffTimestamps(nowTs, deadlineTs);
+        const diff = getDiffTimestamps(nowTs, deadlineTs);
 
         const isDeadlineExceeded = (deadlineTs <= nowTs);
         const countdown = `${diff.days} Dni, ${diff.hours} Godz. ${diff.minutes} Min. ${diff.seconds} Sek.`;
 
         this.setState({
-            
             isDeadlineExceeded,
             countdown,
         });

@@ -13,7 +13,16 @@ const RequestMethod = {
  */
 function apiShot(requestMethod, data) {
     return axios[requestMethod](process.env.REACT_APP_ENDPOINT_URL, data)
-        .catch(error => console.error(error, error.response.data.message))
+        .catch(apiHandleError)
+}
+
+/**
+ *
+ * @param {Error} error
+ */
+function apiHandleError(error) {
+    const {response: {data: {message: apiMessage = 'Brak, api nie odpowiada'} = {}} = {}} = error;
+    console.error(error, '\n\n [API-MESSAGE]: ' + apiMessage + '\n');
 }
 
 export default {

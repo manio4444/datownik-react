@@ -21,12 +21,11 @@ class ListCalendar extends Component {
         getFutureEvents({
             limit: this.props.limit
         }).then(res => {
-            console.log(res);
             this.setState({
                 list: res.data.result.map(event => this.mapQuery(event)),
                 fetchingData: false
             });
-        })
+        }).catch((error) => console.error(error));
     };
 
 

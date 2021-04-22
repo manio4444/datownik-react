@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Button, Header, Icon, Modal, Input, Form, Checkbox} from 'semantic-ui-react'
+import {Button, Header, Icon, Modal, Input, Form} from 'semantic-ui-react'
 import 'semantic-ui-css/components/modal.min.css';
 import 'semantic-ui-css/components/dimmer.min.css';
 import 'semantic-ui-css/components/header.min.css';
@@ -10,13 +10,12 @@ import flatpickr from "flatpickr";
 import 'flatpickr/dist/themes/material_red.css'
 import 'flatpickr/dist/l10n/pl'
 import scrollPlugin from "flatpickr/dist/plugins/scrollPlugin";
-import { addNewTodo } from "./actions";
+import { addNewEvent } from "./actions";
 
-class ModalTodoAdd extends Component {
+class ModalEventAdd extends Component {
     state = {
         isAdding: false,
-        isDeadline: true,
-        deadline: '',
+        data: '',
         title: this.props.value || '',
     };
     refFlatpickr = React.createRef();
@@ -36,46 +35,35 @@ class ModalTodoAdd extends Component {
     handleAddButton = () => {
         this.setState({isAdding: true});
 
-        addNewTodo({
+        addNewEvent({
             txt: this.state.title,
-            no_deadline: this.state.isDeadline ? '0' : '1',
-            deadline: this.state.deadline,
+            data: this.state.data,
         })
             .then(response => response && this.props.trueCallback(response.data.result.newElement))
             .catch(error => console.error(error))
             .finally(() => this.setState({isAdding: false}));
     };
 
-    handleToggleDeadline = () => this.setState(prevState => ({isDeadline: !prevState.isDeadline}));
     handleChange = (e, {name, value}) => this.setState({ [name]: value });
-    flatPickrChange = (date, value) => this.setState({ deadline: value });
+    flatPickrChange = (date, value) => this.setState({ data: value });
 
     render() {
         const {props, state} = this;
 
         return (
             <Modal open={true} basic size='small'>
-                <Header icon={'calendar plus'} content={'Dodaj nowe zadanie'}/>
+                <Header icon={'calendar plus'} content={'Dodaj nowe wydarzenie'}/>
                 <Modal.Content>
                     <Form inverted>
                         <Form.Field>
                             <label>Tytuł</label>
                             <Input onChange={this.handleChange} name='title' value={state.title}/>
                         </Form.Field>
-                        <Form.Field>
-                            <Checkbox
-                                toggle
-                                label={<label>enable deadline</label>}
-                                onChange={this.handleToggleDeadline}
-                                name='isDeadline'
-                                defaultChecked={state.isDeadline}
-                            />
-                        </Form.Field>
 
-                        {state.isDeadline && <Form.Field>
-                            <label>Deadline</label>
+                        <Form.Field>
+                            <label>Data</label>
                             <input readOnly ref={this.refFlatpickr}/>
-                        </Form.Field>}
+                        </Form.Field>
                     </Form>
                 </Modal.Content>
                 <Modal.Actions>
@@ -101,4 +89,4 @@ class ModalTodoAdd extends Component {
         )
     };
 }
-export default ModalTodoAdd;
+export default ModalEventAdd;

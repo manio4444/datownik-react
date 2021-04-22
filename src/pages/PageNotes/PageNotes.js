@@ -18,6 +18,7 @@ const PageNotes = ({location: {state: {queryString} = {}}}) => {
                     viewOnly={false}
                     limit={0}
                     searchQuery={searchQuery}
+                    placeholders={8}
                 />
 
             </section>

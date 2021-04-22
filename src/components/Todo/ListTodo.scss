@@ -7,11 +7,8 @@
     align-items: stretch;
   }
 
-  &__list .todo_element {
+  &__page &__list .todo_element {
     margin: 0 0.714em 1.429em;
-    &:last-child {
-      margin-bottom: 1.429em;
-    }
 
     &--new {
       cursor: pointer;
@@ -20,40 +17,12 @@
         justify-content: center;
         align-items: center;
       }
-       .icon {
+      .icon {
         transition: all .2s ease;
       }
       &:hover .content .icon {
         font-size: 6em;
       }
     }
-
-    .field.deadline {
-      max-height: 100px;
-      transition-property: margin, max-height;
-      transition-duration: .4s;
-      transition-timing-function: ease-out;
-      overflow: hidden;
-    }
-
-    &.done {
-      opacity: .2;
-      transition: opacity .3s ease;
-      transition-delay: .3s;
-    }
-
-    &:not(.deadline) {
-      .field.deadline {
-        max-height: 0;
-        margin: 0;
-      }
-    }
   }
-}
-
-/* hotfix */
-.ui.toggle.checkbox input:focus:checked~label,
-.ui.toggle.checkbox input:checked~.box,
-.ui.toggle.checkbox input:checked~label {
-  color: rgba(255,255,255,.9) !important;
 }

@@ -3,10 +3,11 @@ import {
     Card,
     Icon,
     Button,
-    Checkbox,
-    Form,
     Dropdown
 } from 'semantic-ui-react';
+
+import { getDiffTimestamps } from '../../utils/commonTime'
+
 import ModalYesNo from './ModalYesNo';
 import 'semantic-ui-css/components/button.min.css';
 import 'semantic-ui-css/components/card.min.css';
@@ -16,6 +17,9 @@ import 'semantic-ui-css/components/input.min.css';
 import 'semantic-ui-css/components/checkbox.min.css';
 import axios from "axios";
 import Placeholder from '../Placeholder/Placeholder';
+import { deleteTodo } from "./actions";
+
+import './SingleTodo.scss'
 
 class SingleTodo extends Component {
     interval = null; // can't be in state
@@ -23,6 +27,7 @@ class SingleTodo extends Component {
         isDeadline: this.props.isDeadline,
         isFinished: this.props.isFinished,
         isDeleted: this.props.isDeleted,
+        isDeleting: false,
         isDeadlineLoading: false,
         isLoading: false,
         openModalYesNo: false,
@@ -39,6 +44,7 @@ class SingleTodo extends Component {
 
     componentDidMount() {
         if (this.state.isDeadline) {
+            this.renderCountdown();
             this.interval = setInterval(()=> {
                 this.renderCountdown();
             }, 1000);
@@ -51,11 +57,6 @@ class SingleTodo extends Component {
 
     handleAddNew = (data) => this.props.handleAddNew(data);
 
-    handleToggleDeadline = () => {
-        this.setState(prevState => ({
-            isDeadline: !prevState.isDeadline,
-        }))
-    };
 
     handleToggleDone = () => this.handleModalYesNo({
         icon: 'edit',
@@ -78,7 +79,6 @@ class SingleTodo extends Component {
                 falseCallback: this.closeModalYesNo.bind(this),
             },
             openModalYesNo: true,
-            isLoading: true,
         });
     };
 
@@ -93,7 +93,6 @@ class SingleTodo extends Component {
         .then(() => this.setState({
             isFinished: true,
             openModalYesNo: false,
-            isLoading: false,
         }))
         .catch( error => console.log(error));
 
@@ -108,24 +107,25 @@ class SingleTodo extends Component {
         .then(() => this.setState({
             isFinished: false,
             openModalYesNo: false,
-            isLoading: false,
         }))
         .catch( error => console.log(error));
 
-    setDeleted = () => axios
-        .post(
-            process.env.REACT_APP_ENDPOINT_URL,
-            {
-                ajax_action: 'tasksAjax',
-                operation: 'deleteTask',
-                id: this.props.id,
-            })
-        .then(() => this.setState({
-            isDeleted: true,
-            openModalYesNo: false,
-            isLoading: false,
-        }))
-        .catch( error => console.log(error));
+    setDeleted = () => {
+        deleteTodo({
+            id: this.props.id
+        })
+            .then(() => this.setState({
+                isDeleted: true,
+                openModalYesNo: false,
+                isDeleting: true,
+            }, () => {
+                setTimeout(() => {
+                    this.props.deletedCallback(this.props.id);
+                }, 300);
+            }))
+            .catch(error => console.error(error))
+            .finally();
+    };
 
     setUndeleted = () => axios
         .post(
@@ -143,37 +143,18 @@ class SingleTodo extends Component {
         .catch( error => console.log(error));
 
     closeModalYesNo() {
-        this.setState({
-            isLoading: false,
-            openModalYesNo: false,
-        });
-    };
-
-    getDiffTimestamps(start, end) {
-        const diff = end - start;
-        return (diff < 0) ? {
-            'days': Math.ceil(diff / (1000 * 60 * 60 * 24)),
-            'hours': Math.ceil((diff / (1000 * 60 * 60)) % 24),
-            'minutes': Math.ceil((diff / 1000 / 60) % 60),
-            'seconds': Math.ceil((diff / 1000) % 60),
-        } : {
-            'days': Math.floor(diff / (1000 * 60 * 60 * 24)),
-            'hours': Math.floor((diff / (1000 * 60 * 60)) % 24),
-            'minutes': Math.floor((diff / 1000 / 60) % 60),
-            'seconds': Math.floor((diff / 1000) % 60),
-        };
+        this.setState({openModalYesNo: false});
     };
 
     renderCountdown = () => {
         const nowTs = new Date().getTime();
         const deadlineTs = new Date(this.props.deadline).getTime();
-        const diff = this.getDiffTimestamps(nowTs, deadlineTs);
+        const diff = getDiffTimestamps(nowTs, deadlineTs);
 
         const isDeadlineExceeded = (deadlineTs <= nowTs);
         const countdown = `${diff.days} Dni, ${diff.hours} Godz. ${diff.minutes} Min. ${diff.seconds} Sek.`;
 
         this.setState({
-            
             isDeadlineExceeded,
             countdown,
         });
@@ -187,32 +168,20 @@ class SingleTodo extends Component {
             onClick: this.handleToggleDone
         },
         {
+            key: 'edit',
+            text: 'Edytuj',
+            icon: 'settings',
+            // onClick: this.handleEdit
+        },
+        {
             key: 'delete',
             text: 'Usuń',
-            icon: 'settings',
+            icon: 'trash',
             onClick: this.handleToggleDelete
         },
     ];
 
     render() {
-
-        if (this.props.addNew) {
-            return (
-                <Card
-                    onClick={this.handleAddNew}
-                    className={`todo_element todo_element--new`}
-                >
-                    <Card.Content>
-                        <Icon name='plus' size='huge'/>
-                    </Card.Content>
-
-                    <Button>
-                        <Icon name={'plus'}/> Dodaj nowy
-                    </Button>
-                </Card>
-            );
-        }
-
         const {
             title,
             deadline,
@@ -224,16 +193,16 @@ class SingleTodo extends Component {
             isFinished,
             isDeleted,
             countdown,
-            isLoading,
             openModalYesNo,
-            isDeadlineExceeded,
         } = this.state;
         const isFinishedClass = isFinished ? 'done' : '';
         const isDeadlineClass = isDeadline ? 'deadline' : '';
+        const isDeletingClass = (this.state.isDeleting) ? 'deleting' : '';
+        const isViewOnlyClass = viewOnly ? 'teal' : '';
 
-        if (placeholder && viewOnly) {
+        if (placeholder) {
             return (
-                <Card color='teal'>
+                <Card className={`todo_element task ${isViewOnlyClass}`}>
                     <Card.Content>
                         <Card.Header><Placeholder /></Card.Header>
                         <Card.Meta><Placeholder /></Card.Meta>
@@ -241,105 +210,47 @@ class SingleTodo extends Component {
                     <Card.Content extra>
                         <Placeholder />
                     </Card.Content>
-                </Card>
-            );
-        }
-
-        if (viewOnly) {
-            return (
-                <Card color='teal'>
-                    <Card.Content>
-                        <Card.Header>{title}</Card.Header>
-                        <Card.Meta>{isDeadline ? deadline : 'brak deadline'}</Card.Meta>
-                    </Card.Content>
-                    <Card.Content extra>
-                        <Icon name='stopwatch'/>
-                        {countdown}
-                    </Card.Content>
-
-                </Card>
-            );
-        }
-
-        if (placeholder) {
-            return (
-                <Card className={'todo_element'}>
-                    <Card.Content>
-                        <Card.Header><Placeholder/></Card.Header>
-                        <Card.Description className="ui form">
-                            <Form.Field>
-                                <Checkbox toggle disabled defaultChecked/>
-                            </Form.Field>
-
-                            <Form.Field>
-                                <label>deadline:</label>
-                                <Placeholder/>
-                            </Form.Field>
-
-                            <Form.Field>
-                                <label>countdown:</label>
-                                <Placeholder/>
-                            </Form.Field>
-                        </Card.Description>
-                    </Card.Content>
-
-                    <Button color={"teal"} disabled>
+                    {!viewOnly && <Button color={"teal"} disabled>
                         <Icon name={'check square outline'}/>
                         Oznacz jako wykonane
-                    </Button>
+                    </Button>}
                 </Card>
             );
         }
 
         return (
-
-            <Card className={`todo_element task ${isFinishedClass} ${isDeadlineClass}`}>
+            <Card className={`todo_element task ${isFinishedClass} ${isDeadlineClass} ${isDeletingClass} ${isViewOnlyClass}`}>
                 <Card.Content>
-                    <Card.Header>{title}</Card.Header>
-                    <Card.Meta>
-                        <Dropdown
+                    <Card.Header className={'withDropdown'}>
+                        {title}
+                        {!viewOnly && <Dropdown
                             trigger={<Icon name='ellipsis horizontal'/>}
                             options={this.actionOptions}
                             icon={null}
-                        />
+                        />}
+                    </Card.Header>
+                    <Card.Meta>
+                        {isDeadline ? deadline : 'brak deadline'}
                     </Card.Meta>
-                    <Card.Description className="ui form">
-                        <Form.Field>
-                            <Checkbox
-                                toggle
-                                label={<label>enable deadline</label>}
-                                onChange={this.handleToggleDeadline}
-                                defaultChecked={isDeadline}/>
-                        </Form.Field>
-
-                        <Form.Field className="deadline">
-                            <label>deadline:</label>
-                            <div className="ui icon input">
-                                <input type="text" name="deadline" readOnly className="flatpickr" value={deadline}/>
-                            </div>
-                        </Form.Field>
-
-                        <Form.Field className={`${(isDeadline && isDeadlineExceeded) ? 'error' : ''}`}>
-                            <label>countdown:</label>
-                            <input type="text" name="" readOnly value={isDeadline ? countdown : ''}/>
-                        </Form.Field>
-
-                        {isDeleted && <div>DELETED</div>}
-                    </Card.Description>
+                    {isDeleted && <Card.Description>DELETED</Card.Description>}
                 </Card.Content>
 
-                <Button
+                {countdown && <Card.Content extra>
+                    <Icon name='stopwatch'/>
+                    {countdown}
+                </Card.Content>}
+
+                {!viewOnly && <Button
                     color={"teal"}
                     onClick={this.handleToggleDone}
                 >
                     <Icon name={((isFinished === true) ? 'check ' : '') + 'square outline'}/>
-                    {isFinished === false && 'Oznacz jako wykonane'}
-                    {isFinished === true && 'Cofnij'}
-                </Button>
+                    {!isFinished && 'Oznacz jako wykonane'}
+                    {isFinished && 'Cofnij'}
+                </Button>}
 
                 {openModalYesNo && <ModalYesNo {...this.state.modalProps} />}
             </Card>
-
         );
     }
 }

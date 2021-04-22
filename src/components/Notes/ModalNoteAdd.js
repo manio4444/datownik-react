@@ -5,7 +5,7 @@ import 'semantic-ui-css/components/dimmer.min.css';
 import 'semantic-ui-css/components/header.min.css';
 import 'semantic-ui-css/components/button.min.css';
 import SingleNote from "./SingleNote";
-import addNewNote from "./actions";
+import { addNewNote } from "./actions";
 
 const ModalTodoAdd = ({ value, trueCallback, falseCallback }) => {
     const [isAdding, setIsAdding] = useState(false);

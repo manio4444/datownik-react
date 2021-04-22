@@ -7,18 +7,19 @@ import Placeholder from "../Placeholder/Placeholder";
 
 import './SingleNote.scss'
 
+const FILL_BAR_DELAY = 700;
+
 class SingleNote extends Component {
     fillBar = false; //for logic only, can't be async
     state = {
         txt: this.props.value,
         fillBarAnimation: false,
-        fillBarDelay: 700,
         isAdding: false,
         isEditing: false,
         isDeleting: false,
         isFocus: false,
     };
-    setFocusTarget = React.createRef();
+    textareaRef = React.createRef();
     placeholder = {
         adding: "Zacznij wpisywać tekst aby dodać nową notatkę",
         deleting: "Kliknięcie poza notatką spowoduje usunięcie, naciśnij Ctrl + Z, aby przywrócić",
@@ -26,12 +27,13 @@ class SingleNote extends Component {
     };
 
     addNew() {
+        const focusPosition = this.textareaRef.current.selectionStart;
         this.setState({isAdding: true});
 
         addNewNote({
             txt: this.state.txt
         })
-            .then(res => this.props.addedNew(res.data.result))
+            .then(res => this.props.addedNew({...res.data.result, focusPosition}))
             .catch(error => console.error(error))
             .finally(() => this.setState({isAdding: false}));
     };
@@ -105,7 +107,7 @@ class SingleNote extends Component {
                 this.edit();
             }
             this.fillBar = false;
-        }, this.state.fillBarDelay);
+        }, FILL_BAR_DELAY);
 
     };
 
@@ -119,8 +121,11 @@ class SingleNote extends Component {
     };
 
     componentDidMount() {
-        if (this.props.setFocus) {
-            this.setFocusTarget.current.focus();
+        if (this.props.focusPosition) {
+            const textareaRef = this.textareaRef.current;
+
+            textareaRef.focus();
+            textareaRef.selectionStart = textareaRef.selectionEnd = this.props.focusPosition;
         }
     }
 
@@ -128,10 +133,10 @@ class SingleNote extends Component {
 
     render() {
         const {id, readonly, style} = this.props;
-        const value = this.state.txt;
+        const {state} = this;
         const progress = (this.state.fillBarAnimation) ? 'fill' : '';
         const progressStyle = {
-            transitionDuration: this.state.fillBarDelay + 'ms',
+            transitionDuration: FILL_BAR_DELAY + 'ms',
         };
         const urlifyStyle = {
             display: this.state.isFocus ? 'none' : 'block',
@@ -160,17 +165,17 @@ class SingleNote extends Component {
                 <textarea
                     name="note"
                     placeholder={readonly ? this.placeholder.empty : placeholder}
-                    value={value}
+                    value={state.txt}
                     onChange={this.onChange}
-                    ref={this.setFocusTarget}
+                    ref={this.textareaRef}
                     onFocus={this.onFocus}
                     onBlur={this.onBlur}
-                    disabled={readonly}
+                    disabled={readonly || state.isAdding}
                 />
                 <div className={`note-element__progress ${progress}`} style={progressStyle}/>
                 <div className={'note-element__urlify'} style={urlifyStyle}>
                     <Linkify componentDecorator={this.LinkifyComponentDecorator}>
-                        {value}
+                        {state.txt}
                     </Linkify>
                 </div>
             </div>

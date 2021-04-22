@@ -47,7 +47,7 @@ class ListNotes extends Component {
                 return {
                     id: newElement.id,
                     value: newElement.txt,
-                    setFocus: true,
+                    focusPosition: newElement.focusPosition,
                 }
             }
             return element;
@@ -98,7 +98,7 @@ class ListNotes extends Component {
                                 id={note.id}
                                 value={note.value}
                                 addedNew={this.addedNew.bind(this)}
-                                setFocus={note.setFocus}
+                                focusPosition={note.focusPosition}
                                 deletedCallback={this.deletedNote.bind(this)}
                                 placeholder={note.placeholder}
                             />

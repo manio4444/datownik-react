@@ -43,7 +43,9 @@ const PageStart = () => {
 
                             <ListCalendar limit={5}/>
 
-                            <Button fluid style={{marginTop: '1em'}}>Zobacz wszystkie</Button>
+                            <Link to={`/${RouterPaths.CALENDAR}`}>
+                                <Button fluid style={{marginTop: '1em'}}>Zobacz wszystkie</Button>
+                            </Link>
 
                         </div>
 
@@ -66,16 +68,6 @@ const PageStart = () => {
 
                     </div>
 
-                    <div className="page__container">
-                        <pre>    Current PHP version: 5.6.40  </pre>
-                        <pre>    https://stackoverflow.com/questions/18377891/how-can-i-let-user-paste-image-data-from-the-clipboard-into-a-canvas-element-in
-  </pre>
-                        <pre>    do code snippetów -
-    https://codepen.io/chriscoyier/pen/GBbOJd
-  </pre>
-                    </div>
-
-
                 </section>
 
                 <section id="main_page_notes">
@@ -92,6 +84,14 @@ const PageStart = () => {
                     </div>
 
                 </section>
+
+                <section id="main_page" className='page__section'>
+                    <div className="page__container">
+                        <pre>https://stackoverflow.com/questions/18377891/how-can-i-let-user-paste-image-data-from-the-clipboard-into-a-canvas-element-in</pre>
+                    </div>
+                </section>
+
+
             </div>
         );
     }

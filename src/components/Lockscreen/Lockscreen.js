@@ -5,6 +5,10 @@ import { tryCode } from "./actions";
 import './Lockscreen.css';
 import 'animate.css'
 
+const RESET_ANIMATION_TIMEOUT = 1000;
+const ALLOW_ANIMATION_TIMEOUT = 1000;
+const CODE_MAX_LENGTH = 4;
+
 const TITLE_DEFAULT = 'Enter Passcode';
 const TITLE_OK = 'OK';
 const TITLE_ERROR_CODE = 'Wrong Code';
@@ -17,17 +21,17 @@ const LockscreenTitle = ({ title }) => (
 
 const LockscreenButtonsRow = ({ buttons, handleClick }) => (
     <div className="lockscreen__buttons_row">
-        {buttons.map((i) => <button className={`btn-${i}`} value={i} onClick={handleClick}>{i}</button>)}
+        {buttons.map(i => <button key={i} className={`btn-${i}`} value={i} onClick={handleClick}>{i}</button>)}
     </div>
 );
 
-const LockscreenInputsRow = ({ codeInput, codeMaxLength, resetCodeAnimation }) => {
+const LockscreenInputsRow = ({ codeInput, resetCodeAnimation }) => {
     const codeLength = codeInput.length;
     const resetClassAnimation = resetCodeAnimation ? ' animate__animated animate__shakeX' : '';
     let inputs = [];
 
-    for (let i = 0; i < codeMaxLength; i++) {
-        inputs.push(<span className={(codeLength > i) ? 'filled' : ''} />)
+    for (let i = 0; i < CODE_MAX_LENGTH; i++) {
+        inputs.push(<span key={i} className={(codeLength > i) ? 'filled' : ''} />)
     }
 
     return <div className={`lockscreen__inputs${resetClassAnimation}`}>{inputs}</div>
@@ -40,9 +44,6 @@ class Lockscreen extends Component {
         lockInput: false,
         resetCodeAnimation: false,
         allowCodeAnimation: false,
-        resetAnimationTimeout: 1000,
-        allowAnimationTimeout: 1000,
-        codeMaxLength: 4,
     };
 
     keyCodesMap = [
@@ -78,7 +79,7 @@ class Lockscreen extends Component {
         this.setState({
             codeInput: newCode,
         }, () => {
-            if (newCode.length >= this.state.codeMaxLength) {
+            if (newCode.length >= CODE_MAX_LENGTH) {
                 this.setState({lockInput: true});
                 this.tryCode(newCode);
             }
@@ -93,24 +94,25 @@ class Lockscreen extends Component {
         })
         .then(res => {
             if (!res) {
-                this.resetCode(TITLE_ERROR_CONNECTION);
-                return;
+                throw new Error(TITLE_ERROR_CONNECTION);
             }
             if (!res.data.result.isValid) {
-                this.resetCode(TITLE_ERROR_CODE);
-                return;
+                throw new Error(TITLE_ERROR_CODE);
             }
             if (res.data.result.isValid) {
                 this.allowCode();
+                return;
             }
+            throw new Error();
         })
         .catch(error => {
-            console.log(error);
-            this.resetCode();
+            console.error(error);
+            this.resetCode(error.message);
         })
     };
 
     resetCode = (errorMgs = TITLE_ERROR_UNKNOWN) => {
+        errorMgs = errorMgs !== '' ? errorMgs : 'TITLE_ERROR_UNKNOWN';
         this.setState({
             resetCodeAnimation: true,
             lockTitle: errorMgs,
@@ -122,7 +124,7 @@ class Lockscreen extends Component {
                 resetCodeAnimation: false,
                 lockTitle: TITLE_DEFAULT,
             });
-        }, this.state.resetAnimationTimeout);
+        }, RESET_ANIMATION_TIMEOUT);
     };
 
     allowCode = () => {
@@ -132,7 +134,7 @@ class Lockscreen extends Component {
         });
         setTimeout(() => {
             this.props.isLogged(); //TODO - temp ?
-        }, this.state.allowAnimationTimeout);
+        }, ALLOW_ANIMATION_TIMEOUT);
     };
 
     onKeyDown = e => {
@@ -162,7 +164,6 @@ class Lockscreen extends Component {
                     <LockscreenTitle title={state.lockTitle}/>
                     <LockscreenInputsRow
                         codeInput={this.state.codeInput}
-                        codeMaxLength={this.state.codeMaxLength}
                         resetCodeAnimation={this.state.resetCodeAnimation}
                     />
                     <LockscreenButtonsRow buttons={[1,2,3]} handleClick={this.handleClick} />

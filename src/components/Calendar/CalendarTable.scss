@@ -65,8 +65,13 @@
     }
     &--offset {
       opacity: .2;
+      .placeholder-item {
+        display: none;
+      }
     }
-
+    .placeholder-item {
+      margin: 2px;
+    }
   }
   &__day-number {
     font-size: 2.5em;

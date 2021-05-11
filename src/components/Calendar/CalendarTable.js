@@ -116,7 +116,12 @@ class CalendarTable extends Component {
                     {row.map(day => <Table.Cell
                         key={day.iso}
                     >
-                        <CalendarDay day={day} events={this.dayEvents(props.events, day)}/>
+                        <CalendarDay
+                            day={day}
+                            events={this.dayEvents(props.events, day)}
+                            loading={props.loading}
+
+                        />
                     </Table.Cell>)}
                 </Table.Row>)}
             </Table>

@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from "moment";
 import { Grid, Button } from "semantic-ui-react";
+
+import { getMonthEvents } from "../../components/Calendar/actions"; //TODO - move to component inside /components/Calendar/
 import CalendarTable from "../../components/Calendar/CalendarTable";
+
 import 'semantic-ui-css/components/grid.min.css'; // TODO - import this in specific component
 
 const monthsOfYear = [
@@ -21,9 +24,21 @@ const monthsOfYear = [
 
 const PageCalendar = () => {
     const [date, setDate] = useState(moment());
+    const [loadingEvents, setLoadingEvents] = useState(false);
+    const [monthEvents, setMonthEvents] = useState([]);
 
-    const month = monthsOfYear[date.format('M') - 1];
-    const year = date.format('YYYY');
+    const month = Number(date.format('M'));
+    const monthTitle = monthsOfYear[month - 1];
+    const year = Number(date.format('YYYY'));
+
+    useEffect(() => {
+        setLoadingEvents(true);
+        getMonthEvents({month, year})
+            .then(data => {
+                setMonthEvents(data.data.result);
+            })
+            .finally(() => setLoadingEvents(false));
+    }, [date]);
 
     const handleSetDate = type => {
         if (type === 'subtract') setDate(date.clone().subtract(1, 'month'));
@@ -34,7 +49,7 @@ const PageCalendar = () => {
         <React.Fragment>
             <section className="calendar">
 
-                <h1>{month} {year}</h1>
+                <h1>{monthTitle} {year}</h1>
 
                 <Grid>
                     <Grid.Column width={8}>
@@ -54,7 +69,11 @@ const PageCalendar = () => {
                     </Grid.Column>
                 </Grid>
 
-                <CalendarTable date={date}/>
+                <CalendarTable
+                    date={date}
+                    loading={loadingEvents}
+                    events={monthEvents}
+                />
 
             </section>
         </React.Fragment>

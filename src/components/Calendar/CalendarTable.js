@@ -90,14 +90,16 @@ class CalendarTable extends Component {
         return rows;
     };
 
+    dayEvents = (events, day) => events.filter(event => event.day === day.day && !day.offset);
+
     render () {
-        const {date} = this.props;
-        const previousMonth = date.clone().subtract(1, 'months');
-        const nextMonth = date.clone().add(1, 'months');
+        const {props} = this;
+        const previousMonth = props.date.clone().subtract(1, 'months');
+        const nextMonth = props.date.clone().add(1, 'months');
 
         const calendarDays = [
             ...this.previousMonthWeek(previousMonth),
-            ...this.currentMonth(date),
+            ...this.currentMonth(props.date),
             ...this.nextMonthWeek(nextMonth),
         ];
         const calendarRows = this.daysIntoRows(calendarDays);
@@ -114,7 +116,7 @@ class CalendarTable extends Component {
                     {row.map(day => <Table.Cell
                         key={day.iso}
                     >
-                        <CalendarDay day={day}/>
+                        <CalendarDay day={day} events={this.dayEvents(props.events, day)}/>
                     </Table.Cell>)}
                 </Table.Row>)}
             </Table>

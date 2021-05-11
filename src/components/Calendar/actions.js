@@ -18,6 +18,24 @@ export function getFutureEvents({limit}) {
 
 /**
  *
+ * @param {Object} data
+ * @param {number} data.month
+ * @param {number} data.year
+ * @returns {Promise<AxiosResponse<T>>}
+ */
+export function getMonthEvents({month, year}) {
+    return api.post(
+        'calendarAjax',
+        'getMonthEvents',
+        {
+            month,
+            year,
+        }
+    );
+}
+
+/**
+ *
  * @param {Object} values
  * @returns {Promise<AxiosResponse<T>>}
  */

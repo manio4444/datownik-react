@@ -12,16 +12,11 @@ const daysOfWeek = [
     'Niedziela',
 ];
 
-export class Table extends Component {
-    static HeaderRow = ({children}) => <div className="calendar-table__header-row">{children}</div>;
-    static HeaderCell = ({children}) => <div className="calendar-table__header-cell">{children}</div>;
-    static Row = ({children}) => <div className="calendar-table__row">{children}</div>;
-    static Cell = ({children}) => <div className="calendar-table__cell">{children}</div>;
-
-    render() {
-        return <div className={'calendar-table'}>{this.props.children}</div>
-    }
-}
+const Table = ({children}) => <div className="calendar-table">{children}</div>;
+const TableHeaderRow = ({children}) => <div className="calendar-table__header-row">{children}</div>;
+const TableHeaderCell = ({children}) => <div className="calendar-table__header-cell">{children}</div>;
+const TableRow = ({children}) => <div className="calendar-table__row">{children}</div>;
+const TableCell = ({children}) => <div className="calendar-table__cell">{children}</div>;
 
 class CalendarTable extends Component {
 
@@ -106,24 +101,23 @@ class CalendarTable extends Component {
 
         return (
             <Table>
-                <Table.HeaderRow>
-                    {daysOfWeek.map(name => <Table.HeaderCell key={name}>
+                <TableHeaderRow>
+                    {daysOfWeek.map(name => <TableHeaderCell key={name}>
                         {name}
-                    </Table.HeaderCell>)}
-                </Table.HeaderRow>
+                    </TableHeaderCell>)}
+                </TableHeaderRow>
 
-                {calendarRows.map((row, i) => <Table.Row key={i}>
-                    {row.map(day => <Table.Cell
+                {calendarRows.map((row, i) => <TableRow key={i}>
+                    {row.map(day => <TableCell
                         key={day.iso}
                     >
                         <CalendarDay
                             day={day}
                             events={this.dayEvents(props.events, day)}
                             loading={props.loading}
-
                         />
-                    </Table.Cell>)}
-                </Table.Row>)}
+                    </TableCell>)}
+                </TableRow>)}
             </Table>
         );
     }

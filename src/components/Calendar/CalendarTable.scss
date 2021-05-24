@@ -1,8 +1,10 @@
 .calendar-table {
+  --cell-border: 1px solid rgba(34, 36, 38, 0.1);
+
   width: 100%;
   background: #fff;
   margin: 1em 0;
-  border: 1px solid rgba(34,36,38,.15);
+  border: var(--cell-border);
   box-shadow: none;
   border-radius: .28571429rem;
   text-align: left;
@@ -14,11 +16,11 @@
     display: flex;
   }
   &__row + &__row &__cell {
-    border-top: 1px solid rgba(34,36,38,.1);
+    border-top: var(--cell-border);
   }
   &__cell,
   &__header-cell {
-    border-left: 1px solid rgba(34,36,38,.1);
+    border-left: var(--cell-border);
     width: calc(100% / 7);
     padding: 0;
     padding-bottom: calc(100% / 7);
@@ -41,7 +43,7 @@
     font-style: none;
     font-weight: 700;
     text-transform: none;
-    border-bottom: 1px solid rgba(34, 36, 38, .1);
+    border-bottom: var(--cell-border);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -57,11 +59,23 @@
     left: 0;
     right: 0;
     font-size: 1rem;
+    color: inherit;
+    background-color: #fff;
     @media screen and (max-width: 1023px) {
       font-size: .9rem;
     }
     @media screen and (max-width: 479px) {
       font-size: .6rem;
+    }
+    @media screen and (hover: hover) {
+      &:not(&--offset) {
+        transition: transform .3s ease;
+        &:hover {
+          transform: scale(1.25);
+          border: var(--cell-border);
+          z-index: 1;
+        }
+      }
     }
     &--offset {
       opacity: .2;
@@ -82,6 +96,9 @@
     margin: 1px;
     color: #fff;
     background-color: #f55b50;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
     &--dayoff {
       background-color: #00b5ad;
     }

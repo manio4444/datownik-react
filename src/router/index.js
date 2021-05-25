@@ -1,12 +1,7 @@
 import React, {Component} from 'react';
-import {BrowserRouter, Route} from 'react-router-dom';
-import { RouterPaths } from "./consts";
-import {
-    PageStart,
-    PageNotes,
-    PageTodo,
-    PageCalendar
-} from '../pages';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+import { routes } from "../routes";
 import MainMenu from '../components/MainMenu/MainMenu';
 import Footer from '../components/Footer/Footer';
 
@@ -33,10 +28,9 @@ class MainRouter extends Component {
                         <MainMenu blurPage={this.blurPage} unBlurPage={this.unBlurPage}/>
                     </header>
                     <main style={this.getBlurStyles()}>
-                        <Route path="/" exact component={PageStart}/>
-                        <Route path={`/${RouterPaths.NOTES}`} component={PageNotes}/>
-                        <Route path={`/${RouterPaths.TODO}`} component={PageTodo}/>
-                        <Route path={`/${RouterPaths.CALENDAR}`} component={PageCalendar}/>
+                        <Switch>
+                            {routes.map((route, i) => <Route key={i} {...route} />)}
+                        </Switch>
                     </main>
                     <Footer/>
                 </div>

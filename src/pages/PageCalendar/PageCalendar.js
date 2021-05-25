@@ -4,23 +4,9 @@ import { Grid, Button } from "semantic-ui-react";
 
 import { getMonthEvents } from "../../components/Calendar/actions"; //TODO - move to component inside /components/Calendar/
 import CalendarTable from "../../components/Calendar/CalendarTable";
+import { LANG_ARR_MONTHS } from '../../components/Calendar/const';
 
 import 'semantic-ui-css/components/grid.min.css'; // TODO - import this in specific component
-
-const monthsOfYear = [
-    'Styczeń',
-    'Luty',
-    'Marzec',
-    'Kwiecień',
-    'Maj',
-    'Czerwiec',
-    'Lipiec',
-    'Sierpień',
-    'Wrzesień',
-    'Październik',
-    'Listopad',
-    'Grudzień',
-];
 
 const PageCalendar = () => {
     const [date, setDate] = useState(moment());
@@ -28,7 +14,7 @@ const PageCalendar = () => {
     const [monthEvents, setMonthEvents] = useState([]);
 
     const month = Number(date.format('M'));
-    const monthTitle = monthsOfYear[month - 1];
+    const monthTitle = LANG_ARR_MONTHS[month - 1];
     const year = Number(date.format('YYYY'));
 
     useEffect(() => {

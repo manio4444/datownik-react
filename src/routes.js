@@ -21,11 +21,11 @@ export const routes = [
         component: PageTodo,
     },
     {
+        path: `/${RouterPaths.CALENDAR}/:date`,
+        component: PageCalendar,
+    },
+    {
         path: `/${RouterPaths.CALENDAR}`,
         component: PageCalendar,
     },
-    // {
-    //     path: `/${RouterPaths.CALENDAR}/:date`,
-    //     component: PageCalendar,
-    // },
 ];

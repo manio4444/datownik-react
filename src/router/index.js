@@ -1,42 +1,39 @@
-import React, {Component} from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { routes } from "../routes";
 import MainMenu from '../components/MainMenu/MainMenu';
 import Footer from '../components/Footer/Footer';
 
-class MainRouter extends Component {
-    state = {
-        isBlurPage: false,
-    };
+const MainRouter = () => {
+    const [isblurPage, setIsBlurPage] = useState(false);
 
-    blurPage = () => this.setState({isBlurPage: true});
-    unBlurPage = () => this.setState({isBlurPage: false});
 
-    getBlurStyles = () => {
+    const blurPage = () => setIsBlurPage(true);
+    const unBlurPage = () => setIsBlurPage(false);
+
+    const getBlurStyles = () => {
         return {
-            filter: this.state.isBlurPage ? 'blur(4px)' : '',
-            pointerEvents: this.state.isBlurPage ? 'none' : '',
+            filter: isblurPage ? 'blur(4px)' : '',
+            pointerEvents: isblurPage ? 'none' : '',
         }
     };
 
-    render() {
-        return (
-            <BrowserRouter>
-                <div className="App">
-                    <header className="App-header">
-                        <MainMenu blurPage={this.blurPage} unBlurPage={this.unBlurPage}/>
-                    </header>
-                    <main style={this.getBlurStyles()}>
-                        <Switch>
-                            {routes.map((route, i) => <Route key={i} {...route} />)}
-                        </Switch>
-                    </main>
-                    <Footer/>
-                </div>
-            </BrowserRouter>
-        );
-    }
-}
+    return (
+        <BrowserRouter>
+            <div className="App">
+                <header className="App-header">
+                    <MainMenu blurPage={blurPage} unBlurPage={unBlurPage}/>
+                </header>
+                <main style={getBlurStyles()}>
+                    <Switch>
+                        {routes.map((route, i) => <Route key={i} {...route} />)}
+                    </Switch>
+                </main>
+                <Footer/>
+            </div>
+        </BrowserRouter>
+    );
+};
 
 export default MainRouter;

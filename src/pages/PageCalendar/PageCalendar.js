@@ -26,7 +26,7 @@ const PageCalendar = () => {
                 setMonthEvents(data.data.result);
             })
             .finally(() => setLoadingEvents(false));
-    }, [date]);
+    }, [date, modalEventAdd]);
 
     const handleSetDate = type => {
         if (type === 'subtract') setDate(date.clone().subtract(1, 'month'));
@@ -79,7 +79,7 @@ const PageCalendar = () => {
 
             {modalEventAdd && <ModalEventAdd
                 value={''}
-                trueCallback={() => this.handleTrueCallback('modalEventAdd')}
+                trueCallback={() => setModalEventAdd(false)}
                 falseCallback={() => setModalEventAdd(false)}
             />}
 

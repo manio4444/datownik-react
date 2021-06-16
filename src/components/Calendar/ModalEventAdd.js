@@ -12,23 +12,29 @@ import 'flatpickr/dist/l10n/pl'
 import scrollPlugin from "flatpickr/dist/plugins/scrollPlugin";
 import { addNewEvent } from "./actions";
 
-class ModalEventAdd extends Component {
+import './ModalEventAdd.scss';
+
+const FLATPICKR_DATETIME_FORMAT = "j F Y, H:i";
+
+
+    class ModalEventAdd extends Component {
     state = {
         isAdding: false,
-        data: '',
+        dateTime: '',
         title: this.props.value || '',
     };
     refFlatpickr = React.createRef();
 
     componentDidMount() {
+        const name = 'dateTime';
         flatpickr(this.refFlatpickr.current, {
             "plugins": [new scrollPlugin()],
             enableTime: true,
             locale: 'pl',
             altInput: true,
-            altFormat: "j F Y, H:i",
+            altFormat: FLATPICKR_DATETIME_FORMAT,
             time_24hr: true,
-            onChange: (date, value) => this.flatPickrChange(date, value),
+            onChange: (date, value) => this.handleChange(null, {name, value}),
         });
     };
 
@@ -37,7 +43,7 @@ class ModalEventAdd extends Component {
 
         addNewEvent({
             txt: this.state.title,
-            data: this.state.data,
+            data: this.state.dateTime,
         })
             .then(response => response && this.props.trueCallback(response.data.result.newElement))
             .catch(error => console.error(error))
@@ -47,11 +53,17 @@ class ModalEventAdd extends Component {
     handleChange = (e, {name, value}) => this.setState({ [name]: value });
     flatPickrChange = (date, value) => this.setState({ data: value });
 
+    buttonFillDate = () => {
+        const dateTime = new Date();
+        dateTime.setDate(dateTime.getDate() + 1);
+        this.setState({dateTime: dateTime.parse(FLATPICKR_DATETIME_FORMAT)});
+    };
+
     render() {
         const {props, state} = this;
 
         return (
-            <Modal open={true} basic size='small'>
+            <Modal open={true} basic size='small' className={'ModalEventAdd'}>
                 <Header icon={'calendar plus'} content={'Dodaj nowe wydarzenie'}/>
                 <Modal.Content>
                     <Form inverted>
@@ -62,7 +74,13 @@ class ModalEventAdd extends Component {
 
                         <Form.Field>
                             <label>Data</label>
-                            <input readOnly ref={this.refFlatpickr}/>
+                            <Form.Field inline className={'inline-with-button'}>
+                                <input readOnly ref={this.refFlatpickr}/>
+                                <Button onClick={this.buttonFillDate}>
+                                    Jutro
+                                </Button>
+                            </Form.Field>
+
                         </Form.Field>
                     </Form>
                 </Modal.Content>

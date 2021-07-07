@@ -20,7 +20,7 @@ const FLATPICKR_DATETIME_FORMAT = "j F Y, H:i";
     class ModalEventAdd extends Component {
     state = {
         isAdding: false,
-        dateTime: '',
+        dateTime: this.props.dateTime || '',
         title: this.props.value || '',
     };
     refFlatpickr = React.createRef();
@@ -29,6 +29,7 @@ const FLATPICKR_DATETIME_FORMAT = "j F Y, H:i";
         const name = 'dateTime';
         flatpickr(this.refFlatpickr.current, {
             "plugins": [new scrollPlugin()],
+            ...this.state.dateTime && {defaultDate: this.state.dateTime},
             enableTime: true,
             locale: 'pl',
             altInput: true,

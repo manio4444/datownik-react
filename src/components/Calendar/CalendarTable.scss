@@ -87,9 +87,20 @@
       margin: 2px;
     }
   }
+  &__day-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   &__day-number {
     font-size: 2.5em;
     opacity: .6;
+  }
+  &__day-add {
+    margin-right: 1.2rem !important;
+    @media screen and (max-width: 767px) {
+      display: none !important;
+    }
   }
   &__day-event {
     font-size: .8em;

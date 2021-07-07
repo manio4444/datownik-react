@@ -25,6 +25,7 @@ const PageCalendar = () => {
             .then(data => {
                 setMonthEvents(data.data.result);
             })
+            .catch(error => console.error(error))
             .finally(() => setLoadingEvents(false));
     }, [date, modalEventAdd]);
 

@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
+import { withRouter } from "react-router";
+
 import CalendarDay from './CalendarDay';
+import ModalDayView from "./ModalDayView";
+
 import './CalendarTable.scss';
 
 const daysOfWeek = [
@@ -12,16 +16,11 @@ const daysOfWeek = [
     'Niedziela',
 ];
 
-export class Table extends Component {
-    static HeaderRow = ({children}) => <div className="calendar-table__header-row">{children}</div>;
-    static HeaderCell = ({children}) => <div className="calendar-table__header-cell">{children}</div>;
-    static Row = ({children}) => <div className="calendar-table__row">{children}</div>;
-    static Cell = ({children}) => <div className="calendar-table__cell">{children}</div>;
-
-    render() {
-        return <div className={'calendar-table'}>{this.props.children}</div>
-    }
-}
+const Table = ({children}) => <div className="calendar-table">{children}</div>;
+const TableHeaderRow = ({children}) => <div className="calendar-table__header-row">{children}</div>;
+const TableHeaderCell = ({children}) => <div className="calendar-table__header-cell">{children}</div>;
+const TableRow = ({children}) => <div className="calendar-table__row">{children}</div>;
+const TableCell = ({children}) => <div className="calendar-table__cell">{children}</div>;
 
 class CalendarTable extends Component {
 
@@ -90,36 +89,58 @@ class CalendarTable extends Component {
         return rows;
     };
 
+    getDayNumber = dateIso => new Date(dateIso).getDate();
+
+    dayEvents = day => this.props.events.filter(event => event.day === day.day.toString() && !day.offset);
+
+    closeModal = () => this.props.history.goBack(); //TODO - there should be routing path generator - calendar without date param
+
     render () {
-        const {date} = this.props;
-        const previousMonth = date.clone().subtract(1, 'months');
-        const nextMonth = date.clone().add(1, 'months');
+        const {props} = this;
+        const routerParams = props.match.params;
+
+        const previousMonth = props.date.clone().subtract(1, 'months');
+        const nextMonth = props.date.clone().add(1, 'months');
 
         const calendarDays = [
             ...this.previousMonthWeek(previousMonth),
-            ...this.currentMonth(date),
+            ...this.currentMonth(props.date),
             ...this.nextMonthWeek(nextMonth),
         ];
         const calendarRows = this.daysIntoRows(calendarDays);
 
+        const openModal = !!Date.parse(routerParams.date);
+
         return (
             <Table>
-                <Table.HeaderRow>
-                    {daysOfWeek.map(name => <Table.HeaderCell key={name}>
+                <TableHeaderRow>
+                    {daysOfWeek.map(name => <TableHeaderCell key={name}>
                         {name}
-                    </Table.HeaderCell>)}
-                </Table.HeaderRow>
+                    </TableHeaderCell>)}
+                </TableHeaderRow>
 
-                {calendarRows.map((row, i) => <Table.Row key={i}>
-                    {row.map(day => <Table.Cell
+                {calendarRows.map((row, i) => <TableRow key={i}>
+                    {row.map(day => <TableCell
                         key={day.iso}
                     >
-                        <CalendarDay day={day}/>
-                    </Table.Cell>)}
-                </Table.Row>)}
+                        <CalendarDay
+                            day={day}
+                            events={this.dayEvents(day)}
+                            loading={props.loading}
+                        />
+                    </TableCell>)}
+                </TableRow>)}
+
+                {openModal && <ModalDayView
+                    dateIso={routerParams.date}
+                    events={this.dayEvents({day: this.getDayNumber(routerParams.date)})}
+                    day={this.getDayNumber(routerParams.date)}
+                    loading={props.loading}
+                    falseCallback={this.closeModal}
+                />}
             </Table>
         );
     }
 }
 
-export default CalendarTable;
+export default withRouter(CalendarTable);

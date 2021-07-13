@@ -4,6 +4,8 @@ import 'semantic-ui-css/components/card.min.css'; // TODO - import this in speci
 import 'semantic-ui-css/components/icon.min.css'; // TODO - import this in specific component
 import './PageStart.scss';
 import { Link } from "react-router-dom";
+
+import { Col } from "../../components/Grid";
 import { RouterPaths } from "../../router/consts";
 import ListNotes from "../../components/Notes/ListNotes";
 import Multicontent from "../../components/Multicontent/Multicontent";
@@ -37,7 +39,7 @@ const PageStart = () => {
                         </div>
 
 
-                        <div className="main_page_dates page__grid-quarter">
+                        <Col size={"quarter"} className="main_page_dates">
 
                             <h2 className="start_form_title">Kalendarz:</h2>
 
@@ -46,11 +48,19 @@ const PageStart = () => {
                             <Link to={`/${RouterPaths.CALENDAR}`}>
                                 <Button fluid style={{marginTop: '1em'}}>Zobacz wszystkie</Button>
                             </Link>
+                            <a href={'https://www.facebook.com/events'} target={'_blank'}>
+                                <Button
+                                    fluid
+                                    icon={'external alternate'}
+                                    style={{marginTop: '.5em'}}
+                                    content={'Facebook events'}
+                                />
+                            </a>
 
-                        </div>
+                        </Col>
 
 
-                        <div className="main_page_dates page__grid-quarter">
+                        <Col size={"quarter"} className="main_page_dates">
 
                             <h2 className="start_form_title">To do:</h2>
 
@@ -64,7 +74,7 @@ const PageStart = () => {
                                 <Button fluid style={{marginTop: '1em'}}>Zobacz wszystkie</Button>
                             </Link>
 
-                        </div>
+                        </Col>
 
                     </div>
 

@@ -1,29 +1,37 @@
 import React, { Component } from 'react';
+
+import { tryCode } from "./actions";
+
 import './Lockscreen.css';
 import 'animate.css'
-import axios from "axios";
 
-const LockscreenTitle = ({ resetCodeAnimation, allowCodeAnimation }) => (
-    <div className="lockscreen__title">
-        {!resetCodeAnimation && !allowCodeAnimation && 'Enter Passcode'}
-        {resetCodeAnimation && 'Wrong Code'}
-        {allowCodeAnimation && 'OK'}
-    </div>
+const RESET_ANIMATION_TIMEOUT = 1000;
+const ALLOW_ANIMATION_TIMEOUT = 1000;
+const CODE_MAX_LENGTH = 4;
+
+const TITLE_DEFAULT = 'Enter Passcode';
+const TITLE_OK = 'OK';
+const TITLE_ERROR_CODE = 'Wrong Code';
+const TITLE_ERROR_CONNECTION = 'Connection error';
+const TITLE_ERROR_UNKNOWN = 'Unknown error';
+
+const LockscreenTitle = ({ title }) => (
+    <div className="lockscreen__title">{title}</div>
 );
 
 const LockscreenButtonsRow = ({ buttons, handleClick }) => (
     <div className="lockscreen__buttons_row">
-        {buttons.map((i) => <button className={`btn-${i}`} value={i} onClick={handleClick}>{i}</button>)}
+        {buttons.map(i => <button key={i} className={`btn-${i}`} value={i} onClick={handleClick}>{i}</button>)}
     </div>
 );
 
-const LockscreenInputsRow = ({ codeInput, codeMaxLength, resetCodeAnimation }) => {
+const LockscreenInputsRow = ({ codeInput, resetCodeAnimation }) => {
     const codeLength = codeInput.length;
     const resetClassAnimation = resetCodeAnimation ? ' animate__animated animate__shakeX' : '';
     let inputs = [];
 
-    for (let i = 0; i < codeMaxLength; i++) {
-        inputs.push(<span className={(codeLength > i) ? 'filled' : ''} />)
+    for (let i = 0; i < CODE_MAX_LENGTH; i++) {
+        inputs.push(<span key={i} className={(codeLength > i) ? 'filled' : ''} />)
     }
 
     return <div className={`lockscreen__inputs${resetClassAnimation}`}>{inputs}</div>
@@ -32,12 +40,10 @@ const LockscreenInputsRow = ({ codeInput, codeMaxLength, resetCodeAnimation }) =
 class Lockscreen extends Component {
     state = {
         codeInput: '',
+        lockTitle: TITLE_DEFAULT,
         lockInput: false,
         resetCodeAnimation: false,
         allowCodeAnimation: false,
-        resetAnimationTimeout: 1000,
-        allowAnimationTimeout: 1000,
-        codeMaxLength: 4,
     };
 
     keyCodesMap = [
@@ -73,7 +79,7 @@ class Lockscreen extends Component {
         this.setState({
             codeInput: newCode,
         }, () => {
-            if (newCode.length >= this.state.codeMaxLength) {
+            if (newCode.length >= CODE_MAX_LENGTH) {
                 this.setState({lockInput: true});
                 this.tryCode(newCode);
             }
@@ -81,44 +87,54 @@ class Lockscreen extends Component {
     };
 
     tryCode = codeInput => {
-        axios.post(process.env.REACT_APP_ENDPOINT_URL, {
+        tryCode({
             ajax_action: 'lockscreenAjax',
             operation: 'tryPasscode',
             code: codeInput,
         })
         .then(res => {
+            if (!res) {
+                throw new Error(TITLE_ERROR_CONNECTION);
+            }
+            if (!res.data.result.isValid) {
+                throw new Error(TITLE_ERROR_CODE);
+            }
             if (res.data.result.isValid) {
                 this.allowCode();
-            } else {
-                this.resetCode();
+                return;
             }
+            throw new Error();
         })
         .catch(error => {
-            console.log(error);
-            this.resetCode();
+            console.error(error);
+            this.resetCode(error.message);
         })
     };
 
-    resetCode = () => {
+    resetCode = (errorMgs = TITLE_ERROR_UNKNOWN) => {
+        errorMgs = errorMgs !== '' ? errorMgs : 'TITLE_ERROR_UNKNOWN';
         this.setState({
             resetCodeAnimation: true,
+            lockTitle: errorMgs,
         });
         setTimeout(() => {
             this.setState({
                 codeInput: '',
                 lockInput: false,
                 resetCodeAnimation: false,
+                lockTitle: TITLE_DEFAULT,
             });
-        }, this.state.resetAnimationTimeout);
+        }, RESET_ANIMATION_TIMEOUT);
     };
 
     allowCode = () => {
         this.setState({
             allowCodeAnimation: true,
+            lockTitle: TITLE_OK,
         });
         setTimeout(() => {
             this.props.isLogged(); //TODO - temp ?
-        }, this.state.allowAnimationTimeout);
+        }, ALLOW_ANIMATION_TIMEOUT);
     };
 
     onKeyDown = e => {
@@ -140,17 +156,14 @@ class Lockscreen extends Component {
     render() {
         const lockedClass = ((this.state.lockInput) ? 'lockscreen--locked' : '');
         const allowedClass = ((this.state.allowCodeAnimation) ? ' lockscreen--allowed' : '');
+        const {state} = this;
 
         return (
             <section className={`lockscreen ${lockedClass} ${allowedClass}`}>
                 <div className="lockscreen__container">
-                    <LockscreenTitle
-                        resetCodeAnimation={this.state.resetCodeAnimation}
-                        allowCodeAnimation={this.state.allowCodeAnimation}
-                    />
+                    <LockscreenTitle title={state.lockTitle}/>
                     <LockscreenInputsRow
                         codeInput={this.state.codeInput}
-                        codeMaxLength={this.state.codeMaxLength}
                         resetCodeAnimation={this.state.resetCodeAnimation}
                     />
                     <LockscreenButtonsRow buttons={[1,2,3]} handleClick={this.handleClick} />

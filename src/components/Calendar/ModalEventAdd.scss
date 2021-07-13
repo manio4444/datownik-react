@@ -1,0 +1,15 @@
+.ModalEventAdd {
+  .inline-with-button {
+    display: flex;
+
+    input {
+      flex-grow: 1;
+      border-top-right-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+    }
+    button {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+}

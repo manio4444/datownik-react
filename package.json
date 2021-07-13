@@ -1,6 +1,6 @@
 {
   "name": "datownik-react",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": true,
   "dependencies": {
     "animate.css": "^4.1.1",

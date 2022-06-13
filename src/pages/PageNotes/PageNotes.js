@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
+import { useLocation } from "react-router";
+
 import ListNotes from "../../components/Notes/ListNotes";
 import SearchNotes from "../../components/Notes/SearchNotes";
 
-const PageNotes = ({location: {state: {queryString} = {}}}) => {
+const PageNotes = () => {
+
+  let location  = useLocation();
+
+  const queryString = location.state?.queryString;
+
 
     const [searchQuery, setSearchQuery] = useState(queryString ? queryString : '');
 

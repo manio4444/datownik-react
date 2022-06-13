@@ -26,10 +26,9 @@ const ResultsResult = ({resultsComponent, title, urlTo, count, queryString}) => 
                     Znaleziono {count} rekordów {urlTo && title && <>typu <Link to={urlTo}>{title}</Link></>}
                 </Table.HeaderCell>
                 <Table.HeaderCell textAlign={'right'}>
-                    <Link to={{
-                        pathname: urlTo,
-                        state: {queryString}
-                    }}>
+                    <Link to={urlTo}
+                          state={{queryString: queryString}}
+                    >
                         więcej >>
                     </Link>
                 </Table.HeaderCell>

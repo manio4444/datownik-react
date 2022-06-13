@@ -20,6 +20,8 @@ const PageCalendar = () => {
     const year = Number(date.format('YYYY'));
 
     useEffect(() => {
+        if (modalEventAdd) return;
+
         setLoadingEvents(true);
         getMonthEvents({month, year})
             .then(data => {

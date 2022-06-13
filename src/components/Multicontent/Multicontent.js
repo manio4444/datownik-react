@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { Form, TextArea, Dropdown, Button } from "semantic-ui-react";
 
 import { DropdownOptions, DropdownDefault } from "./const";
@@ -70,7 +70,7 @@ class Multicontent extends Component {
         const {redirectAfter} = this.getModalConfig(modalName);
 
         if (redirectAfter) {
-            this.props.history.push(`/${redirectAfter}`);
+            this.props.navigate(`/${redirectAfter}`); //TODO: component needs to be converted to functional
         } else {
             this.setState({
                 [MULTICONTENT_INPUT_NAME]: '',
@@ -149,4 +149,20 @@ class Multicontent extends Component {
     }
 }
 
-export default withRouter(Multicontent);
+//TEMP
+const withNavigateFallback = (Component) => {
+    const Wrapper = (props) => {
+        const navigate = useNavigate();
+
+        return (
+          <Component
+            navigate={navigate}
+            {...props}
+          />
+        );
+    };
+
+    return Wrapper;
+};
+
+export default withNavigateFallback(Multicontent);

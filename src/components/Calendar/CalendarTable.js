@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from "react-router";
 
 import CalendarDay from './CalendarDay';
 import ModalDayView from "./ModalDayView";
@@ -93,7 +92,7 @@ class CalendarTable extends Component {
 
     dayEvents = day => this.props.events.filter(event => event.day === day.day.toString() && !day.offset);
 
-    closeModal = () => this.props.history.goBack(); //TODO - there should be routing path generator - calendar without date param
+    closeModal = () => window.history.go(-1); //TODO - there should be routing path generator - calendar without date param
 
     render () {
         const {props} = this;
@@ -143,4 +142,4 @@ class CalendarTable extends Component {
     }
 }
 
-export default withRouter(CalendarTable);
+export default CalendarTable;

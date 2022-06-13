@@ -1,4 +1,4 @@
 export const ResultTypes = {
-    NOTES : 'notes',
-    NOTES123 : 'notes123',
+  NOTES: 'notes',
+  NOTES123: 'notes123',
 };

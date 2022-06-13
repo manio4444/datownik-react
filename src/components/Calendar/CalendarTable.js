@@ -1,8 +1,8 @@
-import React  from 'react';
-import { useNavigate, useParams } from "react-router";
+import React from 'react';
+import { useNavigate, useParams } from 'react-router';
 
 import CalendarDay from './CalendarDay';
-import ModalDayView from "./ModalDayView";
+import ModalDayView from './ModalDayView';
 
 import './CalendarTable.scss';
 
@@ -16,21 +16,31 @@ const daysOfWeek = [
   'Niedziela',
 ];
 
-const Table = ({children}) => <div className="calendar-table">{children}</div>;
-const TableHeaderRow = ({children}) => <div className="calendar-table__header-row">{children}</div>;
-const TableHeaderCell = ({children}) => <div className="calendar-table__header-cell">{children}</div>;
-const TableRow = ({children}) => <div className="calendar-table__row">{children}</div>;
-const TableCell = ({children}) => <div className="calendar-table__cell">{children}</div>;
+const Table = ({ children }) => (
+  <div className="calendar-table">{children}</div>
+);
+const TableHeaderRow = ({ children }) => (
+  <div className="calendar-table__header-row">{children}</div>
+);
+const TableHeaderCell = ({ children }) => (
+  <div className="calendar-table__header-cell">{children}</div>
+);
+const TableRow = ({ children }) => (
+  <div className="calendar-table__row">{children}</div>
+);
+const TableCell = ({ children }) => (
+  <div className="calendar-table__cell">{children}</div>
+);
 
 const CalendarTable = (props) => {
   let routerParams = useParams();
   const navigate = useNavigate();
 
-  const isLastWeekDay = day => Number(day.isoWeekday()) === 7;
+  const isLastWeekDay = (day) => Number(day.isoWeekday()) === 7;
 
-  const isFirstWeekDay = day => Number(day.isoWeekday()) === 1;
+  const isFirstWeekDay = (day) => Number(day.isoWeekday()) === 1;
 
-  const currentMonth = date => {
+  const currentMonth = (date) => {
     const days = [];
     let day = date.clone().startOf('month');
 
@@ -44,7 +54,7 @@ const CalendarTable = (props) => {
     return days;
   };
 
-  const previousMonthWeek = date => {
+  const previousMonthWeek = (date) => {
     let day = date.endOf('month');
     const prevMonthDays = [];
 
@@ -60,7 +70,7 @@ const CalendarTable = (props) => {
     return prevMonthDays;
   };
 
-  const nextMonthWeek = date => {
+  const nextMonthWeek = (date) => {
     let day = date.startOf('month');
     const nextMonthDays = [];
 
@@ -76,7 +86,7 @@ const CalendarTable = (props) => {
     return nextMonthDays;
   };
 
-  const daysIntoRows = days => {
+  const daysIntoRows = (days) => {
     const rows = [];
     let row = 1;
 
@@ -91,9 +101,12 @@ const CalendarTable = (props) => {
     return rows;
   };
 
-  const getDayNumber = dateIso => new Date(dateIso).getDate();
+  const getDayNumber = (dateIso) => new Date(dateIso).getDate();
 
-  const dayEvents = day => props.events.filter(event => event.day === day.day.toString() && !day.offset);
+  const dayEvents = (day) =>
+    props.events.filter(
+      (event) => event.day === day.day.toString() && !day.offset
+    );
 
   const closeModal = () => navigate(-1); //TODO - there should be routing path generator - calendar without date param
 
@@ -112,32 +125,36 @@ const CalendarTable = (props) => {
   return (
     <Table>
       <TableHeaderRow>
-        {daysOfWeek.map(name => <TableHeaderCell key={name}>
-          {name}
-        </TableHeaderCell>)}
+        {daysOfWeek.map((name) => (
+          <TableHeaderCell key={name}>{name}</TableHeaderCell>
+        ))}
       </TableHeaderRow>
 
-      {calendarRows.map((row, i) => <TableRow key={i}>
-        {row.map(day => <TableCell
-          key={day.iso}
-        >
-          <CalendarDay
-            day={day}
-            events={dayEvents(day)}
-            loading={props.loading}
-          />
-        </TableCell>)}
-      </TableRow>)}
+      {calendarRows.map((row, i) => (
+        <TableRow key={i}>
+          {row.map((day) => (
+            <TableCell key={day.iso}>
+              <CalendarDay
+                day={day}
+                events={dayEvents(day)}
+                loading={props.loading}
+              />
+            </TableCell>
+          ))}
+        </TableRow>
+      ))}
 
-      {openModal && <ModalDayView
-        dateIso={routerParams.date}
-        events={dayEvents({day: getDayNumber(routerParams.date)})}
-        day={getDayNumber(routerParams.date)}
-        loading={props.loading}
-        falseCallback={closeModal}
-      />}
+      {openModal && (
+        <ModalDayView
+          dateIso={routerParams.date}
+          events={dayEvents({ day: getDayNumber(routerParams.date) })}
+          day={getDayNumber(routerParams.date)}
+          loading={props.loading}
+          falseCallback={closeModal}
+        />
+      )}
     </Table>
   );
-}
+};
 
 export default CalendarTable;

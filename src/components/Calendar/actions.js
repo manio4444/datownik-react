@@ -1,4 +1,4 @@
-import api from '../../api/api'
+import api from '../../api/api';
 
 /**
  *
@@ -6,14 +6,10 @@ import api from '../../api/api'
  * @param {number} data.limit
  * @returns {Promise<AxiosResponse<T>>}
  */
-export function getFutureEvents({limit}) {
-    return api.post(
-        'calendarAjax',
-        'getFutureEvents',
-        {
-            limit,
-        }
-    );
+export function getFutureEvents({ limit }) {
+  return api.post('calendarAjax', 'getFutureEvents', {
+    limit,
+  });
 }
 
 /**
@@ -23,15 +19,11 @@ export function getFutureEvents({limit}) {
  * @param {number} data.year
  * @returns {Promise<AxiosResponse<T>>}
  */
-export function getMonthEvents({month, year}) {
-    return api.post(
-        'calendarAjax',
-        'getMonthEvents',
-        {
-            month,
-            year,
-        }
-    );
+export function getMonthEvents({ month, year }) {
+  return api.post('calendarAjax', 'getMonthEvents', {
+    month,
+    year,
+  });
 }
 
 /**
@@ -39,12 +31,9 @@ export function getMonthEvents({month, year}) {
  * @param {Object} values
  * @returns {Promise<AxiosResponse<T>>}
  */
-export function addNewEvent({txt, data}) {
-    return api.post(
-        'calendarAjax',
-        'saveEvent',
-        {
-            txt,
-            data,
-        });
+export function addNewEvent({ txt, data }) {
+  return api.post('calendarAjax', 'saveEvent', {
+    txt,
+    data,
+  });
 }

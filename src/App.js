@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import 'dotenv';
 import './assets/css/reset.css';
 import './assets/css/main.css';
 import './assets/scss/page.scss';

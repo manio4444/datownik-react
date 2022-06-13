@@ -1,5 +1,5 @@
 import React  from 'react';
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 import CalendarDay from './CalendarDay';
 import ModalDayView from "./ModalDayView";
@@ -24,6 +24,7 @@ const TableCell = ({children}) => <div className="calendar-table__cell">{childre
 
 const CalendarTable = (props) => {
   let routerParams = useParams();
+  const navigate = useNavigate();
 
   const isLastWeekDay = day => Number(day.isoWeekday()) === 7;
 
@@ -94,7 +95,7 @@ const CalendarTable = (props) => {
 
   const dayEvents = day => props.events.filter(event => event.day === day.day.toString() && !day.offset);
 
-  const closeModal = () => window.history.go(-1); //TODO - there should be routing path generator - calendar without date param
+  const closeModal = () => navigate(-1); //TODO - there should be routing path generator - calendar without date param
 
   const previousMonth = props.date.clone().subtract(1, 'months');
   const nextMonth = props.date.clone().add(1, 'months');

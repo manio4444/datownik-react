@@ -1,29 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
+
 import 'assets/css/reset.css';
 import 'assets/css/main.css';
 import 'assets/scss/page.scss';
+
 import MainRouter from 'router';
 import Lockscreen from 'components/Lockscreen/Lockscreen';
+import { useLoggedIn } from 'shared/hooks/useLoggedIn';
 
-class App extends Component {
-  state = {
-    isLogged: process.env.REACT_APP_ENV === 'dev', //TODO - CREATE QUERY FOR CHECKING
-  };
+export default function App() {
+  const { isLogged, setToken, isCheckingAuth } = useLoggedIn();
 
-  setIsLogged = () => {
-    this.setState({
-      isLogged: true,
-    });
-  };
-
-  render() {
-    const pageConfig = {};
-
-    if (!this.state.isLogged) {
-      return <Lockscreen isLogged={this.setIsLogged} />;
-    }
-    return <MainRouter pageConfig={pageConfig} />;
-  }
+  return isLogged ? (
+    <MainRouter />
+  ) : (
+    <Lockscreen setToken={setToken} isCheckingAuth={isCheckingAuth} />
+  );
 }
-
-export default App;

@@ -14,6 +14,7 @@ const TITLE_OK = 'OK';
 const TITLE_ERROR_CODE = 'Wrong Code';
 const TITLE_ERROR_CONNECTION = 'Connection error';
 const TITLE_ERROR_UNKNOWN = 'Unknown error';
+const TITLE_CHECKING_AUTH = 'Checking credentials';
 
 const LockscreenTitle = ({ title }) => (
   <div className="lockscreen__title">{title}</div>
@@ -111,7 +112,7 @@ class Lockscreen extends Component {
           throw new Error(TITLE_ERROR_CODE);
         }
         if (res.data.result.isValid) {
-          this.allowCode();
+          this.allowCode(res.data.result.token);
           return;
         }
         throw new Error();
@@ -138,13 +139,13 @@ class Lockscreen extends Component {
     }, RESET_ANIMATION_TIMEOUT);
   };
 
-  allowCode = () => {
+  allowCode = (token) => {
     this.setState({
       allowCodeAnimation: true,
       lockTitle: TITLE_OK,
     });
     setTimeout(() => {
-      this.props.isLogged(); //TODO - temp ?
+      this.props.setToken(token);
     }, ALLOW_ANIMATION_TIMEOUT);
   };
 
@@ -165,16 +166,20 @@ class Lockscreen extends Component {
   }
 
   render() {
-    const lockedClass = this.state.lockInput ? 'lockscreen--locked' : '';
+    const { state } = this;
+    const { props } = this;
+
+    const lockedClass =
+      this.state.lockInput || props.isCheckingAuth ? 'lockscreen--locked' : '';
     const allowedClass = this.state.allowCodeAnimation
       ? ' lockscreen--allowed'
       : '';
-    const { state } = this;
+    const title = props.isCheckingAuth ? TITLE_CHECKING_AUTH : state.lockTitle;
 
     return (
       <section className={`lockscreen ${lockedClass} ${allowedClass}`}>
         <div className="lockscreen__container">
-          <LockscreenTitle title={state.lockTitle} />
+          <LockscreenTitle title={title} />
           <LockscreenInputsRow
             codeInput={this.state.codeInput}
             resetCodeAnimation={this.state.resetCodeAnimation}

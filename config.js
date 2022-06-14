@@ -11,6 +11,7 @@ System.config({
     'pages/*': './src/pages/*',
     router: './src/router',
     'router/*': './src/router/*',
+    'shared/*': './src/shared/*',
     'utils/*': './src/utils/*',
   },
 });

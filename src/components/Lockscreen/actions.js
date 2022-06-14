@@ -10,3 +10,14 @@ export function tryCode({ code }) {
     code,
   });
 }
+
+/**
+ *
+ * @param {Object} data
+ * @returns {Promise<AxiosResponse<T>>}
+ */
+export function checkAuth({ token }) {
+  return api.post('lockscreenAjax', 'checkAuth', {
+    token,
+  });
+}

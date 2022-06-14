@@ -5,14 +5,14 @@ import 'semantic-ui-css/components/icon.min.css'; // TODO - import this in speci
 import './PageStart.scss';
 import { Link } from 'react-router-dom';
 
-import { Col } from '../../components/Grid';
-import { RouterPaths } from '../../router/consts';
-import ListNotes from '../../components/Notes/ListNotes';
-import Multicontent from '../../components/Multicontent/Multicontent';
-import MultiSearch from '../../components/MultiSearch/MultiSearch';
+import { Col } from 'components/Grid';
+import { RouterPaths } from 'router/consts';
+import ListNotes from 'components/Notes/ListNotes';
+import Multicontent from 'components/Multicontent/Multicontent';
+import MultiSearch from 'components/MultiSearch/MultiSearch';
 import { Button } from 'semantic-ui-react';
-import ListTodo from '../../components/Todo/ListTodo';
-import ListCalendar from '../../components/Calendar/ListCalendar';
+import ListTodo from 'components/Todo/ListTodo';
+import ListCalendar from 'components/Calendar/ListCalendar';
 
 const PageDivider = () => <div className="page__divider" />;
 const FirstSectionTitle = ({ value }) => <h2 className="title">{value}</h2>;

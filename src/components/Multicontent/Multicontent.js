@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { Form, TextArea, Dropdown, Button } from 'semantic-ui-react';
 
 import { DropdownOptions, DropdownDefault } from './const';
-import ModalNoteAdd from '../Notes/ModalNoteAdd';
-import ModalTodoAdd from '../Todo/ModalTodoAdd';
-import ModalEventAdd from '../Calendar/ModalEventAdd';
+import ModalNoteAdd from 'components/Notes/ModalNoteAdd';
+import ModalTodoAdd from 'components/Todo/ModalTodoAdd';
+import ModalEventAdd from 'components/Calendar/ModalEventAdd';
 
 import 'semantic-ui-css/components/form.min.css';
 import 'semantic-ui-css/components/button.min.css';

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Icon, Button, Dropdown } from 'semantic-ui-react';
 
-import { getDiffTimestamps } from '../../utils/commonTime';
+import { getDiffTimestamps } from 'utils/commonTime';
 
 import ModalYesNo from './ModalYesNo';
 import 'semantic-ui-css/components/button.min.css';
@@ -11,7 +11,7 @@ import 'semantic-ui-css/components/form.min.css';
 import 'semantic-ui-css/components/input.min.css';
 import 'semantic-ui-css/components/checkbox.min.css';
 import axios from 'axios';
-import Placeholder from '../Placeholder/Placeholder';
+import Placeholder from 'components/Placeholder/Placeholder';
 import { deleteTodo } from './actions';
 
 import './SingleTodo.scss';

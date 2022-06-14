@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import './assets/css/reset.css';
-import './assets/css/main.css';
-import './assets/scss/page.scss';
-import MainRouter from './router';
-import Lockscreen from './components/Lockscreen/Lockscreen';
+import 'assets/css/reset.css';
+import 'assets/css/main.css';
+import 'assets/scss/page.scss';
+import MainRouter from 'router';
+import Lockscreen from 'components/Lockscreen/Lockscreen';
 
 class App extends Component {
   state = {

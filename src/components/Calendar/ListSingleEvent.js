@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Card, Icon } from 'semantic-ui-react';
 
-import { getDiffTimestamps } from '../../utils/commonTime';
-import Placeholder from '../Placeholder/Placeholder';
+import { getDiffTimestamps } from 'utils/commonTime';
+import Placeholder from 'components/Placeholder/Placeholder';
 
 import 'semantic-ui-css/components/card.min.css';
 import 'semantic-ui-css/components/icon.min.css';

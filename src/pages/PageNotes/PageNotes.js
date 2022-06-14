@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router';
 
-import ListNotes from '../../components/Notes/ListNotes';
-import SearchNotes from '../../components/Notes/SearchNotes';
+import ListNotes from 'components/Notes/ListNotes.js';
+import SearchNotes from 'components/Notes/SearchNotes';
 
 const PageNotes = () => {
   let location = useLocation();

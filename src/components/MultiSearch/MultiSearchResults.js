@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Table } from 'semantic-ui-react';
 import { ResultTypes } from './consts';
-import { RouterPaths } from '../../router/consts';
+import { RouterPaths } from 'router/consts';
 
 import ResultsNotes from './components/ResultsNotes';
 

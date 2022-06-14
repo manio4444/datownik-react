@@ -1,5 +1,5 @@
 import React from 'react';
-import SingleNote from '../../Notes/SingleNote';
+import SingleNote from 'components/Notes/SingleNote';
 
 const ResultsNotes = ({ data }) => (
   <React.Fragment>

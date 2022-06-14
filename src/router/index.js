@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import MainMenu from '../components/MainMenu/MainMenu';
-import Footer from '../components/Footer/Footer';
-import { PageStart, PageNotes, PageTodo, PageCalendar } from '../pages';
+import MainMenu from 'components/MainMenu/MainMenu';
+import Footer from 'components/Footer/Footer';
+import { PageStart, PageNotes, PageTodo, PageCalendar } from 'pages';
 import { RouterPaths } from './consts';
 
 const MainRouter = () => {

@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { Grid, Button, Icon } from 'semantic-ui-react';
 
-import { getMonthEvents } from '../../components/Calendar/actions'; //TODO - move to component inside /components/Calendar/
-import CalendarTable from '../../components/Calendar/CalendarTable';
-import { LANG_ARR_MONTHS } from '../../components/Calendar/const';
-import ModalEventAdd from '../../components/Calendar/ModalEventAdd';
+import { getMonthEvents } from 'components/Calendar/actions'; //TODO - move to component inside /components/Calendar/
+import CalendarTable from 'components/Calendar/CalendarTable';
+import { LANG_ARR_MONTHS } from 'components/Calendar/const';
+import ModalEventAdd from 'components/Calendar/ModalEventAdd';
 
 import 'semantic-ui-css/components/grid.min.css';
 

@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { BuildVersion, BuildDate, BuildEnv } from '../../components';
+import {
+  BuildDate,
+  BuildEnv,
+  BuildVersion,
+} from 'components/BuildInfo/BuildInfo';
 
 class Footer extends Component {
   getStyles = {

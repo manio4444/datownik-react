@@ -1,4 +1,4 @@
-import { RouterPaths } from '../../router/consts';
+import { RouterPaths } from 'router/consts';
 
 export const DropdownDefault = {
   text: 'Dodaj nowy',

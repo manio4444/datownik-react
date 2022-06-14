@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SingleNote from './SingleNote';
-import '../../assets/css/notes.css';
+import 'assets/css/notes.css';
 import axios from 'axios';
 
 import './ListNotes.scss';

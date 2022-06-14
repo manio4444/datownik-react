@@ -3,7 +3,7 @@ import axios from 'axios';
 import Linkify from 'react-linkify';
 
 import { addNewNote } from './actions';
-import Placeholder from '../Placeholder/Placeholder';
+import Placeholder from 'components/Placeholder/Placeholder';
 
 import './SingleNote.scss';
 

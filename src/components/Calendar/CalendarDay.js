@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { RouterPaths } from '../../router/consts';
-import Placeholder from '../Placeholder/Placeholder';
+import { RouterPaths } from 'router/consts';
+import Placeholder from 'components/Placeholder/Placeholder';
 import { Button } from 'semantic-ui-react';
 import ModalEventAdd from './ModalEventAdd';
 

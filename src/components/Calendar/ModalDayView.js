@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react';
 
 import { LANG_ARR_MONTHS } from './const';
-import Placeholder from '../Placeholder/Placeholder';
+import Placeholder from 'components/Placeholder/Placeholder';
 
 import 'semantic-ui-css/components/modal.min.css';
 import 'semantic-ui-css/components/dimmer.min.css';

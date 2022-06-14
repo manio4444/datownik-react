@@ -3,4 +3,5 @@ export const RouterPaths = {
   TODO: 'do-zrobienia',
   CALENDAR_DATE: 'kalendarz/:date',
   CALENDAR: 'kalendarz',
+  DOCS: 'dokumenty',
 };

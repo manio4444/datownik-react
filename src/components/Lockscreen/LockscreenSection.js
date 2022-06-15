@@ -1,32 +1,11 @@
 import React, { useEffect } from 'react';
 
+import { NumericKeyCodesEnum } from 'shared/consts/NumericKeyCodesEnum';
+
 import './Lockscreen.css';
 import 'animate.css';
 
 const CODE_MAX_LENGTH = 4;
-
-const keyCodesMap = [
-  { keyCode: 48, clickNumber: '0' }, //0
-  { keyCode: 49, clickNumber: '1' }, //1
-  { keyCode: 50, clickNumber: '2' }, //2
-  { keyCode: 51, clickNumber: '3' }, //3
-  { keyCode: 52, clickNumber: '4' }, //4
-  { keyCode: 53, clickNumber: '5' }, //5
-  { keyCode: 54, clickNumber: '6' }, //6
-  { keyCode: 55, clickNumber: '7' }, //7
-  { keyCode: 56, clickNumber: '8' }, //8
-  { keyCode: 57, clickNumber: '9' }, //9
-  { keyCode: 96, clickNumber: '0' }, //numpad 0
-  { keyCode: 97, clickNumber: '1' }, //numpad 1
-  { keyCode: 98, clickNumber: '2' }, //numpad 2
-  { keyCode: 99, clickNumber: '3' }, //numpad 3
-  { keyCode: 100, clickNumber: '4' }, //numpad 4
-  { keyCode: 101, clickNumber: '5' }, //numpad 5
-  { keyCode: 102, clickNumber: '6' }, //numpad 6
-  { keyCode: 103, clickNumber: '7' }, //numpad 7
-  { keyCode: 104, clickNumber: '8' }, //numpad 8
-  { keyCode: 105, clickNumber: '9' }, //numpad 9
-];
 
 const LockscreenTitle = ({ title }) => (
   <div className="lockscreen__title">{title}</div>
@@ -70,13 +49,8 @@ export default function LockscreenSection({
   const handleClick = (e) => updateCode(e.target.value);
 
   const handleOnKeyDown = (e) => {
-    const keyCodeClicked = keyCodesMap.find(
-      (item) => item.keyCode === e.keyCode
-    );
-
-    if (keyCodeClicked) {
-      console.log('### onKeyDown', keyCodeClicked);
-      updateCode(keyCodeClicked.clickNumber);
+    if (NumericKeyCodesEnum[e.keyCode]) {
+      updateCode(NumericKeyCodesEnum[e.keyCode]);
     }
   };
 

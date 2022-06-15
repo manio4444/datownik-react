@@ -31,12 +31,16 @@ const MainRouter = () => {
             <Route path={`/${RouterPaths.NOTES}`} element={<PageNotes />} />
             <Route path={`/${RouterPaths.TODO}`} element={<PageTodo />} />
             <Route
-              path={`/${RouterPaths.CALENDAR}/:date`}
+              path={`/${RouterPaths.CALENDAR_DATE}`}
               element={<PageCalendar />}
             />
             <Route
               path={`/${RouterPaths.CALENDAR}`}
               element={<PageCalendar />}
+            />
+            <Route
+              path={`/${RouterPaths.DOCS_SINGLE}`}
+              element={<PageDocs />}
             />
             <Route path={`/${RouterPaths.DOCS}`} element={<PageDocs />} />
           </Routes>

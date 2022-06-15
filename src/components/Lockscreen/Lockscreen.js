@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
 import { tryCode } from './actions';
+import LockscreenSection from 'components/Lockscreen/LockscreenSection';
 
 import './Lockscreen.css';
 import 'animate.css';
@@ -16,89 +17,26 @@ const TITLE_ERROR_CONNECTION = 'Connection error';
 const TITLE_ERROR_UNKNOWN = 'Unknown error';
 const TITLE_CHECKING_AUTH = 'Checking credentials';
 
-const LockscreenTitle = ({ title }) => (
-  <div className="lockscreen__title">{title}</div>
-);
+export default function Lockscreen(props) {
+  const [codeInput, setCodeInput] = useState('');
+  const [lockTitle, setLockTitle] = useState(TITLE_DEFAULT);
+  const [lockInput, setLockInput] = useState(false);
+  const [resetCodeAnimation, setResetCodeAnimation] = useState(false);
+  const [pinAllowed, setPinAllowed] = useState(false);
 
-const LockscreenButtonsRow = ({ buttons, handleClick }) => (
-  <div className="lockscreen__buttons_row">
-    {buttons.map((i) => (
-      <button key={i} className={`btn-${i}`} value={i} onClick={handleClick}>
-        {i}
-      </button>
-    ))}
-  </div>
-);
+  const updateCode = (number) => {
+    if (lockInput) return;
 
-const LockscreenInputsRow = ({ codeInput, resetCodeAnimation }) => {
-  const codeLength = codeInput.length;
-  const resetClassAnimation = resetCodeAnimation
-    ? ' animate__animated animate__shakeX'
-    : '';
-  let inputs = [];
+    const newCode = `${codeInput}${number}`;
 
-  for (let i = 0; i < CODE_MAX_LENGTH; i++) {
-    inputs.push(<span key={i} className={codeLength > i ? 'filled' : ''} />);
-  }
-
-  return (
-    <div className={`lockscreen__inputs${resetClassAnimation}`}>{inputs}</div>
-  );
-};
-
-class Lockscreen extends Component {
-  state = {
-    codeInput: '',
-    lockTitle: TITLE_DEFAULT,
-    lockInput: false,
-    resetCodeAnimation: false,
-    allowCodeAnimation: false,
+    setCodeInput(newCode);
+    if (newCode.length >= CODE_MAX_LENGTH) {
+      setLockInput(true);
+      handleTryCode(newCode);
+    }
   };
 
-  keyCodesMap = [
-    { keyCode: 48, clickNumber: '0' }, //0
-    { keyCode: 49, clickNumber: '1' }, //1
-    { keyCode: 50, clickNumber: '2' }, //2
-    { keyCode: 51, clickNumber: '3' }, //3
-    { keyCode: 52, clickNumber: '4' }, //4
-    { keyCode: 53, clickNumber: '5' }, //5
-    { keyCode: 54, clickNumber: '6' }, //6
-    { keyCode: 55, clickNumber: '7' }, //7
-    { keyCode: 56, clickNumber: '8' }, //8
-    { keyCode: 57, clickNumber: '9' }, //9
-    { keyCode: 96, clickNumber: '0' }, //numpad 0
-    { keyCode: 97, clickNumber: '1' }, //numpad 1
-    { keyCode: 98, clickNumber: '2' }, //numpad 2
-    { keyCode: 99, clickNumber: '3' }, //numpad 3
-    { keyCode: 100, clickNumber: '4' }, //numpad 4
-    { keyCode: 101, clickNumber: '5' }, //numpad 5
-    { keyCode: 102, clickNumber: '6' }, //numpad 6
-    { keyCode: 103, clickNumber: '7' }, //numpad 7
-    { keyCode: 104, clickNumber: '8' }, //numpad 8
-    { keyCode: 105, clickNumber: '9' }, //numpad 9
-  ];
-
-  handleClick = (e) => this.updateCode(e.target.value);
-
-  updateCode = (number) => {
-    if (this.state.lockInput) return;
-
-    const newCode = `${this.state.codeInput}${number}`;
-
-    this.setState(
-      {
-        codeInput: newCode,
-      },
-      () => {
-        if (newCode.length >= CODE_MAX_LENGTH) {
-          this.setState({ lockInput: true });
-          this.tryCode(newCode);
-        }
-      }
-    );
-  };
-
-  tryCode = (codeInput) => {
+  const handleTryCode = (codeInput) => {
     tryCode({
       ajax_action: 'lockscreenAjax',
       operation: 'tryPasscode',
@@ -112,95 +50,48 @@ class Lockscreen extends Component {
           throw new Error(TITLE_ERROR_CODE);
         }
         if (res.data.result.isValid) {
-          this.allowCode(res.data.result.token);
+          allowCode(res.data.result.token);
           return;
         }
         throw new Error();
       })
       .catch((error) => {
         console.error(error);
-        this.resetCode(error.message);
+        resetCode(error.message);
       });
   };
 
-  resetCode = (errorMgs = TITLE_ERROR_UNKNOWN) => {
+  const resetCode = (errorMgs = TITLE_ERROR_UNKNOWN) => {
     errorMgs = errorMgs !== '' ? errorMgs : 'TITLE_ERROR_UNKNOWN';
-    this.setState({
-      resetCodeAnimation: true,
-      lockTitle: errorMgs,
-    });
+    setResetCodeAnimation(true);
+    setLockTitle(errorMgs);
     setTimeout(() => {
-      this.setState({
-        codeInput: '',
-        lockInput: false,
-        resetCodeAnimation: false,
-        lockTitle: TITLE_DEFAULT,
-      });
+      setCodeInput('');
+      setLockInput(false);
+      setResetCodeAnimation(false);
+      setLockTitle(TITLE_DEFAULT);
     }, RESET_ANIMATION_TIMEOUT);
   };
 
-  allowCode = (token) => {
-    this.setState({
-      allowCodeAnimation: true,
-      lockTitle: TITLE_OK,
-    });
+  const allowCode = (token) => {
+    setPinAllowed(true);
+    setLockTitle(TITLE_OK);
     setTimeout(() => {
-      this.props.setToken(token);
+      props.setToken(token);
     }, ALLOW_ANIMATION_TIMEOUT);
   };
 
-  onKeyDown = (e) => {
-    this.keyCodesMap.forEach((item) => {
-      if (item.keyCode === e.keyCode) {
-        this.updateCode(item.clickNumber);
-      }
-    });
-  };
+  const title = props.isCheckingAuth ? TITLE_CHECKING_AUTH : lockTitle;
 
-  componentDidMount() {
-    document.addEventListener('keydown', this.onKeyDown);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.onKeyDown);
-  }
-
-  render() {
-    const { state } = this;
-    const { props } = this;
-
-    const lockedClass =
-      this.state.lockInput || props.isCheckingAuth ? 'lockscreen--locked' : '';
-    const allowedClass = this.state.allowCodeAnimation
-      ? ' lockscreen--allowed'
-      : '';
-    const title = props.isCheckingAuth ? TITLE_CHECKING_AUTH : state.lockTitle;
-
-    return (
-      <section className={`lockscreen ${lockedClass} ${allowedClass}`}>
-        <div className="lockscreen__container">
-          <LockscreenTitle title={title} />
-          <LockscreenInputsRow
-            codeInput={this.state.codeInput}
-            resetCodeAnimation={this.state.resetCodeAnimation}
-          />
-          <LockscreenButtonsRow
-            buttons={[1, 2, 3]}
-            handleClick={this.handleClick}
-          />
-          <LockscreenButtonsRow
-            buttons={[4, 5, 6]}
-            handleClick={this.handleClick}
-          />
-          <LockscreenButtonsRow
-            buttons={[7, 8, 9]}
-            handleClick={this.handleClick}
-          />
-          <LockscreenButtonsRow buttons={[0]} handleClick={this.handleClick} />
-        </div>
-      </section>
-    );
-  }
+  return (
+    <LockscreenSection
+      title={title}
+      codeInput={codeInput}
+      lockInput={lockInput}
+      resetCodeAnimation={resetCodeAnimation}
+      isCheckingAuth={props.isCheckingAuth}
+      pinAllowed={pinAllowed}
+      updateCode={updateCode.bind(this)}
+    />
+  );
 }
-
-export default Lockscreen;

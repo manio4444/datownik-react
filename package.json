@@ -5,6 +5,7 @@
   "dependencies": {
     "animate.css": "^4.1.1",
     "axios": "^0.27.2",
+    "clsx": "^1.1.1",
     "flatpickr": "^4.6.13",
     "local-storage": "^2.0.0",
     "moment": "^2.29.3",

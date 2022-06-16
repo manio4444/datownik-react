@@ -1,6 +1,10 @@
 .placeholder-item {
   overflow: hidden;
   position: relative;
+  &--inline {
+    display: inline-block;
+    vertical-align: middle;
+  }
 }
 
 .placeholder-item::before {

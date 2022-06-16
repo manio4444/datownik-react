@@ -1,0 +1,19 @@
+.docs {
+  &__card {
+    height: 100%;
+    &--placeholder {
+      a {
+        pointer-events: none;
+      }
+    }
+    &-thumb {
+      overflow: hidden;
+      pointer-events: none;
+    }
+    &-html {
+      height: 200px;
+      width: 200%;
+      padding: 1em;
+    }
+  }
+}

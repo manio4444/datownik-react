@@ -1,9 +1,13 @@
 .docs {
   &__single {
-    &_container {
+    &-container {
+      min-height: 40vh;
       background-color: #fff;
       border: 1px solid #c5c5c5;
       box-shadow: 0 1px 2px #00000033;
+    }
+    &-buttonsGroup {
+      margin-bottom: 16px !important;
     }
   }
 }

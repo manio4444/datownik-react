@@ -10,10 +10,10 @@ class ModalYesNo extends Component {
   handleFalse = () => this.props.falseCallback();
 
   render() {
-    const { header, txt, icon } = this.props;
+    const { open, header, txt, icon } = this.props;
 
     return (
-      <Modal open={this.props.open} basic size="small">
+      <Modal open={open} basic size="small">
         <Header icon={icon} content={header} />
         <Modal.Content>
           <p>{txt}</p>

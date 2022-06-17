@@ -9,8 +9,6 @@ const PageDocs = () => {
 
   const singleDocId = routerParams.id;
 
-  console.log('### singleDocId', singleDocId);
-
   return (
     <section className="docs docs__page">
       {singleDocId ? (

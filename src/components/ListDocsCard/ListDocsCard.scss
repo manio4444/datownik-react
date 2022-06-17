@@ -8,12 +8,24 @@
     }
     &-thumb {
       overflow: hidden;
-      pointer-events: none;
     }
     &-html {
       height: 200px;
-      width: 200%;
       padding: 1em;
+      &:not(&--new) {
+        width: 200%;
+      }
+      &--new {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        &:hover {
+          .icon {
+            font-size: 5em;
+          }
+        }
+      }
     }
   }
 }

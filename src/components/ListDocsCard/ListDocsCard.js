@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { Card, Icon } from 'semantic-ui-react';
@@ -17,48 +17,42 @@ export default function ListDocsCard({
   placeholder,
   addNew,
 }) {
-  const OptionalThumbWrapper = function ({ children }) {
-    return placeholder || addNew ? (
-      <>{children}</>
-    ) : (
-      <Link
-        to={!placeholder && `/${RouterPaths.DOCS_SINGLE.replace(':id', id)}`}
-      >
-        {children}
-      </Link>
-    );
-  };
-
   return (
     <Card
       className={clsx('docs__card', { 'docs__card--placeholder': placeholder })}
     >
-      <OptionalThumbWrapper>
-        <div className={'docs__card-thumb'}>
-          {placeholder ? (
-            <div className={'docs__card-html'}>
-              <Placeholder />
-              <Placeholder />
-              <Placeholder />
-              <Placeholder />
-              <Placeholder />
-              <Placeholder />
-              <Placeholder />
-              <Placeholder />
-              <Placeholder />
-            </div>
-          ) : addNew ? (
-            <div className={'docs__card-html docs__card-html--new'}>
-              <Icon name="plus" size="huge" />
-            </div>
-          ) : (
+      <div className={'docs__card-thumb'}>
+        {placeholder ? (
+          <div className={'docs__card-html'}>
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+          </div>
+        ) : addNew ? (
+          <div className={'docs__card-html docs__card-html--new'}>
+            <Icon name="plus" size="huge" />
+          </div>
+        ) : (
+          <>
             <div
               className={'docs__card-html'}
               dangerouslySetInnerHTML={{ __html: txt }}
             />
-          )}
-        </div>
-      </OptionalThumbWrapper>
+            <Link
+              className={'docs__card-link'}
+              to={
+                !placeholder && `/${RouterPaths.DOCS_SINGLE.replace(':id', id)}`
+              }
+            />
+          </>
+        )}
+      </div>
       <Card.Content>
         <Card.Header>
           {placeholder ? (

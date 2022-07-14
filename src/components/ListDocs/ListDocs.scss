@@ -1,0 +1,12 @@
+.docs {
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    &-item {
+      width: 295px;
+      margin: 0 10px 20px;
+    }
+  }
+}

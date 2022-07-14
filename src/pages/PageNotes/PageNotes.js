@@ -1,29 +1,35 @@
 import React, { useState } from 'react';
-import ListNotes from "../../components/Notes/ListNotes";
-import SearchNotes from "../../components/Notes/SearchNotes";
+import { useLocation } from 'react-router';
 
-const PageNotes = ({location: {state: {queryString} = {}}}) => {
+import ListNotes from 'components/Notes/ListNotes.js';
+import SearchNotes from 'components/Notes/SearchNotes';
 
-    const [searchQuery, setSearchQuery] = useState(queryString ? queryString : '');
+const PageNotes = () => {
+  let location = useLocation();
 
-    return (
-        <React.Fragment>
-            <section className="notes">
-                <SearchNotes
-                    searchQuery={searchQuery}
-                    setSearchQuery={setSearchQuery}
-                />
+  const queryString = location.state?.queryString;
 
-                <ListNotes
-                    viewOnly={false}
-                    limit={0}
-                    searchQuery={searchQuery}
-                    placeholders={8}
-                />
+  const [searchQuery, setSearchQuery] = useState(
+    queryString ? queryString : ''
+  );
 
-            </section>
-        </React.Fragment>
-    );
+  return (
+    <React.Fragment>
+      <section className="notes">
+        <SearchNotes
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+        />
+
+        <ListNotes
+          viewOnly={false}
+          limit={0}
+          searchQuery={searchQuery}
+          placeholders={8}
+        />
+      </section>
+    </React.Fragment>
+  );
 };
 
 export default PageNotes;

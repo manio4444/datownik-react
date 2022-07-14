@@ -1,5 +1,4 @@
 .PageStart {
-
   &__first-section {
     display: flex;
     flex-wrap: wrap;
@@ -14,7 +13,6 @@
 
     .title {
     }
-
 
     @media (max-width: 1023px) {
     }
@@ -40,8 +38,8 @@
 
 .main_page_dates .ui.card > .extra.content {
   font-size: 0.85714em;
-  color: rgba(0,0,0,.6);
-  padding: .5em .75em;
+  color: rgba(0, 0, 0, 0.6);
+  padding: 0.5em 0.75em;
 }
 
 .main_page_dates .ui.red.card {

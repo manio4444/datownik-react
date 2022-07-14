@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import SingleTodo from './SingleTodo';
 import SingleTodoAdd from './SingleTodoAdd';
@@ -8,115 +8,118 @@ import './ListTodo.scss';
 import axios from 'axios';
 
 class ListTodo extends Component {
-    state = {
-        list: [],
-        openModalTodoAdd: false,
-        fetchingData: true,
-        placeholders: Number.isInteger(this.props.placeholders) ? this.props.placeholders : 3,
+  state = {
+    list: [],
+    openModalTodoAdd: false,
+    fetchingData: true,
+    placeholders: Number.isInteger(this.props.placeholders)
+      ? this.props.placeholders
+      : 3,
+  };
+
+  mapQuery(data) {
+    return {
+      id: data.id,
+      title: data.txt,
+      deadline: data.deadline,
+      created: data.date_mk,
+      finished: data.date_fn,
+      isDeadline: data.no_deadline !== '1',
+      isFinished: data.finished === '1',
+      isDeleted: data.deleted === '1',
     };
+  }
 
-    mapQuery(data) {
-        return {
-            id: data.id,
-            title: data.txt,
-            deadline: data.deadline,
-            created: data.date_mk,
-            finished: data.date_fn,
-            isDeadline: (data.no_deadline !== "1"),
-            isFinished: (data.finished === "1"),
-            isDeleted: (data.deleted === "1"),
-        }
-    };
-
-    getTodoList() {
-        axios.post(process.env.REACT_APP_ENDPOINT_URL, {
-            ajax_action: 'tasksAjax',
-            operation: 'getData',
-            limit: this.props.limit,
-            getFinished: this.props.getFinished,
-            getFinishedOnly: this.props.getFinishedOnly,
-        })
-            .then(res => {
-                const list = res.data.result.map(todo => this.mapQuery(todo));
-                this.setState({
-                    list,
-                    fetchingData: false
-                });
-
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
-
-    ModalTodoAdd = () => {
+  getTodoList() {
+    axios
+      .post(process.env.REACT_APP_ENDPOINT_URL, {
+        ajax_action: 'tasksAjax',
+        operation: 'getData',
+        limit: this.props.limit,
+        getFinished: this.props.getFinished,
+        getFinishedOnly: this.props.getFinishedOnly,
+      })
+      .then((res) => {
+        const list = res.data.result.map((todo) => this.mapQuery(todo));
         this.setState({
-            openModalTodoAdd: true,
+          list,
+          fetchingData: false,
         });
-    };
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
-    ModalTodoAddClose = () => {
-        this.setState({
-            openModalTodoAdd: false,
-        })
-    };
+  ModalTodoAdd = () => {
+    this.setState({
+      openModalTodoAdd: true,
+    });
+  };
 
-    handleAddNew = (newElement) => {
-        this.setState({
-            list: [this.mapQuery(newElement), ...this.state.list],
-        });
-        this.ModalTodoAddClose();
-    };
+  ModalTodoAddClose = () => {
+    this.setState({
+      openModalTodoAdd: false,
+    });
+  };
 
-    componentDidMount() {
-        this.getTodoList();
-    };
+  handleAddNew = (newElement) => {
+    this.setState({
+      list: [this.mapQuery(newElement), ...this.state.list],
+    });
+    this.ModalTodoAddClose();
+  };
 
-    deletedTodo(id) {
-        this.setState({list: this.state.list.filter(element => element.id !== id)});
-    };
+  componentDidMount() {
+    this.getTodoList();
+  }
 
-    render() {
-        const todos = this.state.list;
-        const {
-            fetchingData,
-            openModalTodoAdd,
-            placeholders,
-        } = this.state;
-        const { viewOnly } = this.props;
+  deletedTodo(id) {
+    this.setState({
+      list: this.state.list.filter((element) => element.id !== id),
+    });
+  }
 
-        const placeholdersRender = [];
+  render() {
+    const todos = this.state.list;
+    const { fetchingData, openModalTodoAdd, placeholders } = this.state;
+    const { viewOnly } = this.props;
 
-        for (let i = 0; i < placeholders; i++) {
-            placeholdersRender.push(<SingleTodo key={i} placeholder {...this.props}/>)
-        }
+    const placeholdersRender = [];
 
-        return (
-            <div className="todos__list">
-
-                {!viewOnly && <SingleTodoAdd handleAddNew={this.ModalTodoAdd}/>}
-
-                {openModalTodoAdd && <ModalTodoAdd
-                    trueCallback={this.handleAddNew}
-                    falseCallback={this.ModalTodoAddClose}
-                />}
-
-                {fetchingData && <React.Fragment>{placeholdersRender}</React.Fragment>}
-
-                {!fetchingData && todos.map((todo) => {
-                    return (
-                        <SingleTodo
-                            key={todo.id}
-                            {...todo}
-                            viewOnly={viewOnly}
-                            deletedCallback={this.deletedTodo.bind(this)}
-                        />
-                    );
-                })}
-
-            </div>
-        );
+    for (let i = 0; i < placeholders; i++) {
+      placeholdersRender.push(
+        <SingleTodo key={i} placeholder {...this.props} />
+      );
     }
+
+    return (
+      <div className="todos__list">
+        {!viewOnly && <SingleTodoAdd handleAddNew={this.ModalTodoAdd} />}
+
+        {openModalTodoAdd && (
+          <ModalTodoAdd
+            trueCallback={this.handleAddNew}
+            falseCallback={this.ModalTodoAddClose}
+          />
+        )}
+
+        {fetchingData && <React.Fragment>{placeholdersRender}</React.Fragment>}
+
+        {!fetchingData &&
+          todos.map((todo) => {
+            return (
+              <SingleTodo
+                key={todo.id}
+                {...todo}
+                viewOnly={viewOnly}
+                deletedCallback={this.deletedTodo.bind(this)}
+              />
+            );
+          })}
+      </div>
+    );
+  }
 }
 
 export default ListTodo;

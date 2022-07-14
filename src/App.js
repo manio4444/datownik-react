@@ -1,31 +1,19 @@
-import React, {Component} from 'react';
-import 'dotenv';
-import './assets/css/reset.css';
-import './assets/css/main.css';
-import './assets/scss/page.scss';
-import MainRouter from './router';
-import Lockscreen from './components/Lockscreen/Lockscreen';
+import React from 'react';
 
-class App extends Component {
-    state = {
-        isLogged: process.env.REACT_APP_ENV === 'dev', //TODO - CREATE QUERY FOR CHECKING
-    };
+import 'assets/css/reset.css';
+import 'assets/css/main.css';
+import 'assets/scss/page.scss';
 
-    setIsLogged = () => {
-        this.setState({
-            isLogged: true,
-        });
-    };
+import MainRouter from 'router';
+import Lockscreen from 'components/Lockscreen/Lockscreen';
+import { useLoggedIn } from 'shared/hooks/useLoggedIn';
 
-    render() {
-        const pageConfig = {
-        };
+export default function App() {
+  const { isLogged, setToken, isCheckingAuth } = useLoggedIn();
 
-        if (!this.state.isLogged) {
-            return <Lockscreen isLogged={this.setIsLogged} />
-        }
-        return <MainRouter pageConfig={pageConfig} />
-    }
+  return isLogged ? (
+    <MainRouter />
+  ) : (
+    <Lockscreen setToken={setToken} isCheckingAuth={isCheckingAuth} />
+  );
 }
-
-export default App;

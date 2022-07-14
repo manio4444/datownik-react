@@ -1,13 +1,12 @@
 .todo_element {
-
   &.done {
-    opacity: .2;
-    transition: opacity .3s ease;
-    transition-delay: .3s;
+    opacity: 0.2;
+    transition: opacity 0.3s ease;
+    transition-delay: 0.3s;
   }
 
   &.deleting {
-    transition: all .3s ease;
+    transition: all 0.3s ease;
     transform: scale(0.5);
     opacity: 0;
   }
@@ -25,5 +24,4 @@
       right: 0;
     }
   }
-
 }

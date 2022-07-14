@@ -1,33 +1,32 @@
 /* NOTEPAD GLOBAL */
 
 .notes_container {
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    -webkit-justify-content: space-around;
-    -ms-flex-pack: distribute;
-    justify-content: space-around;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
 }
 
 /* NOTEPAD SUBPAGE */
 
 section.notes {
-
 }
 
 .notes_search {
 }
 
 .notes_search .ui.input {
-    width: 100%;
-    margin-bottom: 1em;
+  width: 100%;
+  margin-bottom: 1em;
 }
 
-.notes_search input[type="text"] {
-    width: 100%;
+.notes_search input[type='text'] {
+  width: 100%;
 }
 
 @media screen and (max-width: 1023px) {

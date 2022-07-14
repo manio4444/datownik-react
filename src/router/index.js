@@ -39,6 +39,10 @@ const MainRouter = () => {
               element={<PageCalendar />}
             />
             <Route
+              path={`/${RouterPaths.DOCS_SINGLE_EDIT}`}
+              element={<PageDocs edit={true} />}
+            />
+            <Route
               path={`/${RouterPaths.DOCS_SINGLE}`}
               element={<PageDocs />}
             />

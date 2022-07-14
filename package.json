@@ -3,6 +3,7 @@
   "version": "0.1.6",
   "private": true,
   "dependencies": {
+    "@tinymce/tinymce-react": "^4.1.0",
     "animate.css": "^4.1.1",
     "axios": "^0.27.2",
     "clsx": "^1.1.1",

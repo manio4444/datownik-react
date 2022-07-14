@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
+import { Editor } from '@tinymce/tinymce-react';
 
 import './SingleDoc.scss';
 
@@ -10,7 +11,7 @@ import ModalYesNo from 'components/Todo/ModalYesNo';
 import { deleteDoc } from 'components/ListDocs/actions';
 import { RouterPaths } from 'router/consts';
 
-export default function SingleDoc({ id }) {
+export default function SingleDoc({ id, edit }) {
   const [docData, setDocData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalRemove, setModalRemove] = useState(false);
@@ -27,6 +28,16 @@ export default function SingleDoc({ id }) {
         setLoading(false);
       });
   }, []);
+
+  const handleAskSave = function () {
+    console.log('### handleAskSave');
+  };
+  const handleAskEditName = function () {
+    console.log('### handleAskEditName');
+  };
+  const handleAskEdit = function () {
+    navigate(`/${RouterPaths.DOCS_SINGLE_EDIT.replace(':id', id)}`);
+  };
 
   const handleAskDeleteDoc = function () {
     setModalRemove(true);
@@ -56,9 +67,13 @@ export default function SingleDoc({ id }) {
 
       {!loading && (
         <Button.Group className={'docs__single-buttonsGroup'}>
-          <Button icon={'save'} content={'Zapisz'} />
-          <Button icon={'edit outline'} content={'Zmień nazwę'} />
-          <Button icon={'edit'} content={'Edutuj'} />
+          <Button icon={'save'} content={'Zapisz'} onClick={handleAskSave} />
+          <Button
+            icon={'edit outline'}
+            content={'Zmień nazwę'}
+            onClick={handleAskEditName}
+          />
+          <Button icon={'edit'} content={'Edytuj'} onClick={handleAskEdit} />
           <Button
             icon={'trash'}
             content={'Usuń'}
@@ -78,6 +93,26 @@ export default function SingleDoc({ id }) {
           <Placeholder />
           <Placeholder />
         </div>
+      ) : edit ? (
+        <Editor
+          initialValue={docData}
+          init={{
+            height: 500,
+            menubar: false,
+            plugins: [
+              'advlist autolink lists link image charmap print preview anchor',
+              'searchreplace visualblocks code fullscreen',
+              'insertdatetime media table paste code help wordcount',
+            ],
+            toolbar:
+              'undo redo | formatselect | ' +
+              'bold italic backcolor | alignleft aligncenter ' +
+              'alignright alignjustify | bullist numlist outdent indent | ' +
+              'removeformat | help',
+            content_style:
+              'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+          }}
+        />
       ) : (
         <div
           className="docs__single-container"

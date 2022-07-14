@@ -5,4 +5,5 @@ export const RouterPaths = {
   CALENDAR: 'kalendarz',
   DOCS: 'dokumenty',
   DOCS_SINGLE: 'dokumenty/:id',
+  DOCS_SINGLE_EDIT: 'dokumenty/:id/edit',
 };

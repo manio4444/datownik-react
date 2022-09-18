@@ -12,6 +12,7 @@
     "node-sass": "^7.0.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-flatpickr": "^3.10.13",
     "react-linkify": "^1.0.0-alpha",
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",

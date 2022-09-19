@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Header, Icon, Modal, Input, Form } from 'semantic-ui-react';
 import Flatpickr from 'react-flatpickr';
+import scrollPlugin from 'flatpickr/dist/plugins/scrollPlugin';
 
 import 'semantic-ui-css/components/modal.min.css';
 import 'semantic-ui-css/components/dimmer.min.css';
@@ -50,6 +51,7 @@ const ModalBirthdayAdd = ({ trueCallback, falseCallback }) => {
               <Flatpickr
                 value={date}
                 options={{
+                  plugins: [new scrollPlugin()],
                   locale: 'pl',
                   altInput: true,
                   altFormat: FLATPICKR_DATETIME_FORMAT,

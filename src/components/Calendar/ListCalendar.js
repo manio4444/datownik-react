@@ -11,20 +11,13 @@ class ListCalendar extends Component {
       ? this.props.placeholders
       : 3,
   };
-
-  mapQuery = (data) => ({
-    id: data.id,
-    title: data.txt,
-    date: data.data,
-  });
-
   getTodoList() {
     getFutureEvents({
       limit: this.props.limit,
     })
       .then((res) => {
         this.setState({
-          list: res.data.result.map((event) => this.mapQuery(event)),
+          list: res.data.result,
           fetchingData: false,
         });
       })

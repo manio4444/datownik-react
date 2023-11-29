@@ -42,6 +42,9 @@ class ListSingleEvent extends Component {
         <Card.Content>
           <Card.Header>
             {props.placeholder && <Placeholder />}
+            {!props.placeholder && props.type === 'birthdays' && (
+              <Icon name="birthday cake" />
+            )}
             {!props.placeholder && props.title}
           </Card.Header>
           <Card.Meta>

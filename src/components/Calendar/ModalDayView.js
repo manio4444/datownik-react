@@ -28,7 +28,10 @@ const ModalDayView = ({ dateIso, events, day, loading, falseCallback }) => {
                 className={`${event.type}`}
               >
                 <label>{event.date}</label>
-                <p>{event.txt}</p>
+                <p>
+                  {event.type === 'birthdays' && <Icon name="birthday cake" />}{' '}
+                  {event.txt}
+                </p>
               </Form.Field>
             ))}
           {loading && <Placeholder />}

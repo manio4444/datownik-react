@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { RouterPaths } from 'router/consts';
 import Placeholder from 'components/Placeholder/Placeholder';
-import { Button } from 'semantic-ui-react';
+import { Button, Icon } from 'semantic-ui-react';
 import ModalEventAdd from './ModalEventAdd';
 
 const CalendarDay = ({ day, events, loading }) => {
@@ -34,6 +34,7 @@ const CalendarDay = ({ day, events, loading }) => {
             key={`${event.type}-${event.id}`}
             className={`calendar-table__day-event calendar-table__day-event--${event.type}`}
           >
+            {event.type === 'birthdays' && <Icon name="birthday cake" />}
             {event.txt}
           </p>
         ))}

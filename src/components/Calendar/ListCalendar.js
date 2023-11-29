@@ -33,20 +33,26 @@ class ListCalendar extends Component {
     const placeholdersRender = [];
 
     for (let i = 0; i < state.placeholders; i++) {
-      placeholdersRender.push(
-        <ListSingleEvent key={i} placeholder {...this.props} />
-      );
+      placeholdersRender.push(<ListSingleEvent key={i} placeholder />);
     }
 
     return (
-      <div className="events__list">
+      <div className="ListCalendar">
         {state.fetchingData && (
           <React.Fragment>{placeholdersRender}</React.Fragment>
         )}
 
         {!state.fetchingData &&
           state.list.map((event) => {
-            return <ListSingleEvent key={event.id} {...event} />;
+            return (
+              <ListSingleEvent
+                key={`${event.type}-${event.id}`}
+                id={event.id}
+                date={event.date}
+                title={event.txt}
+                type={event.type}
+              />
+            );
           })}
       </div>
     );

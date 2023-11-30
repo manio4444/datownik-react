@@ -37,3 +37,23 @@ export function addNewEvent({ txt, data }) {
     data,
   });
 }
+
+/**
+ *
+ * @returns {Promise<AxiosResponse<T>>}
+ */
+export function getBirthdaysAll() {
+  return api.post('calendarAjax', 'getBirthdaysAll', {});
+}
+
+/**
+ *
+ * @param {Object} values
+ * @returns {Promise<AxiosResponse<T>>}
+ */
+export function addNewBirthday({ txt, data }) {
+  return api.post('calendarAjax', 'saveBirthday', {
+    txt,
+    data,
+  });
+}

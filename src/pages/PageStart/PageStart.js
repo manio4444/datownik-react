@@ -34,7 +34,7 @@ const PageStart = () => {
             <Multicontent />
           </div>
 
-          <Col size={'quarter'} className="main_page_dates">
+          <Col size={'quarter'} className="dates">
             <h2 className="start_form_title">Kalendarz:</h2>
 
             <ListCalendar limit={5} />
@@ -54,7 +54,7 @@ const PageStart = () => {
             </a>
           </Col>
 
-          <Col size={'quarter'} className="main_page_dates">
+          <Col size={'quarter'} className="todos">
             <h2 className="start_form_title">To do:</h2>
 
             <ListTodo viewOnly={true} limit={5} getFinished={false} />

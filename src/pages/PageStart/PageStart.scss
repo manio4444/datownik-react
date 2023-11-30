@@ -11,6 +11,31 @@
       margin-bottom: 25px;
     }
 
+    .dates,
+    .todos {
+      .ui.card {
+        width: 100%;
+        & > .content > .header {
+          max-height: calc(1.278em * 1);
+          overflow: hidden;
+        }
+        & > .content > .header:hover {
+          overflow: visible;
+        }
+        & > .extra.content {
+          font-size: 0.85714em;
+          color: rgba(0, 0, 0, 0.6);
+          padding: 0.5em 0.75em;
+        }
+      }
+    }
+
+    .todos {
+      .ui.card {
+        box-shadow: 0 0 0 1px #d4d4d5, 0 3px 0px 1px #00b5ad, 0 1px 3px 0 #d4d4d5;
+      }
+    }
+
     .title {
     }
 
@@ -20,41 +45,6 @@
 }
 
 //TODO - rest to sort ###########################
-.main_page_dates {
-}
-
-.main_page_dates .ui.card {
-  width: 100%;
-}
-
-.main_page_dates .ui.card > .content > .header {
-  max-height: calc(1.278em * 1);
-  overflow: hidden;
-}
-
-.main_page_dates .ui.card > .content > .header:hover {
-  overflow: visible;
-}
-
-.main_page_dates .ui.card > .extra.content {
-  font-size: 0.85714em;
-  color: rgba(0, 0, 0, 0.6);
-  padding: 0.5em 0.75em;
-}
-
-.main_page_dates .ui.red.card {
-  box-shadow: 0 0 0 1px #d4d4d5, 0 3px 0px 1px #db2828, 0 1px 3px 0 #d4d4d5;
-}
-
-.main_page_dates .ui.teal.card {
-  box-shadow: 0 0 0 1px #d4d4d5, 0 3px 0px 1px #00b5ad, 0 1px 3px 0 #d4d4d5;
-}
-
-@media (max-width: 1023px) {
-}
-
-@media (max-width: 479px) {
-}
 
 #main_page_notes .notes_title {
   flex-basis: 100%;

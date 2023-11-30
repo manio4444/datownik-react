@@ -3,7 +3,14 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import MainMenu from 'components/MainMenu/MainMenu';
 import Footer from 'components/Footer/Footer';
-import { PageStart, PageNotes, PageTodo, PageCalendar, PageDocs } from 'pages';
+import {
+  PageStart,
+  PageNotes,
+  PageTodo,
+  PageCalendar,
+  PageDocs,
+  PageBirthdays,
+} from 'pages';
 import { RouterPaths } from './consts';
 
 const MainRouter = () => {
@@ -37,6 +44,10 @@ const MainRouter = () => {
             <Route
               path={`/${RouterPaths.CALENDAR}`}
               element={<PageCalendar />}
+            />{' '}
+            <Route
+              path={`/${RouterPaths.CALENDAR_BIRTHDAYS}`}
+              element={<PageBirthdays />}
             />
             <Route
               path={`/${RouterPaths.DOCS_SINGLE}`}

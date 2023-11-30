@@ -7,6 +7,7 @@ import Placeholder from 'components/Placeholder/Placeholder';
 import 'semantic-ui-css/components/card.min.css';
 import 'semantic-ui-css/components/icon.min.css';
 
+import './ListSingleEvent.scss';
 class ListSingleEvent extends Component {
   interval = null; // can't be in state
   state = {
@@ -37,10 +38,13 @@ class ListSingleEvent extends Component {
     const { props, state } = this;
 
     return (
-      <Card className={'todo_element task red'}>
+      <Card className={`ListSingleEvent ${props.type}`}>
         <Card.Content>
           <Card.Header>
             {props.placeholder && <Placeholder />}
+            {!props.placeholder && props.type === 'birthdays' && (
+              <Icon name="birthday cake" />
+            )}
             {!props.placeholder && props.title}
           </Card.Header>
           <Card.Meta>

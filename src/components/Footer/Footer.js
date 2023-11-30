@@ -1,27 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
+  BackendEndpoint,
+  BackendVersion,
   BuildDate,
-  BuildEnv,
   BuildVersion,
 } from 'components/BuildInfo/BuildInfo';
 
-class Footer extends Component {
-  getStyles = {
+const Footer = () => {
+  const getStyles = {
     backgroundColor: '#333333',
     textAlign: 'center',
   };
 
-  render() {
-    return (
-      <footer className="App-Footer page__section" style={this.getStyles}>
-        <div className="page__container">
-          <BuildVersion />
-          <BuildDate />
-          <BuildEnv />
-        </div>
-      </footer>
-    );
-  }
-}
+  return (
+    <footer className="App-Footer page__section" style={getStyles}>
+      <div className="page__container">
+        <BuildVersion />
+        <BuildDate />
+        <BackendEndpoint />
+        <BackendVersion />
+      </div>
+    </footer>
+  );
+};
 
 export default Footer;

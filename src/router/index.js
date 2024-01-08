@@ -35,6 +35,10 @@ const MainRouter = () => {
         <main style={getBlurStyles()}>
           <Routes>
             <Route path={'/'} element={<PageStart />} exact={true} />
+            <Route
+              path={`/${RouterPaths.NOTES_SINGLE}`}
+              element={<PageNotes />}
+            />
             <Route path={`/${RouterPaths.NOTES}`} element={<PageNotes />} />
             <Route path={`/${RouterPaths.TODO}`} element={<PageTodo />} />
             <Route

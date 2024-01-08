@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Linkify from 'react-linkify';
+import { Link } from 'react-router-dom';
+import { RouterPaths } from 'router/consts';
+import { Icon } from 'semantic-ui-react';
 
 import { addNewNote } from './actions';
 import Placeholder from 'components/Placeholder/Placeholder';
@@ -141,7 +144,7 @@ class SingleNote extends Component {
   );
 
   render() {
-    const { id, readonly, style } = this.props;
+    const { id, readonly, style, showLink } = this.props;
     const { state } = this;
     const progress = this.state.fillBarAnimation ? 'fill' : '';
     const progressStyle = {
@@ -187,6 +190,14 @@ class SingleNote extends Component {
             {state.txt}
           </Linkify>
         </div>
+        {showLink && (
+          <Link
+            className={'note-element__noteUrl'}
+            to={`/${RouterPaths.NOTES_SINGLE.replace(':id', id)}`}
+          >
+            <Icon name="linkify" />
+          </Link>
+        )}
       </div>
     );
   }

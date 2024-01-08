@@ -10,3 +10,14 @@ export function addNewNote({ txt }) {
     txt,
   });
 }
+
+/**
+ *
+ * @param {Object} data
+ * @returns {Promise<AxiosResponse<T>>}
+ */
+export function getSingleNote({ id }) {
+  return api.post('notesAjax', 'getSingleNoteData', {
+    id,
+  });
+}

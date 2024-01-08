@@ -91,4 +91,11 @@
     transform: scale(0.5);
     opacity: 0;
   }
+
+  &__noteUrl {
+    position: absolute;
+    font-size: 2em;
+    right: .3em;
+    bottom: .6em;
+  }
 }

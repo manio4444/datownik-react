@@ -110,6 +110,7 @@ class ListNotes extends Component {
                 focusPosition={note.focusPosition}
                 deletedCallback={this.deletedNote.bind(this)}
                 placeholder={note.placeholder}
+                showLink={note.id !== 'new'}
               />
             );
           })}

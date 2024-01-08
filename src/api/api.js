@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 const RequestMethod = {
   GET: 'get',
@@ -28,6 +28,7 @@ function apiHandleError(error) {
     } = {},
   } = error;
   console.error(error, '\n\n [API-MESSAGE]: ' + apiMessage + '\n');
+  throw new AxiosError(error);
 }
 
 export default {

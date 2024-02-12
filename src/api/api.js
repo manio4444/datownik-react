@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 
 const RequestMethod = {
   GET: 'get',
@@ -12,23 +12,22 @@ const RequestMethod = {
  * @returns {Promise<AxiosResponse<T>>}
  */
 function apiShot(requestMethod, data) {
-  return axios[requestMethod](process.env.REACT_APP_ENDPOINT_URL, data).catch(
-    apiHandleError
-  );
+  return axios[requestMethod](process.env.REACT_APP_ENDPOINT_URL, data);
 }
 
 /**
  *
- * @param {Error} error
+ * @param {AxiosError} error
+ * @returns {string}
  */
-function apiHandleError(error) {
-  const {
-    response: {
-      data: { message: apiMessage = 'Brak, api nie odpowiada' } = {},
-    } = {},
-  } = error;
-  console.error(error, '\n\n [API-MESSAGE]: ' + apiMessage + '\n');
-  throw new AxiosError(error);
+export function getApiErrorMessage(error) {
+  if (error?.response?.data?.message) {
+    return error?.response?.data?.message;
+  } else if (error?.message) {
+    return error?.message;
+  } else {
+    return 'Error, check logs';
+  }
 }
 
 export default {

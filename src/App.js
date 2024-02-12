@@ -9,11 +9,17 @@ import Lockscreen from 'components/Lockscreen/Lockscreen';
 import { useLoggedIn } from 'shared/hooks/useLoggedIn';
 
 export default function App() {
-  const { isLogged, setToken, isCheckingAuth } = useLoggedIn();
+  const { isLogged, isCheckingAuth, tryCode, logInError, authAllowed } =
+    useLoggedIn();
 
   return isLogged ? (
     <MainRouter />
   ) : (
-    <Lockscreen setToken={setToken} isCheckingAuth={isCheckingAuth} />
+    <Lockscreen
+      isCheckingAuth={isCheckingAuth}
+      tryCode={tryCode}
+      error={logInError}
+      authAllowed={authAllowed}
+    />
   );
 }

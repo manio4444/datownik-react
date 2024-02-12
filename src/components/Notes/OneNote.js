@@ -7,6 +7,7 @@ import { Button, Message } from 'semantic-ui-react';
 import 'semantic-ui-css/components/message.min.css';
 import { Link } from 'react-router-dom';
 import { RouterPaths } from 'router/consts';
+import { getApiErrorMessage } from 'api/api';
 
 const OneNote = ({ id }) => {
   const [noteData, setNoteData] = useState([]);
@@ -20,13 +21,7 @@ const OneNote = ({ id }) => {
         setNoteData(data.result);
       })
       .catch((error) => {
-        if (error?.message?.response?.data?.message) {
-          setError(error?.message?.response?.data?.message);
-        } else if (error?.message?.message) {
-          setError(error?.message?.message);
-        } else {
-          setError('error, check logs');
-        }
+        setError(getApiErrorMessage(error));
       })
       .finally(() => {
         setLoading(false);

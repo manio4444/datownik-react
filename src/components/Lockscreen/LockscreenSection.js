@@ -42,7 +42,6 @@ export default function LockscreenSection({
   codeInput,
   lockInput,
   resetCodeAnimation,
-  isCheckingAuth,
   pinAllowed,
   updateCode,
 }) {
@@ -61,7 +60,7 @@ export default function LockscreenSection({
     };
   }, [codeInput]);
 
-  const lockedClass = lockInput || isCheckingAuth ? 'lockscreen--locked' : '';
+  const lockedClass = lockInput ? 'lockscreen--locked' : '';
   const allowedClass = pinAllowed ? ' lockscreen--allowed' : '';
 
   return (

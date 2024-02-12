@@ -1,96 +1,63 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { tryCode } from './actions';
 import LockscreenSection from 'components/Lockscreen/LockscreenSection';
 
 import './Lockscreen.css';
 import 'animate.css';
 
 const RESET_ANIMATION_TIMEOUT = 1000;
-const ALLOW_ANIMATION_TIMEOUT = 1000;
 const CODE_MAX_LENGTH = 4;
 
 const TITLE_DEFAULT = 'Enter Passcode';
 const TITLE_OK = 'OK';
-const TITLE_ERROR_CODE = 'Wrong Code';
-const TITLE_ERROR_CONNECTION = 'Connection error';
-const TITLE_ERROR_UNKNOWN = 'Unknown error';
 const TITLE_CHECKING_AUTH = 'Checking credentials';
 
 export default function Lockscreen(props) {
   const [codeInput, setCodeInput] = useState('');
-  const [lockTitle, setLockTitle] = useState(TITLE_DEFAULT);
-  const [lockInput, setLockInput] = useState(false);
-  const [resetCodeAnimation, setResetCodeAnimation] = useState(false);
-  const [pinAllowed, setPinAllowed] = useState(false);
+  const [errorAnimation, setErrorAnimation] = useState(false);
+
+  const isMaxLengthCode = (code) => code.length >= CODE_MAX_LENGTH;
 
   const updateCode = (number) => {
-    if (lockInput) return;
+    if (props.isCheckingAuth) return;
 
     const newCode = `${codeInput}${number}`;
 
     setCodeInput(newCode);
-    if (newCode.length >= CODE_MAX_LENGTH) {
-      setLockInput(true);
-      handleTryCode(newCode);
+    if (isMaxLengthCode(newCode)) {
+      props.tryCode(newCode);
     }
   };
 
-  const handleTryCode = (codeInput) => {
-    tryCode({
-      ajax_action: 'lockscreenAjax',
-      operation: 'tryPasscode',
-      code: codeInput,
-    })
-      .then((res) => {
-        if (!res) {
-          throw new Error(TITLE_ERROR_CONNECTION);
-        }
-        if (!res.data.result.isValid) {
-          throw new Error(TITLE_ERROR_CODE);
-        }
-        if (res.data.result.isValid) {
-          allowCode(res.data.result.token);
-          return;
-        }
-        throw new Error();
-      })
-      .catch((error) => {
-        console.error(error);
-        resetCode(error.message);
-      });
-  };
-
-  const resetCode = (errorMgs = TITLE_ERROR_UNKNOWN) => {
-    errorMgs = errorMgs !== '' ? errorMgs : 'TITLE_ERROR_UNKNOWN';
-    setResetCodeAnimation(true);
-    setLockTitle(errorMgs);
+  const resetCode = () => {
+    if (!codeInput) return;
+    setErrorAnimation(true);
     setTimeout(() => {
       setCodeInput('');
-      setLockInput(false);
-      setResetCodeAnimation(false);
-      setLockTitle(TITLE_DEFAULT);
+      setErrorAnimation(false);
     }, RESET_ANIMATION_TIMEOUT);
   };
 
-  const allowCode = (token) => {
-    setPinAllowed(true);
-    setLockTitle(TITLE_OK);
-    setTimeout(() => {
-      props.setToken(token);
-    }, ALLOW_ANIMATION_TIMEOUT);
-  };
+  useEffect(() => {
+    if (props.error) resetCode();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.error]);
 
-  const title = props.isCheckingAuth ? TITLE_CHECKING_AUTH : lockTitle;
+  const getTitle = () => {
+    if (errorAnimation) return props.error;
+    if (props.isCheckingAuth && !isMaxLengthCode(codeInput))
+      return TITLE_CHECKING_AUTH;
+    if (props.authAllowed) return TITLE_OK;
+    return TITLE_DEFAULT;
+  };
 
   return (
     <LockscreenSection
-      title={title}
+      title={getTitle()}
       codeInput={codeInput}
-      lockInput={lockInput}
-      resetCodeAnimation={resetCodeAnimation}
-      isCheckingAuth={props.isCheckingAuth}
-      pinAllowed={pinAllowed}
+      lockInput={errorAnimation || props.isCheckingAuth || props.authAllowed}
+      resetCodeAnimation={errorAnimation}
+      pinAllowed={props.authAllowed}
       updateCode={updateCode.bind(this)}
     />
   );

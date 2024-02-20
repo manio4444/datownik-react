@@ -10,10 +10,11 @@ import {
   PageCalendar,
   PageDocs,
   PageBirthdays,
+  PageLogout,
 } from 'pages';
 import { RouterPaths } from './consts';
 
-const MainRouter = () => {
+const MainRouter = (props) => {
   const [isblurPage, setIsBlurPage] = useState(false);
 
   const blurPage = () => setIsBlurPage(true);
@@ -58,6 +59,10 @@ const MainRouter = () => {
               element={<PageDocs />}
             />
             <Route path={`/${RouterPaths.DOCS}`} element={<PageDocs />} />
+            <Route
+              path={`/${RouterPaths.LOGOUT}`}
+              element={<PageLogout logout={props.logout} />}
+            />
           </Routes>
         </main>
         <Footer />

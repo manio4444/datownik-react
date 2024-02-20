@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import clsx from 'clsx';
+
 import './MainMenu.css';
 
 const MainMenu = (props) => {
@@ -69,6 +71,10 @@ const MainMenu = (props) => {
       url: '/ustawienia',
       name: 'Ustawienia',
     },
+    {
+      url: '/logout',
+      name: 'Wyloguj',
+    },
   ];
 
   const toggleState = () => {
@@ -83,18 +89,15 @@ const MainMenu = (props) => {
     }
   };
 
-  const getStylesMenu = () => {
-    return {
-      transform: !opened ? 'translateX(-100%)' : '',
-    };
-  };
-
   return (
     <div className="MainMenu">
       <button type="button" className="hamburger" onClick={toggleState}>
         <span className="hamburger_line" />
       </button>
-      <div className="MainMenuWrapper" style={getStylesMenu()} ref={refMenu}>
+      <div
+        className={clsx('MainMenuWrapper', { opened: !opened })}
+        ref={refMenu}
+      >
         <nav>
           <button
             type="button"

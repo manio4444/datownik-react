@@ -4,3 +4,4 @@ export { default as PageTodo } from './PageTodo/PageTodo';
 export { default as PageCalendar } from './PageCalendar/PageCalendar';
 export { default as PageDocs } from './PageDocs/PageDocs';
 export { default as PageBirthdays } from './PageBirthdays/PageBirthdays';
+export { default as PageLogout } from './PageLogout/PageLogout';

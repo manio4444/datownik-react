@@ -1,4 +1,5 @@
 export const RouterPaths = {
+  START: '/',
   NOTES: 'notatki',
   NOTES_SINGLE: 'notatki/:id',
   TODO: 'do-zrobienia',
@@ -7,4 +8,5 @@ export const RouterPaths = {
   CALENDAR_BIRTHDAYS: 'kalendarz/cykliczne',
   DOCS: 'dokumenty',
   DOCS_SINGLE: 'dokumenty/:id',
+  LOGOUT: 'logout',
 };

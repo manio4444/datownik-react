@@ -21,7 +21,7 @@ export function useLoggedIn() {
   const logout = function (error = TITLE_ERROR_LOGOUT) {
     setIsLogged(false);
     setIsCheckingAuth(false);
-    setToken('');
+    handleClearToken();
     setAuthAllowed(false);
     setError(error);
   };
@@ -54,6 +54,10 @@ export function useLoggedIn() {
     }, delay);
   };
 
+  const handleClearToken = function (token) {
+    sessionStorage.removeItem(StorageEnum.AUTH_TOKEN);
+    setToken('');
+  };
   const handleSetToken = function (token) {
     sessionStorage.setItem(StorageEnum.AUTH_TOKEN, token);
     setToken(token);
